@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load django_bootstrap5 %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+  <section class="home"></section>
+  <div style="height: 1000px" class='d-flex justify-content-center flex-column'>
+    <!-- just to make scrolling effect possible -->
+    <h2 class="myH2">산책메이트 로고자리</h2>
+    <p class="myP">친구 말고 산책 메이트 👩‍❤️‍👨</p>
+    <p class="myP">지금 시작하등가말등가</p>
+    <p class="myP">로그인폼 아래</p>
+  </div>
+{% endblock content %}
+
+{% block script %}
+  <!-- Jquery needed -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="js/scripts.js"></script>
+
+  <!-- Function used to shrink nav bar removing paddings and adding black background -->
+  <script>
+    $(window).scroll(function () {
+      if ($(document).scrollTop() > 50) {
+        $('.nav').addClass('affix');
+        console.log("OK");
+      } else {
+        $('.nav').removeClass('affix');
+      }
+    });
+  </script>
+{% endblock script %}
