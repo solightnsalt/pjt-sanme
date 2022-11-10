@@ -7,3 +7,4 @@ from django.views.decorators.http import require_safe
 def index(request):
     return render(request, "articles/index.html")
 
+
