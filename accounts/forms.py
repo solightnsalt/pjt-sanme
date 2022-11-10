@@ -40,7 +40,6 @@ class CustomUserChangeForm(UserChangeForm):
         "nickname",
         "contact",
         "mbti",
-        "mbti",
         "age",
         "address",
         "gender",

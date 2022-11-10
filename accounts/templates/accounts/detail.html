@@ -46,7 +46,8 @@
                 {% endif %}
                 <br>
                 {% if request.user == user %}
-                <a href="{% url 'accounts:delete' %}" type="button" class="btn btn-danger">삭제</a>
+                <a href="{% url 'accounts:update' user.pk %}" type="button" class="pos-btn">수정</a>
+                <a href="{% url 'accounts:delete' %}" type="button" class="neg-btn">삭제</a>
                 {% endif %}
             </div>
         </div>

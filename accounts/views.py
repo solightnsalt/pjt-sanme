@@ -64,19 +64,19 @@ def detail(request, pk):
 def update(request, pk):
     user_info = get_user_model().objects.get(pk=pk)
     # 요청한 유저가 로그인한 해당 유저인 경우
-    if request.user == user_info.user:
-        if request.method == "POST":
-            user_form = CustomUserChangeForm(
-                request.POST, request.FILES, instance=user_info
-            )
-            # 유저폼 유효성 확인
-            if user_form.is_valid():
-                user_form.save()
-                return redirect("accounts:detail", user_info.pk)
-        else:
-            user_form = CustomUserChangeForm(instance=user_info)
-        context = {"user_form": user_form}
-        return render(request, "accounts/update.html", context)
+    if request.method == "POST":
+        user_form = CustomUserChangeForm(
+            request.POST, request.FILES, instance=user_info
+        )
+        # 유저폼 유효성 확인
+        if user_form.is_valid():
+            user_form.save()
+            return redirect("accounts:detail", user_info.pk)
+    else:
+        user_form = CustomUserChangeForm(instance=user_info)
+    context = {"user_form": user_form}
+    return render(request, "accounts/update.html", context)
+
 
 def follow(request, pk):
     accounts = get_user_model().objects.get(pk=pk)
@@ -87,6 +87,7 @@ def follow(request, pk):
     else:
         accounts.followers.add(request.user)
     return redirect("accounts:detail", pk)
+
 
 def delete(request):
     request.user.delete()
