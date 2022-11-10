@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
-  <h1>수정하기</h1>
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% cstf_token %}
-    {% bootstrap_form user_form %}
-    <button class="pos-btn" type="submit">수정하기</button>
-    {% comment %}  {% endcomment %}
-  </form>
+<h1>수정하기</h1>
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form user_form %}
+  <button class="pos-btn" type="submit">수정하기</button>
+  {% comment %} {% endcomment %}
+</form>
 {% endblock content %}
