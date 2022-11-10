@@ -124,6 +124,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("address", models.CharField(max_length=50)),
+                ("age", models.IntegerField()),
                 (
                     "gender",
                     models.CharField(choices=[("M", "남자"), ("F", "여자")], max_length=2),
