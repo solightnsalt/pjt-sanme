@@ -32,18 +32,19 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
-    model = get_user_model()
-    fields = [
-        "profile_pic",
-        "username",
-        "email",
-        "nickname",
-        "contact",
-        "mbti",
-        "age",
-        "address",
-        "gender",
-        "manner",
-        "smoking",
-        "pet",
-    ]
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "profile_pic",
+            "username",
+            "email",
+            "nickname",
+            "contact",
+            "mbti",
+            "age",
+            "address",
+            "gender",
+            "manner",
+            "smoking",
+            "pet",
+        )
