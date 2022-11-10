@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.decorators.http import require_safe
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -61,14 +62,34 @@ def delete(request, pk):
     
 def comment(request, pk):
     post = Post.objects.get(pk=pk)
-    
-    if request.method == "POST":
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment_form.save(commit=False)
-            comment.post = post
-            comment.user = request.user
-            comment.save()
-    
-    return redirect('articles:detail', post.pk)
+    user = request.user.pk
+    comment_form = CommentForm(request.POST)
 
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.post = post
+        comment.user = request.user
+        comment.save()
+    
+    temp = Comment.objects.filter(post_id = pk).order_by('-updated_at')
+    comment_data = []
+
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "content": t.content,
+                "updated_at": t.updated_at,
+                "profile_name": t.user.nickname,
+                "profile_img": t.user.profile_pic.url,
+            }
+        )
+    
+    data = {
+        "commentData": comment_data,
+        "reviewPk": pk,
+        "user": user,
+    }
+    return JsonResponse(data)

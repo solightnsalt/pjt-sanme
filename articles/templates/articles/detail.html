@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
@@ -8,17 +9,74 @@
 
 
 <h1>comment</h1>
-<form action="" method="POST">
+<form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
   {% csrf_token %}
   {% bootstrap_form comment_form %}
-  <input class="btn btn-primary" type="submit" value="Submit">
+  <input class="btn pos-btn" type="submit" value="Submit">
 </form>
 
-{% for comment in comments %}
-<h3>{{ comment.content }} | {{ comment.updated_at }}</h3>
-{% endfor %}
+<div class="comments">
+  {% for comment in comments %}
+  <div class="comment">
+    <img class="comment-profile-img" src="{{ comment.user.profile_pic.url }}" alt="{{ comment.user.profile_pic }}">
+    <div class="comment-detail">
+      <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
+      <p class="comment-content">{{ comment.content }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock content %}
 
 {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const commentForm = document.querySelector("#comment-form")
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  commentForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    axios({
+      method: 'post',
+      url: `/articles/${event.target.dataset.postId}/comment/`,
+      headers: {'X-CSRFToken': csrftoken},
+      data: new FormData(commentForm)
+    })
+      .then(response => {
+        const comments = document.querySelector(".comments")
+        comments.textContent = "",
+        const commentData = response.data.commentData
+        const user = response.data.user
+
+        for (let i = 0; i < commentData.length; i++) {
+          const postId = response.data.reviewPK
+
+          if (user === commentData[i].id) {
+            comments.insertAdjacentHTML('beforeend', `
+            <div class="comment">
+              <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
+              <div class="comment-detail">
+                <p class="comment-profile-name">사용 중<a class="comment-profile-name" href="#">${commentData[i].profile_name}</a></p>
+                <p class="comment-content">${commentData[i].content}</p>
+              </div>
+            </div>
+            `)
+          } else {
+            comments.insertAdjacentHTML('beforeend', `
+            <div class="comment">
+              <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
+              <div class="comment-detail">
+                <p class="comment-profile-name"><a class="comment-profile-name" href="#">${commentData[i].profile_name}</a></p>
+                <p class="comment-content">${commentData[i].content}</p>
+              </div>
+            </div>
+            `)
+          }
+      }
+      commentForm.reset()
+    })
+  })
+</script>
+
 {% endblock script %}
