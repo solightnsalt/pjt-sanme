@@ -32,6 +32,72 @@ html, body {
     color: #F0F1F2;
 }
 
+.glass {
+    backdrop-filter: blur(21px) saturate(107%);
+    -webkit-backdrop-filter: blur(21px) saturate(107%);
+    background-color: rgba(255, 255, 255, 0.71);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    height: auto;
+    width: auto;
+    padding: 6.25rem;
+}
+
+.myH2 {
+	font-size: 4rem;
+}
+.myP {
+	padding-left:15%;
+	padding-right:15%;
+	font-size: 20px;
+    text-shadow: 5px 5px #F0F1F2;
+}
+@media all and (max-width:700px){
+	.myP {
+		padding:2%;
+	}
+}
+
+/* Home */
+
+.home {
+    width: 100%;
+    height: 100vh;
+    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    background-position: center top;
+	background-size:cover;
+}
+
+.glass {
+    backdrop-filter: blur(21px) saturate(107%);
+    -webkit-backdrop-filter: blur(21px) saturate(107%);
+    background-color: rgba(255, 255, 255, 0.71);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    height: auto;
+    width: auto;
+    padding: 6.25rem;
+}
+
+.content {
+    padding-top: 12.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.pf_list {
+    margin-left: 100px;
+}
+
+/* 여기부터 추가해서 쓰세요 */
+/* articles */
+
+
+/* accounts */
+
 
 /* Navbar */
 .nav {
@@ -91,17 +157,6 @@ html, body {
     color: #F2ACCD;
 }
 
-
-/* Home */
-
-.home {
-    width: 100%;
-    height: 100vh;
-    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
-    background-position: center top;
-	background-size:cover;
-}
-
 .navTrigger {
     display: none;
 }
@@ -115,7 +170,6 @@ html, body {
 
 
 /* Media qurey section */
-
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .container {
         margin: 0;
@@ -164,10 +218,8 @@ html, body {
     }
 }
 
-
-/* Animation */
+/* Nav Animation */
 /* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
-
 .navTrigger {
     cursor: pointer;
     width: 30px;
@@ -360,23 +412,4 @@ html, body {
 .affix {
     padding: 0;
     background-color: #FFF;
-}
-
-
-
-
-
-
-.myH2 {
-	font-size: 4rem;
-}
-.myP {
-	padding-left:15%;
-	padding-right:15%;
-	font-size: 20px;
-}
-@media all and (max-width:700px){
-	.myP {
-		padding:2%;
-	}
 }
