@@ -1,4 +1,3 @@
-{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
@@ -6,6 +5,18 @@
 
 {% block content %}
 <h1>detail</h1>
+
+
+<h1>comment</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form comment_form %}
+  <input class="btn btn-primary" type="submit" value="Submit">
+</form>
+
+{% for comment in comments %}
+<h3>{{ comment.content }} | {{ comment.updated_at }}</h3>
+{% endfor %}
 
 {% endblock content %}
 
