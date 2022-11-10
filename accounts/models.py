@@ -34,7 +34,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
-    age = models.IntegerField()  # 나이
+    age = models.IntegerField(default="20")  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
         ("F", "여자"),
