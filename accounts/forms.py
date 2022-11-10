@@ -9,7 +9,6 @@ class CustomUserCreationForm(UserCreationForm):
         fields = (
             "profile_pic",
             "username",
-            "password",
             "email",
             "nickname",
             "contact",
