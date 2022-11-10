@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
 {% load django_bootstrap5 %}
+{% block title %}
+  |
+  {{ user }}
+  님{% endblock title %}
+
 {% block content %}
-  <h1>{{ user }}님의 프로필</h1><br>
-  <section class="py-5">
+  <section class="home"></section>
+  <div style="height: 1000px">
+    <h1>{{ user }}님의 프로필</h1><br>
     <div class="container px-4 px-lg-5 my-5">
       <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-3">
@@ -52,6 +60,7 @@
         </div>
       </div>
     </div>
-  </section>
-
+  </div>
 {% endblock content %}
+
+{% block script %}{% endblock script %}
