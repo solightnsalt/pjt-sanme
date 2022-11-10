@@ -40,12 +40,12 @@ html, body {
 
 .nav div.logo a {
     text-decoration: none;
-    color: #fff;
+    color: #000;
     font-size: 2.5rem;
 }
 
 .nav div.logo a:hover {
-    color: #F288AF;
+    color: #F2ACCD;
 }
 
 .nav div.main_list {
@@ -71,13 +71,13 @@ html, body {
 
 .nav div.main_list ul li a {
     text-decoration: none;
-    color: #03A63C;
+    color: rgb(0, 0, 0);
     line-height: 65px;
     font-size: 2.4rem;
 }
 
 .nav div.main_list ul li a:hover {
-    color: #f288af;
+    color: #F2ACCD;
 }
 
 /* Home */
@@ -133,7 +133,7 @@ html, body {
         right: 0;
         left: 0;
         bottom: 0;
-        background-color: #f0f1f2;
+        background-color: #F0F1F2;
         /*same background color of navbar*/
         background-position: center top;
     }
@@ -347,13 +347,8 @@ html, body {
 
 .affix {
     padding: 0;
-    background-color: #f0f1f2;
+    background-color: #FFF;
 }
-
-
-
-
-
 
 .myH2 {
 	text-align:center;
