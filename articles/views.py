@@ -16,7 +16,7 @@ def create(request):
             posts = post_form.save(commit=False)
             posts.user = request.user
             posts.save()
-            return redirect("articles:index")
+            return redirect("articles:postall")
     else :
         post_form = PostForm()
         
@@ -72,3 +72,9 @@ def comment(request, pk):
     
     return redirect('articles:detail', post.pk)
 
+def postall(request):
+    post = Post.objects.all().order_by("-pk")
+    context = {
+        "post": post,
+    }
+    return render(request, "articles/postall.html", context)
