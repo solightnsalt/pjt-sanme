@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views.decorators.http import require_safe
 from .forms import PostForm, CommentForm
-from .models import Post
+from .models import Post, Comment
 
 
 # Create your views here.
@@ -25,8 +25,13 @@ def create(request):
 
 def detail(request,pk):
     post = Post.objects.get(pk=pk)
+    comment_form = CommentForm()
+    comments = Comment.objects.all().order_by('-updated_at')
+
     context = {
         "post":post,
+        "comment_form": comment_form,
+        "comments": comments,
     }
     
     return render(request,"articles/detail.html",context)
@@ -66,6 +71,4 @@ def comment(request, pk):
             comment.save()
     
     return redirect('articles:detail', post.pk)
-
-
 
