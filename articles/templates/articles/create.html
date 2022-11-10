@@ -1,0 +1,19 @@
+
+{% load static %}
+{% load widget_tweaks %}
+{% load django_bootstrap5 %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+<form class="p-4" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form post_form %}
+
+      <input class="btn btn-dark" type="submit" value="제출하기">
+  </form>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
