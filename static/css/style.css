@@ -6,10 +6,10 @@
 .rest-5 { color: #BF9B6F; }
 
 @font-face {
-  font-family: 'SUIT-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body {
@@ -50,7 +50,7 @@ html, body {
 
 .nav div.main_list {
     height: 65px;
-    float: right;
+    /* float: right; */
 }
 
 .nav div.main_list ul {
@@ -79,7 +79,6 @@ html, body {
 .nav div.main_list ul li a:hover {
     color: #F2ACCD;
 }
-
 
 /* Home */
 
@@ -350,11 +349,6 @@ html, body {
     padding: 0;
     background-color: #FFF;
 }
-
-
-
-
-
 
 .myH2 {
 	text-align:center;
