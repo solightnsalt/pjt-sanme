@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "imagekit",
     "corsheaders",
     "widget_tweaks",
+    "multiselectfield",
     # django default
     "django.contrib.admin",
     "django.contrib.auth",

@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from decimal import Decimal
+from django import forms
+from multiselectfield import MultiSelectField
+
 
 # Create your models here.
 
@@ -34,7 +37,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
-    age = models.IntegerField(default=18)  # 나이
+    age = models.DateTimeField()  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
         ("F", "여자"),
@@ -64,8 +67,8 @@ class User(AbstractUser):
         ("쿨", "쿨한"),
     )
 
-    manner = models.CharField(  # 매너(성향)
-        max_length=10,
+    manner = MultiSelectField(  # 매너(성향)
+        max_length=100,
         choices=MANNER_CHOICES,
     )
 

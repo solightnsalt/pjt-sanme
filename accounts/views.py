@@ -57,3 +57,21 @@ def detail(request, pk):
         "user": user,
     }
     return render(request, "accounts/detail.html", context)
+
+
+@login_required
+def follow(request, pk):
+    accounts = get_user_model().objects.get(pk=pk)
+    if request.user == accounts:
+        return redirect("accounts:detail", pk)
+    if request.user in accounts.followers.all():
+        accounts.followers.remove(request.user)
+    else:
+        accounts.followers.add(request.user)
+    return redirect("accounts:detail", pk)
+
+
+def delete(request):
+    request.user.delete()
+    auth_logout(request)
+    return redirect("accounts:index")
