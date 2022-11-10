@@ -94,7 +94,43 @@ html, body {
 
 /* 여기부터 추가해서 쓰세요 */
 /* articles */
+/*-------------------- 포스트 디테일-------------------- */
 
+/* 댓글 */
+.comment{
+    display: flex;
+    margin: 2rem 15%;
+}
+
+.comment-profile-img{
+    border-radius: 50%;
+    height: 6rem;
+    width: 6rem;
+}
+
+.comment-detail{
+    padding: 1rem;
+    margin-left: 2rem;
+    border-radius: 20px;
+    background-color: #bf9b6f42;
+}
+
+.comment-profile-name{
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color:#000;
+    text-decoration: none;
+}
+
+.comment-profile-name:hover{
+    color: #bf9b6f;
+}
+
+.comment-content{
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
 
 /* accounts */
 
