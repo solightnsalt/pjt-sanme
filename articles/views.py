@@ -30,6 +30,23 @@ def detail(request,pk):
     }
     
     return render(request,"articles/detail.html",context)
+
+
+def update(request,pk):
+    posts = Post.objects.get(pk=pk)
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, instance=posts)
+        
+        if post_form.is_valid():
+            post_form.save()
+            
+            return redirect("articles:index")
+    else:
+        post_form = PostForm(instance=posts)
+    
+    
+    return render(request,"articles/create.html",{"post_form":post_form})
+
     
 def comment(request, pk):
     post = Post.objects.get(pk=pk)
@@ -43,4 +60,5 @@ def comment(request, pk):
             comment.save()
     
     return redirect('articles:detail', post.pk)
+
 

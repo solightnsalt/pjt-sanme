@@ -1,11 +1,12 @@
-{% extends 'base.html' %}
+
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
 {% block title %}{% endblock title %}
 
 {% block content %}
-<form class="p-4 my-2" action="" method="POST" enctype="multipart/form-data">
+
+<form class="p-4" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form post_form %}
 
