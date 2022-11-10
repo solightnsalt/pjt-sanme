@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import get_user_model
 
 
@@ -28,3 +29,22 @@ class CustomUserCreationForm(UserCreationForm):
         widgets = {
             "age": DateInput(),
         }
+
+
+class CustomUserChangeForm(UserChangeForm):
+    model = get_user_model()
+    fields = [
+        "profile_pic",
+        "username",
+        "email",
+        "nickname",
+        "contact",
+        "mbti",
+        "mbti",
+        "age",
+        "address",
+        "gender",
+        "manner",
+        "smoking",
+        "pet",
+    ]
