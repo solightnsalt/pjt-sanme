@@ -97,5 +97,5 @@ class User(AbstractUser):
         "self", symmetrical=False, related_name="followers"
     )
 
-    manner_point = models.DecimalField(max_digits = 1, decimal_places = 1)  # 매너점수
+    manner_point = models.DecimalField(max_digits=1, decimal_places=1)  # 매너점수
     date_created = models.DateTimeField(auto_now_add=True)  # 가입일
