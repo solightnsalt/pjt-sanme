@@ -6,10 +6,10 @@
 .rest-5 { color: #BF9B6F; }
 
 @font-face {
-    font-family: 'SUIT-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'SUIT-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html, body {
@@ -19,6 +19,17 @@ html, body {
     box-sizing: border-box;
     font-size: 62.5%;
     font-size: 10px;
+}
+
+/* 공통 */
+.pos-btn {
+    background-color:  #03A63C;
+    color: #F0F1F2;
+}
+
+.neg-btn {
+    background-color: #F2ACCD;
+    color: #F0F1F2;
 }
 
 
@@ -50,7 +61,7 @@ html, body {
 
 .nav div.main_list {
     height: 65px;
-    /* float: right; */
+    float: right;
 }
 
 .nav div.main_list ul {
@@ -79,6 +90,7 @@ html, body {
 .nav div.main_list ul li a:hover {
     color: #F2ACCD;
 }
+
 
 /* Home */
 
@@ -350,12 +362,15 @@ html, body {
     background-color: #FFF;
 }
 
+
+
+
+
+
 .myH2 {
-	text-align:center;
 	font-size: 4rem;
 }
 .myP {
-	text-align: justify;
 	padding-left:15%;
 	padding-right:15%;
 	font-size: 20px;
