@@ -47,6 +47,12 @@ def update(request,pk):
     
     return render(request,"articles/create.html",{"post_form":post_form})
 
+
+def delete(request, pk):
+    posts = Post.objects.get(pk=pk)
+    posts.delete()
+    return redirect("articles:index") 
+
     
 def comment(request, pk):
     post = Post.objects.get(pk=pk)
@@ -60,5 +66,6 @@ def comment(request, pk):
             comment.save()
     
     return redirect('articles:detail', post.pk)
+
 
 
