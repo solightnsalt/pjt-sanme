@@ -1,10 +1,53 @@
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
 {% block title %}{% endblock title %}
 
 {% block content %}
-<h1>detail</h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class='container'>
+  <div class="d-flex">
+  <div id="map" style="width:350px;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+</script>
+
+<div style="font-size: 2em;">
+  <dl class="row m-3">
+    <dt class="col-4 text-center">Title</dt>
+    <dd class="col-8">{{ post.title }}</dd>
+    <dt class="col-4 text-center">Day</dt>
+    <dd class="col-8">{{ post.day }}</dd>
+    <dt class="col-4 text-center">Time</dt>
+    <dd class="col-8">{{post.time}}</dd>
+    <dt class="col-4 text-center">애완동물 유/무</dt>
+    <dd class="col-8">{{post.pet}}</dd> 
+    <dt class="col-4 text-center">내용</dt>
+    <dd class="col-8">{{ post.content }}</dd>
+    <dt class="col-4 text-center">생성일</dt>
+    <dd class="col-8">{{ post.created_at|date:'Y-m-d' }}</dd>
+  </dl>
+</div>
+
+
+</div>
 
 
 <h1>comment</h1>
@@ -17,6 +60,7 @@
 {% for comment in comments %}
 <h3>{{ comment.content }} | {{ comment.updated_at }}</h3>
 {% endfor %}
+</div>
 
 {% endblock content %}
 
