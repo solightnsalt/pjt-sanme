@@ -13,6 +13,32 @@
     <p class="myP">지금 시작하등가말등가</p>
     <p class="myP">로그인폼 아래</p>
   </div>
+  <!--로그인폼 위 설명-->
+  <div class="container d-flex justify-content-center">
+    <h1 class="text-center mb-3">로그인</h1>
+    <form action="{% url 'accounts:login' %}" method='POST' onsubmit="return frm_check();">
+      {% csrf_token %}
+      {% render_field login_form.username class="form-control w-70" placeholder="아이디를 입력하세요" type="text" name="id" id="logId" %}
+      {% render_field login_form.password class="form-control w-70 my-5" placeholder="비밀번호를 입력하세요" %}
+      <input class="form-control btn pos-btn" type="submit" value="로그인">
+      <p class="text-center my-5">회원이 아니신가요? 👉
+        <a href="{% url 'accounts:signup' %}">회원가입</a>
+      </p>
+    </form>
+    <!--아이디저장, 찾기-->
+    <div class="box d-flex flex-row justify-content-between my-5">
+      <span class="input-wrap">
+        <input type="checkbox" name="saveId" id="saveId">
+        <label for="saveId">
+          <span></span></label>
+        아이디 저장
+      </span>
+      <ul class="find d-flex flex-row">
+        <li class="idSearch mx-3" id="idSearch" style="cursor: hand; cursor: pointer">아이디 찾기</li>
+        <li class="pwSearch" id="pwSearch" style="cursor: hand; cursor: pointer">비밀번호 찾기</li>
+      </ul>
+    </div>
+  </div>
 {% endblock content %}
 
 {% block script %}

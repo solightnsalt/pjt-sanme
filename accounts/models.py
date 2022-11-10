@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from decimal import Decimal
 
 # Create your models here.
 
@@ -33,7 +34,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
-    age = models.IntegerField()  # 나이
+    age = models.IntegerField(default=18)  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
         ("F", "여자"),
@@ -97,5 +98,7 @@ class User(AbstractUser):
         "self", symmetrical=False, related_name="followers"
     )
 
-    manner_point = models.DecimalField(max_digits=1, decimal_places=1)  # 매너점수
+    manner_point = models.DecimalField(
+        max_digits=4, decimal_places=1, default=36.5
+    )  # 매너점수
     date_created = models.DateTimeField(auto_now_add=True)  # 가입일
