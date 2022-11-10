@@ -26,7 +26,7 @@
       <nav class="nav">
         <div class="container">
           <div class="logo">
-            <a href="#">산책메이트로고</a>
+            <a href="{% url 'articles:index' %}">산책메이트로고</a>
           </div>
           <div id="mainListDiv" class="main_list">
             <ul class="navlinks">
@@ -34,13 +34,16 @@
                 <a href="#">공원정보?</a>
               </li>
               <li>
-                <a href="#">구해요</a>
+                <a href="{% url 'articles:postall' %}">구해요</a>
               </li>
               <li>
                 <a href="#">Services</a>
               </li>
               <li>
                 <a href="#">Contact</a>
+              </li>
+              <li class="pf_list">
+                <a href="">프로필</a>
               </li>
             </ul>
           </div>

@@ -17,7 +17,7 @@ def create(request):
             posts = post_form.save(commit=False)
             posts.user = request.user
             posts.save()
-            return redirect("articles:index")
+            return redirect("articles:postall")
     else :
         post_form = PostForm()
         
@@ -75,6 +75,7 @@ def comment(request, pk):
     temp = Comment.objects.filter(post_id = pk).order_by('-updated_at')
     comment_data = []
 
+
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         comment_data.append(
@@ -93,3 +94,11 @@ def comment(request, pk):
         "user": user,
     }
     return JsonResponse(data)
+
+def postall(request):
+    post = Post.objects.all().order_by("-pk")
+    context = {
+        "post": post,
+    }
+    return render(request, "articles/postall.html", context)
+

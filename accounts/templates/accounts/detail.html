@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<h1>{{ user }}님의 프로필</h1><br>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-3">
+                {% if user.profile_pic %}
+                <div class="rounded-circle bg-white"
+                    style="width:200px; height:200px; background-image:url({{ user.profile_pic.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);">
+                </div>
+                {% else %}
+                <div class="rounded-circle"
+                    style="width:200px; height:200px; background-image:url('https://dummyimage.com/35x35/000/fff');">
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h3 class="display-7 fw-bolder">{{ user }}</h3>
+                <div class="small mb-1">
+                    닉네임 : {{user.nickname}}<br>
+                    사는 지역 : {{user.address}}<br>
+                    MBTI : {{user.mbti}}<br>
+                    매너 온도 : {{user.manner_point}}
+                </div>
+                <div class="d-flex">
+                    <div class="me-5">
+                        <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.article_set.count }}</span></p>
+                    </div>
+                    <div class="me-5">
+                        <p class="fs-6">팔로워<span class="ms-2 fw-bold">{{ user.followers.count }}</span></p>
+                    </div>
+                    <div class="me-5">
+                        <p class="fs-6">팔로우<span class="ms-2 fw-bold">{{ user.followings.count }}</span></p>
+                    </div>
+                </div>
+                {% if request.user != user %}
+                <a href="{% url 'accounts:follow' user.pk %}">
+                    {% if request.user in user.followers.all %}
+                    <button type="button" class="btn btn-danger">팔로우 취소</button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary">팔로우</button>
+                    {% endif %}
+                </a>
+                {% endif %}
+                <br>
+                {% if request.user == user %}
+                <a href="{% url 'accounts:update' user.pk %}" type="button" class="pos-btn">수정</a>
+                <a href="{% url 'accounts:delete' %}" type="button" class="neg-btn">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
