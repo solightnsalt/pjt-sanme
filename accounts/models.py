@@ -68,7 +68,7 @@ class User(AbstractUser):
     )
 
     manner = MultiSelectField(  # 매너(성향)
-        max_length=10,
+        max_length=100,
         choices=MANNER_CHOICES,
     )
 
