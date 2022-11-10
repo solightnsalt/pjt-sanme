@@ -6,10 +6,10 @@
 .rest-5 { color: #BF9B6F; }
 
 @font-face {
-  font-family: 'SUIT-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body {
@@ -40,17 +40,17 @@ html, body {
 
 .nav div.logo a {
     text-decoration: none;
-    color: #fff;
+    color: #000;
     font-size: 2.5rem;
 }
 
 .nav div.logo a:hover {
-    color: #03A63C;
+    color: #F2ACCD;
 }
 
 .nav div.main_list {
     height: 65px;
-    float: right;
+    /* float: right; */
 }
 
 .nav div.main_list ul {
@@ -71,15 +71,14 @@ html, body {
 
 .nav div.main_list ul li a {
     text-decoration: none;
-    color: #fff;
+    color: rgb(0, 0, 0);
     line-height: 65px;
     font-size: 2.4rem;
 }
 
 .nav div.main_list ul li a:hover {
-    color: #03A63C;
+    color: #F2ACCD;
 }
-
 
 /* Home */
 
@@ -134,7 +133,7 @@ html, body {
         right: 0;
         left: 0;
         bottom: 0;
-        background-color: #111;
+        background-color: #F0F1F2;
         /*same background color of navbar*/
         background-position: center top;
     }
@@ -348,13 +347,8 @@ html, body {
 
 .affix {
     padding: 0;
-    background-color: #111;
+    background-color: #FFF;
 }
-
-
-
-
-
 
 .myH2 {
 	text-align:center;
