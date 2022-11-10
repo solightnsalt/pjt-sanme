@@ -66,14 +66,14 @@ def update(request, pk):
     # 요청한 유저가 로그인한 해당 유저인 경우
     if request.method == "POST":
         user_form = CustomUserChangeForm(
-            request.POST, request.FILES, instance=user_info
+            request.POST, request.FILES, instance=request.user
         )
         # 유저폼 유효성 확인
         if user_form.is_valid():
             user_form.save()
             return redirect("accounts:detail", user_info.pk)
     else:
-        user_form = CustomUserChangeForm(instance=user_info)
+        user_form = CustomUserChangeForm(instance=request.user)
     context = {"user_form": user_form}
     return render(request, "accounts/update.html", context)
 
