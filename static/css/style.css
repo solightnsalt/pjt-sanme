@@ -109,7 +109,7 @@ html, body {
 }
 
 .comment-detail{
-    padding: 1rem;
+    padding: 2.5rem;
     margin-left: 2rem;
     border-radius: 20px;
     background-color: #bf9b6f42;
@@ -130,6 +130,41 @@ html, body {
 .comment-content{
     margin-bottom: 0;
     font-size: 1.5rem;
+}
+
+.comment-control{
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.comment-control-delete{
+    margin-left: 1rem;
+}
+
+.comment-control-update,
+.comment-control-update-exit,
+.comment-control-delete{
+    margin-bottom: 0;
+    cursor: pointer;
+    color:#000;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.comment-control-update:hover,
+.comment-control-update-exit:hover,
+.comment-control-delete:hover{
+    color:rgb(255, 0, 0);
+}
+
+.comment-update{
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.3rem;
+    background-color: #d4c7b7;
 }
 
 /* accounts */
