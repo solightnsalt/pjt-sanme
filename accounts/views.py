@@ -10,7 +10,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-
+from django.http import JsonResponse
 
 # Create your views here.
 @require_safe
@@ -78,15 +78,40 @@ def update(request, pk):
     return render(request, "accounts/update.html", context)
 
 
+# def follow(request, pk):
+#     accounts = get_user_model().objects.get(pk=pk)
+#     if request.user == accounts:
+#         return redirect("accounts:detail", pk)
+#     if request.user in accounts.followers.all():
+#         accounts.followers.remove(request.user)
+#     else:
+#         accounts.followers.add(request.user)
+#     return redirect("accounts:detail", pk)
+
+
+# 팔로우
+@login_required
+@login_required
 def follow(request, pk):
-    accounts = get_user_model().objects.get(pk=pk)
-    if request.user == accounts:
-        return redirect("accounts:detail", pk)
-    if request.user in accounts.followers.all():
-        accounts.followers.remove(request.user)
-    else:
-        accounts.followers.add(request.user)
-    return redirect("accounts:detail", pk)
+    if request.user.is_authenticated:
+        User = get_user_model()
+        me = request.user
+        you = User.objects.get(pk=pk)
+        if me != you:
+            if you.followers.filter(pk=me.pk).exists():
+                you.followers.remove(me)
+                is_followed = False
+            else:
+                you.followers.add(me)
+                is_followed = True
+            context = {
+                "is_followed": is_followed,
+                "followers_count": you.followers.count(),
+                "followings_count": you.followings.count(),
+            }
+            return JsonResponse(context)
+        return redirect("accounts:detail", you.username)
+    return redirect("accounts:login")
 
 
 def delete(request):
