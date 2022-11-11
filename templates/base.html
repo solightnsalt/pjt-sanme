@@ -41,7 +41,7 @@
               <li>
                 <a href="#">Contact</a>
               </li>
-              {% if user.is_authenticated %}
+              {% if request.user.is_authenticated %}
                 <li class="pf_list">
                   <a href="{% url 'accounts:detail' user.pk %}">프로필</a>
                 </li>
