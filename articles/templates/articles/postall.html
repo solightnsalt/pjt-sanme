@@ -29,7 +29,7 @@
     <tbody class="table-group-divider">
       {% for posts in post %}
         <tr>
-          <td>{{ posts.title }}</td>
+          <td><a href="{% url 'articles:detail' posts.pk %}">{{ posts.title }}</a></td>
           <td>{{ posts.day }}</td>
           <td>{{ posts.time }}</td>
           <td>{{ posts.pet }}</td>
