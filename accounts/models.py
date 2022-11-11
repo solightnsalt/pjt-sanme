@@ -5,7 +5,7 @@ from imagekit.processors import ResizeToFill
 from decimal import Decimal
 from django import forms
 from multiselectfield import MultiSelectField
-
+import datetime
 
 # Create your models here.
 
@@ -37,7 +37,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
-    age = models.DateTimeField()  # 나이
+    age = models.DateTimeField(default=datetime.datetime.now())  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
         ("F", "여자"),
