@@ -17,8 +17,19 @@ html, body {
     padding: 0;
     font-family: 'SUIT-Regular';
     box-sizing: border-box;
+    outline: none;
     font-size: 62.5%;
     font-size: 10px;
+}
+
+::selection{
+    background:#03A63C;color:#F0F1F2;
+}
+::-moz-selection{
+    background:#03A63C;color:#F0F1F2;
+}
+::-webkit-selection{
+    background:#03A63C;color:#F0F1F2;
 }
 
 /* 공통 */
@@ -89,7 +100,7 @@ html, body {
 }
 
 .pf_list {
-    margin-left: 100px;
+    margin-right: 100px;
 }
 
 /* 여기부터 추가해서 쓰세요 */
@@ -177,6 +188,7 @@ html, body {
     position: fixed;
     line-height: 65px;
     text-align: center;
+    z-index: 1;
 }
 
 .nav div.logo {

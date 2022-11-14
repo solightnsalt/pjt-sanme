@@ -1,157 +1,212 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  outline: none;
-  font-family: 'Poppins', sans-serif;
-}
-body{
+.signup-body {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   overflow: hidden;
-  background: url("bg.png"), -webkit-linear-gradient(bottom, #0250c5, #d43f8d);
+  background-color: #BF9B6F;
 }
-::selection{
-  color: #fff;
-  background: #d43f8d;
-}
-.container{
-  width: 330px;
+
+.signup-container{
+  width: 500px;
   background: #fff;
   text-align: center;
-  border-radius: 5px;
   padding: 50px 35px 10px 35px;
+  backdrop-filter: blur(21px) saturate(107%);
+  -webkit-backdrop-filter: blur(21px) saturate(107%);
+  background-color: rgba(255, 255, 255, 0.71);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+  text-align: center;
 }
-.container header{
+
+.signup-container header{
   font-size: 35px;
   font-weight: 600;
   margin: 0 0 30px 0;
 }
-.container .form-outer{
+
+.signup-container .form-outer{
   width: 100%;
   overflow: hidden;
 }
-.container .form-outer form{
+
+.signup-container .form-outer form{
   display: flex;
-  width: 400%;
+  width: 500%;
 }
-.form-outer form .page{
+
+.form-outer form .page {
   width: 25%;
-  transition: margin-left 0.3s ease-in-out;
+  transition: margin-left 0.3s ease-in-out;  
 }
+
 .form-outer form .page .title{
   text-align: left;
   font-size: 25px;
   font-weight: 500;
 }
 .form-outer form .page .field{
-  width: 330px;
+  width: 428px;
   height: 45px;
   margin: 45px 0;
   display: flex;
   position: relative;
 }
-form .page .field .label{
+
+.form-outer form .page .field .label{
   position: absolute;
-  top: -30px;
+  top: -20px;
   font-weight: 500;
 }
-form .page .field input{
+
+.form-outer form .page .field input{
   height: 100%;
   width: 100%;
-  border: 1px solid lightgrey;
+  border: 1px solid #03A63C;
   border-radius: 5px;
   padding-left: 15px;
   font-size: 18px;
 }
-form .page .field select{
-  width: 100%;
-  padding-left: 10px;
-  font-size: 17px;
-  font-weight: 500;
-}
-form .page .field button{
+
+.form-outer form .page .field button,
+.form-outer form .page .field .submit{
   width: 100%;
   height: calc(100% + 5px);
   border: none;
-  background: #d33f8d;
-  margin-top: -20px;
   border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 18px;
+  background: #03A63C;
+  color: #F0F1F2;
   font-weight: 500;
+  font-size: 18px;
   letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: 0.5s ease;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-form .page .field button:hover{
-  background: #000;
+
+.form-outer form .page .field button:hover{
+  background: #06c749;
 }
-form .page .btns button{
-  margin-top: -20px!important;
+
+.form-outer form .page .btns button,
+.form-outer form .page .field .submit{
+  margin-top: -20px !important;
 }
-form .page .btns button.prev{
+
+form .page .btns button .prev{
   margin-right: 3px;
   font-size: 17px;
 }
-form .page .btns button.next{
+
+form .page .btns button .next{
   margin-left: 3px;
+  font-size: 17px;
 }
-.container .progress-bar{
+.agreement {
   display: flex;
+
+}
+.agree-btn {
+  height: 25px;
+  width: 25px;
+}
+
+.mybox {
+  padding: 5px;
+  height: 428px;
+  width: 428px;
+  border: 1px solid #03A63C;
+  border-radius: 5px;
+  overflow: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+  border: 1px solid yellowgreen;
+  border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  background: yellowgreen;  
+  border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background: #88ba1c;  
+  }
+
+/* progress-bar */
+.signup-container .progress-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 40px 0;
   user-select: none;
 }
-.container .progress-bar .step{
+
+.signup-container .progress-bar .step{
+  position: relative;
   text-align: center;
   width: 100%;
-  position: relative;
 }
-.container .progress-bar .step p{
-  font-weight: 500;
+
+.signup-container .progress-bar .step p{
   font-size: 18px;
+  font-weight: 500;
   color: #000;
   margin-bottom: 8px;
 }
+
 .progress-bar .step .bullet{
+  position: relative;
   height: 25px;
   width: 25px;
   border: 2px solid #000;
+  border-radius: 50px;
   display: inline-block;
-  border-radius: 50%;
-  position: relative;
-  transition: 0.2s;
   font-weight: 500;
   font-size: 17px;
   line-height: 25px;
+  transition: 0.2s;
 }
+
 .progress-bar .step .bullet.active{
-  border-color: #d43f8d;
-  background: #d43f8d;
+  border-color: #03A63C;
+  background: #03A63C;
 }
-.progress-bar .step .bullet span{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+
+.progress-bar .step:last-child .bullet:before,
+.progress-bar .step:last-child .bullet:after{
+  display: none;
 }
+
+.progress-bar .step p.active{
+  color: #03A63C;
+  transition: 0.2s linear;
+}
+
 .progress-bar .step .bullet.active span{
   display: none;
 }
+
 .progress-bar .step .bullet:before,
 .progress-bar .step .bullet:after{
   position: absolute;
   content: '';
-  bottom: 11px;
-  right: -51px;
+  bottom: 8px;
+  right: -54px;
   height: 3px;
-  width: 44px;
-  background: #262626;
+  width: 44px; 
+  background: #262626 
 }
-.progress-bar .step .bullet.active:after{
-  background: #d43f8d;
+
+.progress-bar .step .bullet:after{
+  background: #03A63C;
   transform: scaleX(0);
   transform-origin: left;
   animation: animate 0.3s linear forwards;
@@ -161,14 +216,17 @@ form .page .btns button.next{
     transform: scaleX(1);
   }
 }
-.progress-bar .step:last-child .bullet:before,
-.progress-bar .step:last-child .bullet:after{
-  display: none;
+
+.progress-bar .step span{
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 25px;
+  position: absolute;
+  left: 50%;
+  bottom: 0.5px;
+  transform:  translateX(-50%);
 }
-.progress-bar .step p.active{
-  color: #d43f8d;
-  transition: 0.2s linear;
-}
+
 .progress-bar .step .check{
   position: absolute;
   left: 50%;
@@ -177,6 +235,7 @@ form .page .btns button.next{
   transform: translate(-50%, -50%);
   display: none;
 }
+
 .progress-bar .step .check.active{
   display: block;
   color: #fff;
