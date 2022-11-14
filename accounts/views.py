@@ -29,7 +29,7 @@ def login(request):
         }
         return render(request, "accounts/login.html", context)
     else:
-        return HttpResponseRedirect("/login")
+        return HttpResponseRedirect("/")
 
 
 def logout(request):
@@ -41,6 +41,8 @@ def signup(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
+            manners = form.cleaned_data.getlist("manner")
+            form.manner = manners
             user = form.save()  # ModelForm의 save메소드의 리턴값은 해당 모델의 인스턴스다
             auth_login(request, user)  # 로그인
             return redirect("articles:index")
@@ -90,7 +92,6 @@ def update(request, pk):
 
 
 # 팔로우
-@login_required
 @login_required
 def follow(request, pk):
     if request.user.is_authenticated:
