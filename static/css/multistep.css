@@ -38,6 +38,7 @@
 
 .form-outer form .page {
   width: 25%;
+  position: relative;
   transition: margin-left 0.3s ease-in-out;  
 }
 
@@ -46,6 +47,11 @@
   font-size: 25px;
   font-weight: 500;
 }
+
+.field-box {
+  height: 400px
+}
+
 .form-outer form .page .field{
   width: 428px;
   height: 45px;
@@ -88,57 +94,41 @@
   background: #06c749;
 }
 
-.form-outer form .page .btns button,
-.form-outer form .page .field .submit{
-  margin-top: -20px !important;
-}
-
 form .page .btns button .prev{
-  margin-right: 3px;
+  margin-right: 3px !important;
   font-size: 17px;
+  position: absolute;
+  bottom: 10px;
 }
 
 form .page .btns button .next{
-  margin-left: 3px;
+  margin-left: 3px !important;
   font-size: 17px;
+  position: absolute;
+  bottom: 10px;
 }
 .agreement {
   display: flex;
-
-}
-.agree-btn {
-  height: 25px;
-  width: 25px;
+  margin-bottom: 55px;
 }
 
-.mybox {
-  padding: 5px;
-  height: 428px;
+.textBox {
+  margin: 10px 0;
+  padding: 5px 20px 0 20px;
+  border: 1px solid #06c749;
+  font-size: 10px;
   width: 428px;
-  border: 1px solid #03A63C;
+  height: 350px;
+  overflow-y: scroll;
+  background: #F0F1F2;
   border-radius: 5px;
-  overflow: scroll;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
-/* Scrollbar styles */
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-  }
-  
-  ::-webkit-scrollbar-track {
-  border: 1px solid yellowgreen;
-  border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-  background: yellowgreen;  
-  border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-  background: #88ba1c;  
-  }
+.lastbtns {
+  margin-top: 50px;
+}
 
 /* progress-bar */
 .signup-container .progress-bar{
@@ -180,14 +170,10 @@ form .page .btns button .next{
   background: #03A63C;
 }
 
-.progress-bar .step:last-child .bullet:before,
-.progress-bar .step:last-child .bullet:after{
-  display: none;
-}
-
-.progress-bar .step p.active{
-  color: #03A63C;
-  transition: 0.2s linear;
+.progress-bar .step .bullet span{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .progress-bar .step .bullet.active span{
@@ -202,10 +188,15 @@ form .page .btns button .next{
   right: -54px;
   height: 3px;
   width: 44px; 
-  background: #262626 
+  background: #262626
+} 
+
+.progress-bar .step p.active{
+  color: #03A63C;
+  transition: 0.2s linear;
 }
 
-.progress-bar .step .bullet:after{
+.progress-bar .step .bullet.active:after{
   background: #03A63C;
   transform: scaleX(0);
   transform-origin: left;
@@ -217,6 +208,11 @@ form .page .btns button .next{
   }
 }
 
+.progress-bar .step:last-child .bullet:before,
+.progress-bar .step:last-child .bullet:after{
+  display: none;
+}
+
 .progress-bar .step span{
   font-weight: 700;
   font-size: 17px;
@@ -225,6 +221,11 @@ form .page .btns button .next{
   left: 50%;
   bottom: 0.5px;
   transform:  translateX(-50%);
+}
+
+.progress-bar .step p.active{
+  color: #03A63C;
+  transition: 0.2s linear;
 }
 
 .progress-bar .step .check{
