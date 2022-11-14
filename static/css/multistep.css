@@ -4,7 +4,7 @@
   justify-content: center;
   min-height: 100vh;
   overflow: hidden;
-  background-color: black;
+  background-color: #BF9B6F;
 }
 
 .signup-container{
@@ -28,7 +28,7 @@
 
 .signup-container .form-outer{
   width: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .signup-container .form-outer form{
@@ -47,39 +47,196 @@
   font-weight: 500;
 }
 .form-outer form .page .field{
-  width: 500px;
+  width: 428px;
   height: 45px;
   margin: 45px 0;
-  /* display: flex; */
-  /* position: relative; */
+  display: flex;
+  position: relative;
 }
 
-form .page .field input{
+.form-outer form .page .field .label{
+  position: absolute;
+  top: -20px;
+  font-weight: 500;
+}
+
+.form-outer form .page .field input{
   height: 100%;
   width: 100%;
-  border: 1px solid lightgrey;
+  border: 1px solid #03A63C;
   border-radius: 5px;
   padding-left: 15px;
   font-size: 18px;
 }
 
-  form .page .field .label{
-    position: absolute;
-    top: -30px;
-    font-weight: 500;
+.form-outer form .page .field button,
+.form-outer form .page .field .submit{
+  width: 100%;
+  height: calc(100% + 5px);
+  border: none;
+  border-radius: 5px;
+  background: #03A63C;
+  color: #F0F1F2;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.form-outer form .page .field button:hover{
+  background: #06c749;
+}
+
+.form-outer form .page .btns button,
+.form-outer form .page .field .submit{
+  margin-top: -20px !important;
+}
+
+form .page .btns button .prev{
+  margin-right: 3px;
+  font-size: 17px;
+}
+
+form .page .btns button .next{
+  margin-left: 3px;
+  font-size: 17px;
+}
+.agreement {
+  display: flex;
+
+}
+.agree-btn {
+  height: 25px;
+  width: 25px;
+}
+
+.mybox {
+  padding: 5px;
+  height: 428px;
+  width: 428px;
+  border: 1px solid #03A63C;
+  border-radius: 5px;
+  overflow: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+  border: 1px solid yellowgreen;
+  border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  background: yellowgreen;  
+  border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background: #88ba1c;  
   }
 
-  form .page .field input{
-    height: 100%;
-    width: 100%;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    padding-left: 15px;
-    font-size: 18px;
+/* progress-bar */
+.signup-container .progress-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px 0;
+  user-select: none;
+}
+
+.signup-container .progress-bar .step{
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.signup-container .progress-bar .step p{
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.progress-bar .step .bullet{
+  position: relative;
+  height: 25px;
+  width: 25px;
+  border: 2px solid #000;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 25px;
+  transition: 0.2s;
+}
+
+.progress-bar .step .bullet.active{
+  border-color: #03A63C;
+  background: #03A63C;
+}
+
+.progress-bar .step:last-child .bullet:before,
+.progress-bar .step:last-child .bullet:after{
+  display: none;
+}
+
+.progress-bar .step p.active{
+  color: #03A63C;
+  transition: 0.2s linear;
+}
+
+.progress-bar .step .bullet.active span{
+  display: none;
+}
+
+.progress-bar .step .bullet:before,
+.progress-bar .step .bullet:after{
+  position: absolute;
+  content: '';
+  bottom: 8px;
+  right: -54px;
+  height: 3px;
+  width: 44px; 
+  background: #262626 
+}
+
+.progress-bar .step .bullet:after{
+  background: #03A63C;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: animate 0.3s linear forwards;
+}
+@keyframes animate {
+  100%{
+    transform: scaleX(1);
   }
-  form .page .field select{
-    width: 100%;
-    padding-left: 10px;
-    font-size: 17px;
-    font-weight: 500;
-  }
+}
+
+.progress-bar .step span{
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 25px;
+  position: absolute;
+  left: 50%;
+  bottom: 0.5px;
+  transform:  translateX(-50%);
+}
+
+.progress-bar .step .check{
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  font-size: 15px;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.progress-bar .step .check.active{
+  display: block;
+  color: #fff;
+}

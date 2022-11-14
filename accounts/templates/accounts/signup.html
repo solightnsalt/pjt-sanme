@@ -111,8 +111,8 @@
               {% render_field form.mbti class="form-control" %}
             </div>
             <div class="field">
-              <div class="label d-flex flex-row flex-wrap">성격</div>
-              {% render_field form.manner %}
+              <div class="label">성격</div>
+              {% render_field form.manner class="d-flex flex-row flex-wrap" %}
             </div>
             <div class="field">
               <div class="label">흡연여부</div>
@@ -120,7 +120,7 @@
             </div>
             <div class="field">
               <div class="label">애완동물</div>
-              {% render_field form.pet class="form-control" %}
+              {% render_field form.pet %}
             </div>
             <div class="field btns">
               <button class="prev-2 prev">이전</button>
@@ -146,9 +146,9 @@
           <!--폼페이지5 약관동의프로필-->
           <div class="page">
             <div class="title">약관 동의:</div>
-            <div class="field">
+            <div class="field d-flex flex-column">
               <div class="label">산메 서비스 이용약관</div>
-              <textarea class="scrollabletextbox text" name="약관" value="">
+              <div class="mybox" name="약관" value="">
                 <h5>제1장 총칙</h5><br>
                 <h6>제1조 (본 약관의 목적)</h6>
                 <p>본 서비스 이용약관(이하 “본 약관”이라 합니다)은 프로젝트 산메(이하 “팀”이라 합니다) 가 제공하는 산책메이트(SAMNE) 서비스 및 관련 제반 서비스(이하 “서비스”라 합니다)의 이용에 대 한 팀과 회원 간의 권리 · 의무, 책임사항 및 기타 필요한 사항을 규정함으로써 상호 간의 이 해 관계를 합리적으로 조정하고, 이에 대한 원활한 서비스 시스템이 운영 및 유지될 수 있도록 하는 것을 목적으로 합니다.</p><br>
@@ -165,12 +165,14 @@
                 </p>
                 <h6>제3조 (본 약관의 게시와 개정)</h6>
                 <p>어쩌구저쩌구···생략···</p>
-              </textarea>
-              {% render_field form.agree class="form-control" %}
+              </div>
+              <div class="agreement">{% render_field form.agree class="agree-btn" %}
+                <p>약관에 동의합니다.</p>
+              </div>
             </div>
             <div class="field btns">
-              <button class="prev-4 prev">Previous</button>
-              <input type="submit" class="btn pos-btn" content="회원가입">
+              <button class="prev-4 prev">이전</button>
+              <input type="submit" class="submit" value="회원가입">
             </div>
           </div>
         </form>
