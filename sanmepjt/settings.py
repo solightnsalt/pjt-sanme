@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # apps
     "accounts",
     "articles",
+    "maps",
     # pkg
     "django_bootstrap5",
     "django_extensions",
