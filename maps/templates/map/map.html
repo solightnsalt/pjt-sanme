@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{% endblock title %}
 
@@ -10,8 +11,21 @@
 <br>
 <br>
   <h1>지도지도</h1>
-  <button type="button" onclick="getUserLocation()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기</button>
-  <div id="map" style="width:1000px; height:500px;"></div>
+  <div class="map">
+    <div class="map-search">
+      <h2>공원 검색하기</h2>
+      <form id="map-search-form" action="{% url 'map:search' %}" method="POST">
+        {% csrf_token %}
+        <input class="form-control" type="search" placeholder="Search" name="searched" aria-label="Search">
+        <button class="map-search-btn btn pos-btn" type="submit"> 검색하기 </button>
+      </form>
+      <div id="map-search-result"></div>
+    </div>
+    <div>
+      <button type="button" onclick="getUserLocation()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기</button>
+      <div id="map" style="width: 70vw; height:500px;"></div>
+    </div>
+  </div>
 {% endblock content %}
 
 {% block script %}
@@ -55,7 +69,6 @@
           position:  new kakao.maps.LatLng(parks[i].lat, parks[i].long), // 마커를 표시할 위치
           title : parks[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           image : markerImage // 마커 이미지 
-          
         });
       }
     })
@@ -81,5 +94,35 @@
   function getUserLocation() {
       navigator.geolocation.getCurrentPosition(locationLoadSuccess, loactionLoadError)
   }
+</script>
+
+<script>
+  const mapSearchForm = document.querySelector("#map-search-form")
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  mapSearchForm.addEventListener('submit', function(event) {
+    axios({
+      method: 'post',
+      url: `/map/map/search`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }, 
+    })
+
+    .then(response =>{
+      const mapSearchResult = document.querySelector("#map-search-result")
+      const parks = response.data.parkJson
+      
+      for (let i = 0; i < parks.length; i++) {
+        mapSearchResult.insertAdjacentHTML('beforeend',`
+        <div class="map-search-result-detail">
+          <p>공원 이름: ${ parks[i].name }</p>
+          <p>공원 주소: ${ parks[i].addr }</p>
+          <p>공원 종류: ${ parks[i].parkType }</p>
+        </div>
+        `)
+      }
+    })
+  })
 </script>
 {% endblock script %}

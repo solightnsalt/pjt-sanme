@@ -181,6 +181,20 @@ html, body {
 /* accounts */
 
 
+/*-------------------- 지도 map ------------------------------- */
+.map{
+    display: flex;
+    justify-content: center;
+}
+
+.map-search{
+    margin: 0 2rem;
+}
+
+.map-search-btn{
+    margin-top:1rem;
+}
+
 /* Navbar */
 .nav {
     width: 100%;
