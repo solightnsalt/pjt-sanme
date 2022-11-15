@@ -14,13 +14,14 @@ from django.http import JsonResponse
 
 # Create your views here.
 
+
 def login(request):
     if request.user.is_anonymous:
         if request.method == "POST":
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect("articles:detail")
+                return redirect("articles:index")
         else:
             login_form = AuthenticationForm()
 

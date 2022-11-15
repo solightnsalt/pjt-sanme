@@ -1,8 +1,10 @@
 from django import forms
 from .models import Post, Comment
 
+
 class DateInput(forms.DateInput):
-    input_type= 'date'
+    input_type = "date"
+
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -13,15 +15,15 @@ class PostForm(forms.ModelForm):
             "time",
             "park_address",
             "pet",
+            "participate_people",
             "content",
         ]
         widgets = {
-            'day' : DateInput(),
+            "day": DateInput(),
         }
 
-        
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
-
+        fields = ["content"]

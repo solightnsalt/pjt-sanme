@@ -1,9 +1,23 @@
 /* Borderless-credit-app Color Theme Swatches in Hex */
-.point-2 { color: #F2ACCD; }
-.bg-4 { color: #F0F1F2; }
-.emphasis-3 { color: #F288AF; }
-.main-1 { color: #03A63C; }
-.rest-5 { color: #BF9B6F; }
+.point-2 {
+    color: #F2ACCD;
+}
+
+.bg-4 {
+    color: #F0F1F2;
+}
+
+.emphasis-3 {
+    color: #F288AF;
+}
+
+.main-1 {
+    color: #03A63C;
+}
+
+.rest-5 {
+    color: #BF9B6F;
+}
 
 @font-face {
     font-family: 'SUIT-Regular';
@@ -12,7 +26,8 @@
     font-style: normal;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     font-family: 'SUIT-Regular';
@@ -22,19 +37,24 @@ html, body {
     font-size: 10px;
 }
 
-::selection{
-    background:#03A63C;color:#F0F1F2;
+::selection {
+    background: #03A63C;
+    color: #F0F1F2;
 }
-::-moz-selection{
-    background:#03A63C;color:#F0F1F2;
+
+::-moz-selection {
+    background: #03A63C;
+    color: #F0F1F2;
 }
-::-webkit-selection{
-    background:#03A63C;color:#F0F1F2;
+
+::-webkit-selection {
+    background: #03A63C;
+    color: #F0F1F2;
 }
 
 /* 공통 */
 .pos-btn {
-    background-color:  #03A63C;
+    background-color: #03A63C;
     color: #F0F1F2;
 }
 
@@ -55,18 +75,20 @@ html, body {
 }
 
 .myH2 {
-	font-size: 4rem;
+    font-size: 4rem;
 }
+
 .myP {
-	padding-left:15%;
-	padding-right:15%;
-	font-size: 20px;
+    padding-left: 15%;
+    padding-right: 15%;
+    font-size: 20px;
     text-shadow: 5px 5px #F0F1F2;
 }
-@media all and (max-width:700px){
-	.myP {
-		padding:2%;
-	}
+
+@media all and (max-width:700px) {
+    .myP {
+        padding: 2%;
+    }
 }
 
 /* Home */
@@ -76,7 +98,7 @@ html, body {
     height: 100vh;
     background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
     background-position: center top;
-	background-size:cover;
+    background-size: cover;
 }
 
 .glass {
@@ -106,58 +128,64 @@ html, body {
 /* 여기부터 추가해서 쓰세요 */
 /* articles */
 /*-------------------- 포스트 디테일-------------------- */
+.modal-participater img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
 /* 댓글 */
-.comment{
+.comment {
     display: flex;
     margin: 2rem 15%;
 }
 
-.comment-profile-img{
+.comment-profile-img {
     border-radius: 50%;
     height: 6rem;
     width: 6rem;
 }
 
-.comment-detail{
+.comment-detail {
     padding: 2.5rem;
     margin-left: 2rem;
     border-radius: 20px;
     background-color: #bf9b6f42;
 }
 
-.comment-profile-name{
+.comment-profile-name {
     margin-bottom: 0.5rem;
     font-size: 1.5rem;
     font-weight: bold;
-    color:#000;
+    color: #000;
     text-decoration: none;
 }
 
-.comment-profile-name:hover{
+.comment-profile-name:hover {
     color: #bf9b6f;
 }
 
-.comment-content{
+.comment-content {
     margin-bottom: 0;
     font-size: 1.5rem;
 }
 
-.comment-control{
+.comment-control {
     display: flex;
     margin-top: 0.5rem;
 }
 
-.comment-control-delete{
+.comment-control-delete {
     margin-left: 1rem;
 }
 
 .comment-control-update,
 .comment-control-update-exit,
-.comment-control-delete{
+.comment-control-delete {
     margin-bottom: 0;
     cursor: pointer;
-    color:#000;
+    color: #000;
     font-weight: bold;
     font-size: 1.2rem;
     text-decoration: none;
@@ -165,11 +193,11 @@ html, body {
 
 .comment-control-update:hover,
 .comment-control-update-exit:hover,
-.comment-control-delete:hover{
-    color:rgb(255, 0, 0);
+.comment-control-delete:hover {
+    color: rgb(255, 0, 0);
 }
 
-.comment-update{
+.comment-update {
     margin-bottom: 1rem;
     border-radius: 20px;
     border: none;
@@ -263,18 +291,22 @@ html, body {
     .navTrigger {
         display: block;
     }
+
     .nav div.logo {
         margin-left: 15px;
     }
+
     .nav div.main_list {
         width: 100%;
         height: 0;
         overflow: hidden;
     }
+
     .nav div.show_list {
         height: auto;
         display: none;
     }
+
     .nav div.main_list ul {
         flex-direction: column;
         width: 100%;
@@ -286,16 +318,19 @@ html, body {
         /*same background color of navbar*/
         background-position: center top;
     }
+
     .nav div.main_list ul li {
         width: 100%;
         text-align: right;
     }
+
     .nav div.main_list ul li a {
         text-align: center;
         width: 100%;
         font-size: 3rem;
         padding: 20px;
     }
+
     .nav div.media_button {
         display: block;
     }
@@ -364,6 +399,7 @@ html, body {
     50% {
         -webkit-transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(45deg);
     }
@@ -373,6 +409,7 @@ html, body {
     50% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(45deg);
     }
@@ -382,6 +419,7 @@ html, body {
     50% {
         -webkit-transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(45deg);
     }
@@ -391,6 +429,7 @@ html, body {
     50% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(45deg);
     }
@@ -400,9 +439,11 @@ html, body {
     0% {
         -webkit-transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         -webkit-transform: translateY(9px) rotate(0deg);
     }
+
     100% {
         -webkit-transform: translateY(9px) rotate(135deg);
     }
@@ -412,9 +453,11 @@ html, body {
     0% {
         transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         transform: translateY(9px) rotate(0deg);
     }
+
     100% {
         transform: translateY(9px) rotate(135deg);
     }
@@ -424,9 +467,11 @@ html, body {
     0% {
         -webkit-transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         -webkit-transform: translateY(9px) rotate(0deg);
     }
+
     100% {
         -webkit-transform: translateY(9px) rotate(135deg);
     }
@@ -436,9 +481,11 @@ html, body {
     0% {
         transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         transform: translateY(9px) rotate(0deg);
     }
+
     100% {
         transform: translateY(9px) rotate(135deg);
     }
@@ -448,9 +495,11 @@ html, body {
     0% {
         -webkit-transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         -webkit-transform: translateY(-9px) rotate(0deg);
     }
+
     100% {
         -webkit-transform: translateY(-9px) rotate(135deg);
     }
@@ -460,9 +509,11 @@ html, body {
     0% {
         transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         transform: translateY(-9px) rotate(0deg);
     }
+
     100% {
         transform: translateY(-9px) rotate(135deg);
     }
@@ -472,9 +523,11 @@ html, body {
     0% {
         -webkit-transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         -webkit-transform: translateY(-9px) rotate(0deg);
     }
+
     100% {
         -webkit-transform: translateY(-9px) rotate(135deg);
     }
@@ -484,9 +537,11 @@ html, body {
     0% {
         transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         transform: translateY(-9px) rotate(0deg);
     }
+
     100% {
         transform: translateY(-9px) rotate(135deg);
     }
@@ -499,114 +554,131 @@ html, body {
 
 /* 회원가입 form styles*/
 #msform {
-	width: 400px;
-	margin: 50px auto;
-	text-align: center;
-	position: relative;
+    width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
 }
+
 #msform fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	
-	/*stacking fieldsets above each other*/
-	position: relative;
+    background: white;
+    border: 0 none;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0 10%;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
 }
+
 /*Hide all except first fieldset*/
 #msform fieldset:not(:first-of-type) {
-	display: none;
+    display: none;
 }
+
 /*inputs*/
-#msform input, #msform textarea {
-	padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
+#msform input,
+#msform textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
 }
+
 /*buttons*/
 #msform .action-button {
-	width: 100px;
-	background: #27AE60;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px 5px;
-	margin: 10px 5px;
+    width: 100px;
+    background: #27AE60;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
 }
-#msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
 }
+
 /*headings*/
 .fs-title {
-	font-size: 15px;
-	text-transform: uppercase;
-	color: #2C3E50;
-	margin-bottom: 10px;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
 }
+
 .fs-subtitle {
-	font-weight: normal;
-	font-size: 13px;
-	color: #666;
-	margin-bottom: 20px;
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
 }
+
 /*progressbar*/
 #progressbar {
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
+    margin-bottom: 30px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
 }
+
 #progressbar li {
-	list-style-type: none;
-	color: white;
-	text-transform: uppercase;
-	font-size: 9px;
-	width: 33.33%;
-	float: left;
-	position: relative;
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
 }
+
 #progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
+    content: counter(step);
+    counter-increment: step;
+    width: 20px;
+    line-height: 20px;
+    display: block;
+    font-size: 10px;
+    color: #333;
+    background: white;
+    border-radius: 3px;
+    margin: 0 auto 5px auto;
 }
+
 /*progressbar connectors*/
 #progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background: white;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1;
+    /*put it behind the numbers*/
 }
+
 #progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none; 
+    /*connector not needed before the first step*/
+    content: none;
 }
+
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
-#progressbar li.active:before,  #progressbar li.active:after{
-	background: #27AE60;
-	color: white;
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: #27AE60;
+    color: white;
 }
