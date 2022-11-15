@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 # Create your views here.
-@require_safe
+
 def login(request):
     if request.user.is_anonymous:
         if request.method == "POST":
