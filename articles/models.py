@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -10,9 +10,11 @@ class Post(models.Model):
     time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_post")
+    like_user = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="like_post"
+    )
     park_address = models.CharField(max_length=80)
-    pet = models.BooleanField(default = False)
+    pet = models.BooleanField(default=False)
     content = models.TextField()
     TIME_CHOICES = (
         ("00:00", "00:00"),
@@ -41,7 +43,15 @@ class Post(models.Model):
         ("23:00", "23:00"),
         ("24:00", "24:00"),
     )
-    time = models.CharField(max_length=20,choices=TIME_CHOICES)
+    time = models.CharField(max_length=20, choices=TIME_CHOICES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    participate_people = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)]
+    )
+    participate = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="participater"
+    )
+
 
 class Comment(models.Model):
     content = models.TextField()

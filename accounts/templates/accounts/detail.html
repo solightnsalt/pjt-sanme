@@ -39,7 +39,7 @@
         <!-- 팔로워 표시 -->
         <div class="d-flex">
           <div class="me-5">
-            <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.article_set.count }}</span></p>
+            <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
           </div>
           <div class="me-5">
             <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
@@ -82,7 +82,7 @@
   </div>
   <br><br>
   <h3>작성한 글</h3>
-  <p class="text-muted">{{ user.article_set.count }}개를 작성하였습니다.</p>
+  <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
   <table class="table">
     <thead>
       <tr class="thead-dark">
@@ -91,7 +91,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for article in user.article_set.all %}
+      {% for article in user.post_set.all %}
       <tr>
         <td>{{ forloop.counter}}</td>
         <td><a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a></td>
