@@ -94,6 +94,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 
   commentForm.addEventListener('submit', function (event) {
     event.preventDefault();
+    console.log(event)
     axios({
       method: 'post',
       url: `/${event.target.dataset.postId}/comment/`,
