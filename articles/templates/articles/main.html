@@ -77,6 +77,57 @@
       </div>
       <i id="right" class="fa-solid fa-angle-right"></i>
     </div>
+  </section>
+  <div class="container">
+    <div class="mt-3 mb-3">
+      <h3>{{ my_mbti }}인 당신을 위한 산책 추천유저</h3>
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
+        {% for user_info in matched_user %}
+          <div class="col mb-5">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="{% static 'images/img_default.jpeg' %}" alt="..."/></a>
+              <div class="card-body py-4">
+                <div class="text-center">
+                  <h5 class="fw-bold">
+                    <p>{{ user_info.nickname }}</p>
+                  </h5>
+                </div>
+              </div>
+              <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark" href="#">방문하기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mt-3 mb-3">
+      <h3>Manner Stack Overflow! 산책 매너좋은 유저</h3>
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
+        {% for hot_info in hot_user %}
+          <div class="col mb-5">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="{% static 'images/img_default.jpeg' %}" alt="..."/></a>
+              <div class="card-body py-4">
+                <div class="text-center">
+                  <h5 class="fw-bold">
+                    <p>{{ hot_info.nickname }}</p>
+                  </h5>
+                </div>
+              </div>
+              <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark" href="#">방문하기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock content %}
 {% block script %}
   <script src="{% static 'js/slide.js' %}"></script>
