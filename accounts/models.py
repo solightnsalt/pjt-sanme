@@ -12,7 +12,6 @@ from django.utils import timezone
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=10)  # 별명
-    contact = models.CharField(max_length=30)  # 연락처
     MBTI_CHOICES = (
         ("ISTJ", "ISTJ"),
         ("ISTP", "ISTP"),
@@ -37,7 +36,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
-    age = models.DateTimeField(default=timezone.now)  # 나이
+    birth = models.DateTimeField(default=timezone.now)  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
         ("F", "여자"),
@@ -104,4 +103,3 @@ class User(AbstractUser):
     manner_point = models.DecimalField(
         max_digits=4, decimal_places=1, default=36.5
     )  # 매너점수
-    date_created = models.DateTimeField(auto_now_add=True)  # 가입일
