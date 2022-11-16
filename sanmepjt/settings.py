@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     # apps
     "accounts",
     "articles",
+    # module
     "maps",
-    # pkg
     "django_bootstrap5",
     "django_extensions",
     "django_cleanup.apps.CleanupConfig",
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "widget_tweaks",
     "multiselectfield",
+    "embed_video",
     # django default
     "django.contrib.admin",
     "django.contrib.auth",
