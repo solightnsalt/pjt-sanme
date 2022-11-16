@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_safe
 from .forms import PostForm, CommentForm
+from accounts.models import User
 from .models import Post, Comment
 from django.http import JsonResponse
 import json
@@ -201,3 +202,10 @@ def board(request):
         "post": post,
     }
     return render(request, "articles/board.html", context)
+
+
+def recommend(request, pk):
+    user_data = User.objects.all(pk=pk)
+    if request.user == user_data:
+        print(user_data)
+    return render(request, pk)
