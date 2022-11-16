@@ -8,9 +8,48 @@
 님{% endblock title %}
 
 {% block content %}
+<style>
+  #article-profile #article-profile-right .meters {
+    clear: both;
+    display: block;
+    width: 150px;
+    background-color: #e9ecef;
+    height: 8px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    position: relative;
+    vertical-align: middle;
+    margin-top: 24px;
+  }
+
+  #article-profile #article-profile-right .meters .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #495057;
+    height: 8px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+  }
+
+  #article-profile #article-profile-right .meters .bar-color-02 {
+    background-color: #de5d06;
+  }
+
+  #article-profile #article-profile-right .meters .bar-color-03 {
+    background-color: #1561a9;
+  }
+
+  #article-profile #article-profile-right .meters .bar-color-04 {
+    background-color: #319e45;
+  }
+</style>
+
 <section class="home"></section>
 <div style="height: 1000px">
-  <h1>{{ user }}님의 프로필</h1><br>
   <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
       <div class="col-md-3">
@@ -33,54 +72,72 @@
           MBTI :
           {{user.mbti}}<br>
           매너 온도 :
-          {{user.manner_point}}
+          {{user.manner_point}}℃
+          {% if user.manner_point < 36.5 %}<i class="bi bi-emoji-frown-fill text-danger"></i>
+            {% elif user.manner_point == 36.5 %}🙂
+            {% else %}
+            😍{% endif %}</p>
+            <section id="article-profile">
+              <div id="article-profile-right">
+                <div class="meters">
+                  {% if user.manner_point < 36.5 %} <div class="bar bar-color-02" style="width:41%;">
+                </div>
+                {% elif user.manner_point == 36.5 %}
+                <div class="bar bar-color-03" style="width:41%;"></div>
+                {% else %}
+                <div class="bar bar-color-04" style="width:41%;"></div>
+                {% endif %}
+              </div>
         </div>
-
-        <!-- 팔로워 표시 -->
-        <div class="d-flex">
-          <div class="me-5">
-            <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
-          </div>
-          <div class="me-5">
-            <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
-            </p>
-          </div>
-          <div class="me-5">
-            <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
-            </p>
-          </div>
-        </div>
-        <!-- {% if request.user != user %}
-        <a href="{% url 'accounts:follow' user.pk %}">
-          {% if request.user in user.followers.all %}
-          <button type="button" class="btn btn-danger">팔로우 취소</button>
-          {% else %}
-          <button type="button" class="btn btn-primary">팔로우</button>
-          {% endif %}
-        </a>
-        {% endif %} -->
-
-        <!-- 팔로우 버튼 -->
-        {% if request.user != user %}
-        <form id='follow-form' data-user-id='{{ user.pk }}'>
-          {% csrf_token %}
-          {% if request.user in user.followers.all %}
-          <input type='submit' class="neg-btn" value="언팔로우">
-          {% else %}
-          <input type='submit' class="pos-btn" value='팔로우'>
-          {% endif %}
-        </form>
-        {% endif %}
-        <br>
-        <!-- 수정 및 삭제  -->
-        {% if request.user == user %}
-        <a href="{% url 'accounts:update' user.pk %}" type="button" class="pos-btn">수정</a>
-        <a href="{% url 'accounts:delete' %}" type="button" class="neg-btn">회원탈퇴</a>
-        {% endif %}
+        </section>
       </div>
+
+      <!-- 팔로워 표시 -->
+      <div class="d-flex">
+        <div class="me-5">
+          <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
+        </div>
+        <div class="me-5">
+          <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
+          </p>
+        </div>
+        <div class="me-5">
+          <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
+          </p>
+        </div>
+      </div>
+      {% if request.user != user %}
+      <a href="{% url 'accounts:follow' user.pk %}">
+        {% if request.user in user.followers.all %}
+        <button type="button" class="btn btn-danger">팔로우 취소</button>
+        {% else %}
+        <button type="button" class="btn btn-primary">팔로우</button>
+        {% endif %}
+      </a>
+      {% endif %}
+
+      <!-- 팔로우 버튼(비동기) -->
+      <!-- {% if request.user != user %}
+      <form id='follow-form' data-user-id='{{ user.pk }}'>
+        {% csrf_token %}
+        {% if request.user in user.followers.all %}
+        <input type='submit' class="neg-btn" value="언팔로우">
+        {% else %}
+        <input type='submit' class="pos-btn" value='팔로우'>
+        {% endif %}
+      </form>
+      {% endif %} -->
+      <br>
+      <!-- 수정 및 삭제  -->
+      {% if request.user == user %}
+      <a href="{% url 'accounts:update' user.pk %}" type="button" class="pos-btn">수정</a>
+      <a href="{% url 'accounts:delete' %}" type="button" class="neg-btn">회원탈퇴</a>
+      {% endif %}
     </div>
   </div>
-  <br><br>
+</div>
+<br><br>
+<div class="container px-4 px-lg-5 my-5">
   <h3>작성한 글</h3>
   <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
   <table class="table">
