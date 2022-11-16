@@ -14,9 +14,9 @@
   <div class="map">
     <div class="map-search">
       <h2>공원 검색하기</h2>
-      <form id="map-search-form" action="{% url 'map:search' %}" method="POST">
+      <form id="map-search-form" action="" method="POST">
         {% csrf_token %}
-        <input class="form-control" type="search" placeholder="Search" name="searched" aria-label="Search">
+        <input class="form-control" type="search" placeholder="공원 | 주소 검색" name="searched" aria-label="Search">
         <button class="map-search-btn btn pos-btn" type="submit"> 검색하기 </button>
       </form>
       <div id="map-search-result"></div>
@@ -96,31 +96,43 @@
   }
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   const mapSearchForm = document.querySelector("#map-search-form")
   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
   mapSearchForm.addEventListener('submit', function(event) {
+    console.log(event)
     axios({
       method: 'post',
       url: `/map/map/search`,
       headers: {
         'X-CSRFToken': csrftoken
-      }, 
+      },
+      data: new FormData(mapSearchForm),
     })
-
-    .then(response =>{
+    .then(response => {
       const mapSearchResult = document.querySelector("#map-search-result")
+      mapSearchResult.textContent = ""
       const parks = response.data.parkJson
-      
-      for (let i = 0; i < parks.length; i++) {
+
+
+      if (parks.length === 0) {
         mapSearchResult.insertAdjacentHTML('beforeend',`
         <div class="map-search-result-detail">
-          <p>공원 이름: ${ parks[i].name }</p>
-          <p>공원 주소: ${ parks[i].addr }</p>
-          <p>공원 종류: ${ parks[i].parkType }</p>
+          <p>결과를 찾을 수 없습니다</p>
         </div>
         `)
+      } else {
+        for (let i = 0; i < parks.length; i++) {
+          mapSearchResult.insertAdjacentHTML('beforeend',`
+          <div class="map-search-result-detail">
+            <p>공원 이름: ${ parks[i].name }</p>
+            <p>공원 주소: ${ parks[i].addr }</p>
+            <p>공원 종류: ${ parks[i].parkType }</p>
+          </div>
+          `)
+        }
       }
     })
   })
