@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 
-
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=50)
@@ -10,9 +9,11 @@ class Post(models.Model):
     time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_post")
+    like_user = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="like_post"
+    )
     park_address = models.CharField(max_length=80)
-    pet = models.BooleanField(default = False)
+    pet = models.BooleanField(default=False)
     content = models.TextField()
     TIME_CHOICES = (
         ("00:00", "00:00"),
@@ -41,7 +42,8 @@ class Post(models.Model):
         ("23:00", "23:00"),
         ("24:00", "24:00"),
     )
-    time = models.CharField(max_length=20,choices=TIME_CHOICES)
+    time = models.CharField(max_length=20, choices=TIME_CHOICES)
+
 
 class Comment(models.Model):
     content = models.TextField()
@@ -49,3 +51,23 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class Park(models.Model):
+    code = models.TextField()
+    name = models.CharField(max_length=300, blank=True, null=True)
+    parktype = models.CharField(max_length=300, blank=True, null=True)
+    addr1 = models.TextField()
+    add2 = models.TextField()
+    lat = models.FloatField()
+    long = models.FloatField()
+    size = models.FloatField()
+    facility_sport = models.CharField(max_length=300, blank=True, null=True)
+    facility_game = models.CharField(max_length=300, blank=True, null=True)
+    facility_con = models.CharField(max_length=300, blank=True, null=True)
+    facility_edu = models.CharField(max_length=300, blank=True, null=True)
+    facility_other = models.CharField(max_length=300, blank=True, null=True)
+    establish = models.CharField(max_length=300, blank=True, null=True)
+    manage_org = models.CharField(max_length=300, blank=True, null=True)
+    tel = models.CharField(max_length=300, blank=True, null=True)
+    created_at = models.DateField(blank=True, null=True)
