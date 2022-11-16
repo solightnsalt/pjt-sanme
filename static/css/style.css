@@ -26,6 +26,10 @@
     font-style: normal;
 }
 
+.fa,.fab,.fad,.fal,.far,.fas{
+	font-weight: 900 !important;
+}
+
 html,
 body {
     margin: 0;
@@ -123,6 +127,21 @@ body {
 .pf_list {
     margin-right: 100px;
 }
+
+
+/*-------------------- main-------------------- */
+.carousel-item img {
+    width: 100%;
+    height: 700px;
+    border-radius: 5%;
+}
+
+.carousel-caption a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
 
 /* 여기부터 추가해서 쓰세요 */
 /* articles */
@@ -349,6 +368,15 @@ body {
     .nav div.media_button {
         display: block;
     }
+}
+
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    background: #F0F1F2;
+    border-radius: 5%;
 }
 
 /* Nav Animation */
