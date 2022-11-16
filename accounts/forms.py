@@ -16,9 +16,8 @@ class CustomUserCreationForm(UserCreationForm):
             "username",
             "email",
             "nickname",
-            "contact",
             "mbti",
-            "age",
+            "birth",
             "address",
             "gender",
             "manner",
@@ -27,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
             "agree",
         )
         widgets = {
-            "age": DateInput(),
+            "birth": DateInput(),
         }
 
 
@@ -39,9 +38,8 @@ class CustomUserChangeForm(UserChangeForm):
             "username",
             "email",
             "nickname",
-            "contact",
             "mbti",
-            "age",
+            "birth",
             "address",
             "gender",
             "manner",
