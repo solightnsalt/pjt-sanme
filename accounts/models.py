@@ -100,6 +100,4 @@ class User(AbstractUser):
         "self", symmetrical=False, related_name="followers"
     )
 
-    manner_point = models.DecimalField(
-        max_digits=4, decimal_places=1, default=36.5
-    )  # 매너점수
+    manner_point = models.FloatField(default=36.5)  # 매너점수

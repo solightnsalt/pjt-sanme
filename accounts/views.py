@@ -91,27 +91,46 @@ def update(request, pk):
 
 
 # 팔로우
+# @login_required
+# def follow(request, pk):
+#     if request.user.is_authenticated:
+#         User = get_user_model()
+#         me = request.user
+#         you = User.objects.get(pk=pk)
+#         if me != you:
+#             if you.followers.filter(pk=me.pk).exists():
+#                 you.followers.remove(me)
+#                 you.manner -= 0.2
+#                 you.save()
+#                 is_followed = False
+#             else:
+#                 you.followers.add(me)
+#                 you.manner += 0.2
+#                 you.save()
+#                 is_followed = True
+#             context = {
+#                 "is_followed": is_followed,
+#                 "followers_count": you.followers.count(),
+#                 "followings_count": you.followings.count(),
+#             }
+#             return JsonResponse(context)
+#         return redirect("accounts:detail", you.username)
+#     return redirect("accounts:login")
 @login_required
 def follow(request, pk):
-    if request.user.is_authenticated:
-        User = get_user_model()
-        me = request.user
-        you = User.objects.get(pk=pk)
-        if me != you:
-            if you.followers.filter(pk=me.pk).exists():
-                you.followers.remove(me)
-                is_followed = False
-            else:
-                you.followers.add(me)
-                is_followed = True
-            context = {
-                "is_followed": is_followed,
-                "followers_count": you.followers.count(),
-                "followings_count": you.followings.count(),
-            }
-            return JsonResponse(context)
-        return redirect("accounts:detail", you.username)
-    return redirect("accounts:login")
+    accounts = get_user_model().objects.get(pk=pk)
+    if request.user == accounts:
+        return redirect("accounts:detail", pk)
+    if request.user in accounts.followers.all():
+        accounts.followers.remove(request.user)
+        accounts.manner_point -= 0.2
+        accounts.save()
+    else:
+        accounts.followers.add(request.user)
+        accounts.manner_point += 0.2
+        accounts.save()
+    # 상세 페이지로 redirect
+    return redirect("accounts:detail", pk)
 
 
 def delete(request):
