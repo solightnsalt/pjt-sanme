@@ -23,4 +23,5 @@ urlpatterns = [
         name="comment_update",
     ),
     path("<int:pk>/participate/", views.participate, name="participate"),
+    path("<int:pk>/recommend/", views.recommend, name="recommend"),
 ]
