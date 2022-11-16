@@ -48,10 +48,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
+    "chat",
     # apps
     "accounts",
     "articles",
     # module
+    "maps",
     "django_bootstrap5",
     "django_extensions",
     "django_cleanup.apps.CleanupConfig",
@@ -68,6 +71,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+ASGI_APPLICATION = 'sanmepjt.asgi.application'
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -161,3 +166,14 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+ASGI_APPLICATION = 'sanmepjt.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

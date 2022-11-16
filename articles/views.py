@@ -33,6 +33,28 @@ def create(request):
     return render(request, "articles/create.html", {"post_form": post_form})
 
 
+def participate(request, pk):
+    # article = get_object_or_404(Article, pk=pk)
+    article = Post.objects.get(pk=pk)
+    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
+    # if article.like_users.filter(id=request.user.id).exists():
+    if request.user in article.participate.all():
+        # 참여하기 삭제하고
+        article.participate.remove(request.user)
+        # is_participated = False
+    else:
+        # 참여하기 추가하고
+        article.participate.add(request.user)
+        # is_participated = True
+    # 상세 페이지로 redirect
+    return redirect("articles:detail", pk)
+    # context = {
+    # "is_participated": is_participated,
+    # "ParticipateCount": article.participate.count(),
+    # }
+    # return JsonResponse(context)
+
+
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment_form = CommentForm()

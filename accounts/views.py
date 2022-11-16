@@ -13,14 +13,15 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 # Create your views here.
-@require_safe
+
+
 def login(request):
     if request.user.is_anonymous:
         if request.method == "POST":
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect("articles:detail")
+                return redirect("articles:index")
         else:
             login_form = AuthenticationForm()
 
@@ -41,7 +42,7 @@ def signup(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save(commit=False)  # ModelForm의 save메소드의 리턴값은 해당 모델의 인스턴스다
+            user = form.save()  # ModelForm의 save메소드의 리턴값은 해당 모델의 인스턴스다
             auth_login(request, user)  # 로그인
             return redirect("articles:main")
     else:

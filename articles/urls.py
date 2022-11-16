@@ -22,4 +22,5 @@ urlpatterns = [
         views.comment_update,
         name="comment_update",
     ),
+    path("<int:pk>/participate/", views.participate, name="participate"),
 ]

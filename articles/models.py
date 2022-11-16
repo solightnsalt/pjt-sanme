@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Post(models.Model):
@@ -43,6 +43,14 @@ class Post(models.Model):
         ("24:00", "24:00"),
     )
     time = models.CharField(max_length=20, choices=TIME_CHOICES)
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    participate_people = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)]
+    )
+    participate = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="participater"
+    )
 
 
 class Comment(models.Model):
