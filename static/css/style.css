@@ -219,6 +219,11 @@ body {
     margin-top:1rem;
 }
 
+#map-search-result{
+    overflow-y: scroll;
+    height: 500px;
+}
+
 /* Navbar */
 .nav {
     width: 100%;
