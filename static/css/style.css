@@ -92,7 +92,6 @@ body {
 }
 
 /* Home */
-
 .home {
     width: 100%;
     height: 100vh;
@@ -205,9 +204,6 @@ body {
     font-size: 1.3rem;
     background-color: #d4c7b7;
 }
-
-/* accounts */
-
 
 /*-------------------- 지도 map ------------------------------- */
 .map{

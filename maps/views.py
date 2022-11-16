@@ -54,9 +54,9 @@ def map_search(request, x, y):
 
 
 def search(request):
-    parkJson = []
+    park_list = []
     if request.method == "POST":
-        searched = request.POST["searched"]
+        searched = request.POST['searched']
 
         if searched != "":
             park_name = Map.objects.filter(
@@ -66,9 +66,8 @@ def search(request):
             )
 
             if len(park_name) > 0:
-                parkJson = []
                 for park in park_name:
-                    parkJson.append(
+                    park_list.append(
                         {
                             "name": park.parkNm,
                             "addr": park.lnmadr,
@@ -77,14 +76,9 @@ def search(request):
                             "long": park.longitude,
                         }
                     )
-            else:
-                parkJson.append("결과를 찾을 수 없습니다")
 
-        else:
-            parkJson.append("결과를 찾을 수 없습니다")
+    data = {
+        "parkJson": park_list,
+    }
 
-        data = {
-            "parkJson": parkJson,
-        }
-
-        return JsonResponse(data)
+    return JsonResponse(data)
