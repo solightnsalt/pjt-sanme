@@ -51,6 +51,12 @@ class Post(models.Model):
     participate = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="participater"
     )
+    hit = models.PositiveBigIntegerField(default=0)
+    
+    @property
+    def update_conter(self):
+        self.hit = self.hit + 1
+        self.save()
 
 
 class Comment(models.Model):
