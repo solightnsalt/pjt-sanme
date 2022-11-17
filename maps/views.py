@@ -29,7 +29,7 @@ def query_debugger(func):
 # Create your views here.
 @query_debugger
 def map(request):
-    return render(request, "map/map.html")
+    return render(request, "maps/map.html")
 
 
 @query_debugger
@@ -37,15 +37,20 @@ def map_search(request, x, y):
     parks = Map.objects.all()
     parkJson = []
 
+    latitude_range = (float(x) - 0.025 , float(x) + 0.025)
+    longitude_range = (float(y) - 0.0375, float(y) + 0.0375)
+
     for park in parks:
-        parkJson.append(
-            {
-                "name": park.parkNm,
-                "addr": park.lnmadr,
-                "lat": park.latitude,
-                "long": park.longitude,
-            }
-        )
+        if park.latitude != '' and park.longitude != '':
+            if latitude_range[0] <= float(park.latitude) <= latitude_range[1] and longitude_range[0] <= float(park.longitude) <= longitude_range[1]:
+                parkJson.append(
+                    {
+                        "name": park.parkNm,
+                        "addr": park.lnmadr,
+                        "lat": park.latitude,
+                        "long": park.longitude,
+                    }
+                )
 
     data = {
         "parkJson": parkJson,
