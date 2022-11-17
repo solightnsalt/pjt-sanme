@@ -60,7 +60,8 @@ def detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
-
+    post.hit += 1 
+    post.save()
     context = {
         "post": post,
         "comment_form": comment_form,
