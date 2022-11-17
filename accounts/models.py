@@ -95,9 +95,11 @@ class User(AbstractUser):
         format="JPEG",
         options={"quality": 80},
     )
-
+    manner_point = models.FloatField(default=36.5)  # 매너점수
     followings = models.ManyToManyField(  # 팔로워
         "self", symmetrical=False, related_name="followers"
     )
+    blocking = models.ManyToManyField(
+        "self", symmetrical=False, related_name="blockers"
+    )
 
-    manner_point = models.FloatField(default=36.5)  # 매너점수

@@ -3,9 +3,9 @@
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
 {% block title %}
-  |
-  {{ user }}
-  님{% endblock title %}
+|
+{{ user }}
+님{% endblock title %}
 
 {% block content %}
 <style>
@@ -73,7 +73,7 @@
           {{user.mbti}}<br>
           매너 온도 :
           {{user.manner_point}}℃
-          {% if user.manner_point < 36.5 %}<i class="bi bi-emoji-frown-fill text-danger"></i>
+          {% if user.manner_point < 36.5 %}<i>🥵</i>
             {% elif user.manner_point == 36.5 %}🙂
             {% else %}
             😍{% endif %}</p>
@@ -91,6 +91,9 @@
         </div>
         </section>
       </div>
+      {% if request.user == user %}
+      <a href="{% url 'accounts:block_user' %}" class="btn btn-outline-dark">차단 목록</a>
+      {% endif %}
 
       <!-- 팔로워 표시 -->
       <div class="d-flex">
@@ -112,6 +115,17 @@
         <button type="button" class="btn btn-danger">팔로우 취소</button>
         {% else %}
         <button type="button" class="btn btn-primary">팔로우</button>
+        {% endif %}
+      </a>
+      {% endif %}
+
+      <!-- 차단 버튼 -->
+      {% if request.user != user %}
+      <a href="{% url 'accounts:block' user.pk %}">
+        {% if request.user in user.blockers.all %}
+        <button type="button" class="btn btn-danger">차단 취소</button>
+        {% else %}
+        <button type="button" class="btn btn-primary">차단</button>
         {% endif %}
       </a>
       {% endif %}
@@ -157,88 +171,88 @@
     </tbody>
   </table>
   <br><br>
-      <h3>작성한 댓글</h3>
-      <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
-      <table class="table">
-        <thead>
-          <tr class="thead-dark">
-            <th>작성 댓글 개수</th>
-            <th>댓글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for comment in user.comment_set.all %}
-            <tr>
-              <td>{{ forloop.counter}}</td>
-              <td>
-                <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
-              </td>
-            </tr>
-            {% endfor%}
-          </tbody>
-        </table>
-        <br><br>
-        <h3>좋아요 누른 글</h3>
-        <p class="text-muted">{{ user.like_articles.count }}개의 글의 좋아요를 표시하였습니다.</p>
-        <table class="table">
-          <thead>
-            <tr class="thead-dark">
-              <th>좋아요 글 개수</th>
-              <th>좋아요 표시한 글</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for article in user.like_articles.all %}
-              <tr>
-                <td>{{ forloop.counter}}</td>
-                <td>
-                  <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
-                </td>
-              </tr>
-              {% endfor%}
-            </tbody>
-          </table>
-        </div>
-      {% endblock content %}
+  <h3>작성한 댓글</h3>
+  <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
+  <table class="table">
+    <thead>
+      <tr class="thead-dark">
+        <th>작성 댓글 개수</th>
+        <th>댓글 내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in user.comment_set.all %}
+      <tr>
+        <td>{{ forloop.counter}}</td>
+        <td>
+          <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
+        </td>
+      </tr>
+      {% endfor%}
+    </tbody>
+  </table>
+  <br><br>
+  <h3>좋아요 누른 글</h3>
+  <p class="text-muted">{{ user.like_articles.count }}개의 글의 좋아요를 표시하였습니다.</p>
+  <table class="table">
+    <thead>
+      <tr class="thead-dark">
+        <th>좋아요 글 개수</th>
+        <th>좋아요 표시한 글</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in user.like_articles.all %}
+      <tr>
+        <td>{{ forloop.counter}}</td>
+        <td>
+          <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+        </td>
+      </tr>
+      {% endfor%}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
 
-      {% block script %}
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-          const form = document.querySelector('#follow-form')
-          const csrftoken = document
-            .querySelector('[name=csrfmiddlewaretoken]')
-            .value
-            form
-            .addEventListener('submit', function (event) {
-              event.preventDefault()
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector('#follow-form')
+  const csrftoken = document
+    .querySelector('[name=csrfmiddlewaretoken]')
+    .value
+  form
+    .addEventListener('submit', function (event) {
+      event.preventDefault()
 
-              const userId = event
-                .target
-                .dataset
-                .userId
-                axios({
-                  method: 'post',
-                  url: `/accounts/${userId}/follow/`,
-                  headers: {
-                    'X-CSRFToken': csrftoken
-                  }
-                })
-                .then((response) => {
-                  console.log(response)
-                  const followersCountTag = document.querySelector('#followers-count')
-                  const followingsCountTag = document.querySelector('#followings-count')
-                  const followersCount = response.data.followers_count
-                  const followingsCount = response.data.followings_count
-                  followersCountTag.innerText = followersCount
-                  followingsCountTag.innerText = followingsCount
-                  const isFollowed = response.data.is_followed
-                  const followBtn = document.querySelector('#follow-form > input[type=submit]')
-                  if (isFollowed == true) {
-                    followBtn.value = '언팔로우'
-                  } else {
-                    followBtn.value = '팔로우'
-                  }
-                })
-            })
-        </script>
-      {% endblock script %}
+      const userId = event
+        .target
+        .dataset
+        .userId
+      axios({
+        method: 'post',
+        url: `/accounts/${userId}/follow/`,
+        headers: {
+          'X-CSRFToken': csrftoken
+        }
+      })
+        .then((response) => {
+          console.log(response)
+          const followersCountTag = document.querySelector('#followers-count')
+          const followingsCountTag = document.querySelector('#followings-count')
+          const followersCount = response.data.followers_count
+          const followingsCount = response.data.followings_count
+          followersCountTag.innerText = followersCount
+          followingsCountTag.innerText = followingsCount
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('#follow-form > input[type=submit]')
+          if (isFollowed == true) {
+            followBtn.value = '언팔로우'
+          } else {
+            followBtn.value = '팔로우'
+          }
+        })
+    })
+</script>
+{% endblock script %}
