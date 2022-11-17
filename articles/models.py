@@ -52,7 +52,7 @@ class Post(models.Model):
     participate = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="participater"
     )
-    hit = models.PositiveBigIntegerField(default=0)
+    hit = models.PositiveBigIntegerField(default=0
 
     thumbnail = ProcessedImageField(
         upload_to="images/",
@@ -74,3 +74,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
