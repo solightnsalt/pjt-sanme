@@ -16,8 +16,10 @@
           <th scope="col">Day</th>
           <th scope="col">Time</th>
           <th scope="col">애완동물 유/무</th>
+          <th scope="col">모집인원</th>
           <th scope="col">내용</th>
           <th scope="col">생성일</th>
+          <th scope="col">조회수</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -29,8 +31,10 @@
           <td>{{ posts.day }}</td>
           <td>{{ posts.time }}</td>
           <td>{{ posts.pet }}</td>
+          <td>{{ post.participate.count}}/{{post.participate_people}}</td>
           <td>{{ posts.content }}</td>
           <td>{{ posts.created_at }}</td>
+          <td>{{ posts.hit }}</td>
         </tr>
         {% endif %}{% endfor %}
       </tbody>

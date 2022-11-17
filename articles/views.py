@@ -54,6 +54,11 @@ def participate(request, pk):
     # "ParticipateCount": article.participate.count(),
     # }
     # return JsonResponse(context)
+def delete_participate(request, pk):
+    article = Post.objects.get(pk=pk)
+    if request.user in article.participate.all():
+        article.participate.remove(request.user)
+    return redirect("articles:detail", pk)
 
 
 def detail(request, pk):
@@ -66,7 +71,6 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
-        "participate":participate
     }
 
     return render(request, "articles/detail.html", context)
