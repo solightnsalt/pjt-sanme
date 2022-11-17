@@ -47,7 +47,67 @@
     background-color: #319e45;
   }
 </style>
-
+<!-- 팔로워 모달 -->
+<div class="modal fade title-font" id="followerModal" tabindex="-1" aria-labelledby="followerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="followerModalLabel">Followers</h5>
+      </div>
+      <div class="modal-body">
+        {% if user.followers.all %}
+        {% for follower in user.followers.all %}
+        <a href="{% url 'accounts:detail' follower.pk %}" class="modal-participater"
+          style="color: black; text-decoration: none;">
+          <div class="d-flex align-items-center">
+            <!-- 프로필 이미지가 있으면 -->
+            <img src="{{ follower.profile_pic.url }}">
+            <!-- 이름이 있으면 이름, 없으면 아이디 -->
+            <h1>{{ follower.username }}</h1>
+          </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <div class="text-center">팔로워가 없습니다.</div>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 팔로잉 모달 -->
+<div class="modal fade title-font" id="followingModal" tabindex="-1" aria-labelledby="followingModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="followingModalLabel">Followings</h5>
+      </div>
+      <div class="modal-body">
+        {% if user.followings.all %}
+        {% for following in user.followings.all %}
+        <a href="{% url 'accounts:detail' following.pk %}" class="modal-participater"
+          style="color: black; text-decoration: none;">
+          <div class="d-flex align-items-center">
+            <img src="{{ following.profile_pic.url }}">
+            <!-- 이름이 있으면 이름, 없으면 아이디 -->
+            <h1>{{ following.username }}</h1>
+          </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <div class="text-center">팔로우 중인 사람이 없습니다.</div>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <section class="home"></section>
 <div style="height: 1000px">
   <div class="container px-4 px-lg-5 my-5">
@@ -94,18 +154,21 @@
       {% if request.user == user %}
       <a href="{% url 'accounts:block_user' %}" class="btn btn-outline-dark">차단 목록</a>
       {% endif %}
-
+      <br>
+      <br>
       <!-- 팔로워 표시 -->
       <div class="d-flex">
         <div class="me-5">
           <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
         </div>
         <div class="me-5">
-          <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
+          <p class="fs-6" data-bs-target="#followerModal" data-bs-toggle="modal">팔로워<span class="ms-2 fw-bold"
+              id="followers-count">{{ user.followers.count }}</span>
           </p>
         </div>
         <div class="me-5">
-          <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
+          <p class="fs-6" data-bs-target="#followingModal" data-bs-toggle="modal">팔로잉<span class="ms-2 fw-bold"
+              id="followings-count">{{ user.followings.count }}</span>
           </p>
         </div>
       </div>
