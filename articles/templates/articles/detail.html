@@ -45,7 +45,7 @@
 <br>
 <br>
 <br>
-{{ post.update_counter }}
+
 <div class='container'>
   <div class="d-flex">
     <div id="map" style="width:350px;height:350px;"></div>
@@ -96,8 +96,8 @@
 
 
   </div>
-
-  {% if request.user == participate.user %}
+  {% for participater in post.participate.all %}
+  {% if request.user == participater %}
   <h1>comment</h1>
   <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
     {% csrf_token %}
@@ -135,7 +135,7 @@
     </div>
     {% endfor %}
   </div>
-  {% endif %}
+    {% endif %}{% endfor %}
   {% endblock content %}
 
   {% block script %}

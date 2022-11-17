@@ -53,10 +53,6 @@ class Post(models.Model):
     )
     hit = models.PositiveBigIntegerField(default=0)
     
-    @property
-    def update_conter(self):
-        self.hit = self.hit + 1
-        self.save()
 
 
 class Comment(models.Model):
@@ -65,3 +61,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
