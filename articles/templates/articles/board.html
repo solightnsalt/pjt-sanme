@@ -16,8 +16,10 @@
           <th scope="col">Day</th>
           <th scope="col">Time</th>
           <th scope="col">애완동물 유/무</th>
+          <th scope="col">모집인원</th>
           <th scope="col">내용</th>
           <th scope="col">생성일</th>
+          <th scope="col">조회수</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -29,8 +31,10 @@
           <td>{{ posts.day }}</td>
           <td>{{ posts.time }}</td>
           <td>{{ posts.pet }}</td>
+          <td>{{ post.participate.count}}/{{post.participate_people}}</td>
           <td>{{ posts.content }}</td>
           <td>{{ posts.created_at }}</td>
+          <td>{{ posts.hit }}</td>
         </tr>
         {% endif %}{% endfor %}
       </tbody>
@@ -42,6 +46,32 @@
     </div>
   </div>
 </section>
+<section class='container'>
+  <div class="content">
+    <div class="row">
+      {% for posts in post %}{% if posts.user not in request.user.blocking.all %}
+      <div class="col-3 mb-3">
+        <div class="card rounded-3 shadow">
+          <div class="badge bg-white text-black position-absolute" style="top: 0.5rem; right:0.5rem">
+            👁‍🗨{{ posts.hit }}
+          </div>
+          {% if posts.thumbnail %}
+          <img src="{{ posts.thumbnail.url }}" class="card-img-top " alt="...">
+          {% else %}
+          <img src="{% static 'images/base/article_base.jpg' %}" class="card-img-top">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ posts.title }}</h5>
+            <h5 class="card-title">{{ posts.park_address }}</h5>
+            <a href="{% url 'articles:detail' posts.pk %}" class="pos-btn"">자세히보기</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+</section>
+
+
 {% endblock content %}
 
 {% block script %}{% endblock script %}

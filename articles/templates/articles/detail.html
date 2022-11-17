@@ -21,6 +21,17 @@
           <div class="d-flex align-items-center">
             <img src="{{ participater.profile_pic.url }}">
             <h3>{{ participater }}</h3>
+            {% if request.user == post.user %}
+            <form class="m-0" action="{% url 'articles:delete_participate' participater.pk %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger mx-2" value="강퇴">
+            </form>
+            {% elif request.user == participater%}
+            <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger mx-2" value="취소">
+            </form>
+            {% endif %}
             <!-- <div>
               <a href="#" class="">DM</a>
             </div> -->
@@ -45,7 +56,7 @@
 <br>
 <br>
 <br>
-{{ post.update_counter }}
+
 <div class='container'>
   <div class="d-flex">
     <div id="map" style="width:350px;height:350px;"></div>
@@ -65,6 +76,13 @@
 
     <div style="font-size: 2em;">
       <dl class="row m-3">
+        <dt class="col-4 text-center">작성자</dt>
+        <dd class="col-8">
+          <a href="{% url 'accounts:detail' user.pk %}">
+            <img class="rounded-circle bg-white"" style=" max-width: 5%; height: auto"
+              src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
+        </dd>
+
         <dt class="col-4 text-center">Title</dt>
         <dd class="col-8">{{ post.title }}</dd>
         <dt class="col-4 text-center">Day</dt>
@@ -77,11 +95,15 @@
         <dd class="col-8">{{ post.content }}</dd>
         <dt class="col-4 text-center">참여여부</dt>
         <dd class="col-8">
+
+          {% if post.participate.count >= post.participate_people %}
+          <p>모집완료</p>
           <a href="{% url 'articles:participate' post.pk %}">
-            {% if request.user in post.participate.all %}
+            {% elif request.user in post.participate.all %}
             <button type="button" class="btn btn-danger">참여취소</button>
             {% else %}
             <button type="button" class="btn btn-primary">참여하기</button>
+
             {% endif %}
           </a>
           <div data-bs-target="#participateModal" data-bs-toggle="modal">참여자
@@ -95,9 +117,11 @@
     </div>
 
 
-  </div>
 
-  {% if request.user == participate.user %}
+
+  </div>
+  {% for participater in post.participate.all %}
+  {% if request.user == post.user or request.user == participater %}
   <h1>comment</h1>
   <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
     {% csrf_token %}
@@ -136,6 +160,8 @@
     {% endfor %}
   </div>
   {% endif %}
+  {% endfor %}
+
   {% endblock content %}
 
   {% block script %}
