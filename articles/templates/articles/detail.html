@@ -45,6 +45,7 @@
 <br>
 <br>
 <br>
+{{ post.update_counter }}
 <div class='container'>
   <div class="d-flex">
     <div id="map" style="width:350px;height:350px;"></div>
@@ -86,6 +87,8 @@
           <div data-bs-target="#participateModal" data-bs-toggle="modal">참여자
             {{ post.participate.count}}</span><span>/{{post.participate_people}}</div>
         </dd>
+        <dt class="col-4 text-center">조회수</dt>
+        <dd class="col-8">{{ post.hit }}</dd>
         <dt class="col-4 text-center">생성일</dt>
         <dd class="col-8">{{ post.created_at|date:'Y-m-d' }}</dd>
       </dl>
@@ -94,7 +97,7 @@
 
   </div>
 
-
+  {% if request.user == participate.user %}
   <h1>comment</h1>
   <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
     {% csrf_token %}
@@ -132,7 +135,7 @@
     </div>
     {% endfor %}
   </div>
-
+  {% endif %}
   {% endblock content %}
 
   {% block script %}

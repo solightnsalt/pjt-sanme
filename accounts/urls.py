@@ -11,4 +11,7 @@ urlpatterns = [
     path("<int:pk>/follow/", views.follow, name="follow"),
     path("logout/", views.logout, name="logout"),
     path("delete/", views.delete, name="delete"),
+    path("<int:pk>/block", views.block, name="block"),
+    path("block_user/", views.block_user, name="block_user"),
+    path("<int:pk>/block_user_block", views.block_user_block, name="block_user_block"),
 ]
