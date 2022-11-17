@@ -1,189 +1,152 @@
 {% extends 'base.html' %}
+
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
+
 {% block title %}
   |
-  {{ user }}
-  님{% endblock title %}
+  {{ user.nickname }}님의 프로필{% endblock title %}
 
 {% block content %}
-<style>
-  #article-profile #article-profile-right .meters {
-    clear: both;
-    display: block;
-    width: 150px;
-    background-color: #e9ecef;
-    height: 8px;
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-    position: relative;
-    vertical-align: middle;
-    margin-top: 24px;
-  }
-
-  #article-profile #article-profile-right .meters .bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background-color: #495057;
-    height: 8px;
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-  }
-
-  #article-profile #article-profile-right .meters .bar-color-02 {
-    background-color: #de5d06;
-  }
-
-  #article-profile #article-profile-right .meters .bar-color-03 {
-    background-color: #1561a9;
-  }
-
-  #article-profile #article-profile-right .meters .bar-color-04 {
-    background-color: #319e45;
-  }
-</style>
-
-<section class="home"></section>
-<div style="height: 1000px">
-  <div class="container px-4 px-lg-5 my-5">
-    <div class="row gx-4 gx-lg-5 align-items-center">
-      <div class="col-md-3">
+  <section class="home"></section>
+  <section class='container'>
+    <div class="pf-box">
+      <!--프사-->
+      <div class="pf-pic">
         {% if user.profile_pic %}
-        <div class="rounded-circle bg-white"
-          style="width:200px; height:200px; background-image:url({{ user.profile_pic.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);">
-        </div>
+          <div class="rounded-circle bg-white" style="width:200px; height:200px; background-image:url({{ user.profile_pic.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);"></div>
         {% else %}
-        <div class="rounded-circle"
-          style="width:200px; height:200px; background-image:url('https://dummyimage.com/35x35/000/fff');"></div>
+          <div class="rounded-circle" style="width:200px; height:200px; background-image:url('https://dummyimage.com/35x35/000/fff');"></div>
         {% endif %}
       </div>
-      <div class="col-md-6">
-        <h3 class="display-7 fw-bolder">{{ user }}</h3>
-        <div class="small mb-1">
-          닉네임 :
-          {{user.nickname}}<br>
-          사는 지역 :
-          {{user.address}}<br>
-          MBTI :
-          {{user.mbti}}<br>
-          매너 온도 :
-          {{user.manner_point}}℃
-          {% if user.manner_point < 36.5 %}<i class="bi bi-emoji-frown-fill text-danger"></i>
-            {% elif user.manner_point == 36.5 %}🙂
+      <!--프사 옆-->
+      <div class="pf-right">
+        <div class="pf-detail">
+          <h3 class="display-7 fw-bolder">{{ user }}</h3>
+          <p class="small mb-1 lh-lg">
+            닉네임 :
+            {{user.nickname}}<br>
+            사는 지역 :
+            {{user.address}}<br>
+            MBTI :
+            {{user.mbti}}<br>
+            매너 온도 :
+            {{user.manner_point}}℃
+            {% if user.manner_point < 36.5 %}
+              <i class="bi bi-emoji-frown-fill text-danger"></i>
+            {% elif user.manner_point == 36.5 %}
+              🙂
             {% else %}
-            😍{% endif %}</p>
-            <section id="article-profile">
-              <div id="article-profile-right">
-                <div class="meters">
-                  {% if user.manner_point < 36.5 %} <div class="bar bar-color-02" style="width:41%;">
-                </div>
+              😍
+            {% endif %}
+          </p>
+          <div id="article-profile">
+            <div id="article-profile-right">
+              <div class="meters">
+                {% if user.manner_point < 36.5 %}
+                  <div class="bar bar-color-02" style="width:41%;"></div>
                 {% elif user.manner_point == 36.5 %}
-                <div class="bar bar-color-03" style="width:41%;"></div>
+                  <div class="bar bar-color-03" style="width:41%;"></div>
                 {% else %}
-                <div class="bar bar-color-04" style="width:41%;"></div>
+                  <div class="bar bar-color-04" style="width:41%;"></div>
                 {% endif %}
               </div>
+            </div>
+          </div>
         </div>
-        </section>
-      </div>
+        <!-- 팔로워 표시 -->
+        <div class="counts">
+          <div class="me-5">
+            <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
+          </div>
+          <div class="me-5">
+            <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
+            </p>
+          </div>
+          <div class="me-5">
+            <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="pf-btns">
+          {% if request.user != user %}
+            <a href="{% url 'accounts:follow' user.pk %}">
+              {% if request.user in user.followers.all %}
+                <button type="button" class="btn btn-danger">팔로우 취소</button>
+              {% else %}
+                <button type="button" class="btn btn-primary">팔로우</button>
+              {% endif %}
+            </a>
+          {% endif %}
+          <!-- 팔로우 버튼(비동기) -->
+          <!-- {% if request.user != user %} <form id='follow-form' data-user-id='{{ user.pk }}'> {% csrf_token %} {% if request.user in user.followers.all %} <input type='submit' class="neg-btn" value="언팔로우"> {% else %} <input type='submit' class="pos-btn" value='팔로우'> {% endif %} </form> {% endif %} -->
 
-      <!-- 팔로워 표시 -->
-      <div class="d-flex">
-        <div class="me-5">
-          <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
-        </div>
-        <div class="me-5">
-          <p class="fs-6">팔로워<span class="ms-2 fw-bold" id="followers-count">{{ user.followers.count }}</span>
-          </p>
-        </div>
-        <div class="me-5">
-          <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
-          </p>
+          <!-- 수정 및 삭제 -->
+          {% if request.user == user %}
+            <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn mx-3">수정</a>
+            <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">회원탈퇴</a>
+          {% endif %}
         </div>
       </div>
-      {% if request.user != user %}
-      <a href="{% url 'accounts:follow' user.pk %}">
-        {% if request.user in user.followers.all %}
-        <button type="button" class="btn btn-danger">팔로우 취소</button>
-        {% else %}
-        <button type="button" class="btn btn-primary">팔로우</button>
-        {% endif %}
-      </a>
-      {% endif %}
-
-      <!-- 팔로우 버튼(비동기) -->
-      <!-- {% if request.user != user %}
-      <form id='follow-form' data-user-id='{{ user.pk }}'>
-        {% csrf_token %}
-        {% if request.user in user.followers.all %}
-        <input type='submit' class="neg-btn" value="언팔로우">
-        {% else %}
-        <input type='submit' class="pos-btn" value='팔로우'>
-        {% endif %}
-      </form>
-      {% endif %} -->
-      <br>
-      <!-- 수정 및 삭제  -->
-      {% if request.user == user %}
-      <a href="{% url 'accounts:update' user.pk %}" type="button" class="pos-btn">수정</a>
-      <a href="{% url 'accounts:delete' %}" type="button" class="neg-btn">회원탈퇴</a>
-      {% endif %}
     </div>
-  </div>
-</div>
-<br><br>
-<div class="container px-4 px-lg-5 my-5">
-  <h3>작성한 글</h3>
-  <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
-  <table class="table">
-    <thead>
-      <tr class="thead-dark">
-        <th>작성글 개수</th>
-        <th>글 제목</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for article in user.post_set.all %}
-      <tr>
-        <td>{{ forloop.counter}}</td>
-        <td><a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a></td>
-      </tr>
-      {% endfor%}
-    </tbody>
-  </table>
-  <br><br>
-      <h3>작성한 댓글</h3>
-      <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
-      <table class="table">
-        <thead>
-          <tr class="thead-dark">
-            <th>작성 댓글 개수</th>
-            <th>댓글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for comment in user.comment_set.all %}
-            <tr>
-              <td>{{ forloop.counter}}</td>
-              <td>
-                <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
-              </td>
-            </tr>
-            {% endfor%}
-          </tbody>
-        </table>
-        <br><br>
-        <h3>좋아요 누른 글</h3>
-        <p class="text-muted">{{ user.like_articles.count }}개의 글의 좋아요를 표시하였습니다.</p>
+    <!--content-->
+    <div class="pf-history">
+      <div class="written-p">
+        <h3>작성한 글</h3>
+        <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
         <table class="table">
           <thead>
             <tr class="thead-dark">
-              <th>좋아요 글 개수</th>
+              <th>#</th>
+              <th>글 제목</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for article in user.post_set.all %}
+              <tr>
+                <td>{{ forloop.counter}}</td>
+                <td>
+                  <a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="written-c">
+        <h3>작성한 댓글</h3>
+        <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
+        <table class="table">
+          <thead>
+            <tr class="thead-dark">
+              <th>#</th>
+              <th>댓글 내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for comment in user.comment_set.all %}
+              <tr>
+                <td>{{ forloop.counter}}</td>
+                <td>
+                  <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!--written-c-->
+      <div class="liked">
+        <h3>좋아요 누른 글</h3>
+        <p class="text-muted">
+          {% if user.like_articles %}{{ user.like_articles.count }}
+          {% else %}0
+          {% endif %}개의 글에 좋아요를 표시하였습니다.</p>
+        <table class="table">
+          <thead>
+            <tr class="thead-dark">
+              <th>#</th>
               <th>좋아요 표시한 글</th>
             </tr>
           </thead>
@@ -195,50 +158,54 @@
                   <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
                 </td>
               </tr>
-              {% endfor%}
-            </tbody>
-          </table>
-        </div>
-      {% endblock content %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!--liked-->
+    </div>
+  </div>
+</section>
+{% endblock content %}
 
-      {% block script %}
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-          const form = document.querySelector('#follow-form')
-          const csrftoken = document
-            .querySelector('[name=csrfmiddlewaretoken]')
-            .value
-            form
-            .addEventListener('submit', function (event) {
-              event.preventDefault()
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector('#follow-form')
+  const csrftoken = document
+    .querySelector('[name=csrfmiddlewaretoken]')
+    .value
+    form
+    .addEventListener('submit', function (event) {
+      event.preventDefault()
 
-              const userId = event
-                .target
-                .dataset
-                .userId
-                axios({
-                  method: 'post',
-                  url: `/accounts/${userId}/follow/`,
-                  headers: {
-                    'X-CSRFToken': csrftoken
-                  }
-                })
-                .then((response) => {
-                  console.log(response)
-                  const followersCountTag = document.querySelector('#followers-count')
-                  const followingsCountTag = document.querySelector('#followings-count')
-                  const followersCount = response.data.followers_count
-                  const followingsCount = response.data.followings_count
-                  followersCountTag.innerText = followersCount
-                  followingsCountTag.innerText = followingsCount
-                  const isFollowed = response.data.is_followed
-                  const followBtn = document.querySelector('#follow-form > input[type=submit]')
-                  if (isFollowed == true) {
-                    followBtn.value = '언팔로우'
-                  } else {
-                    followBtn.value = '팔로우'
-                  }
-                })
-            })
-        </script>
-      {% endblock script %}
+      const userId = event
+        .target
+        .dataset
+        .userId
+        axios({
+          method: 'post',
+          url: `/accounts/${userId}/follow/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+        .then((response) => {
+          console.log(response)
+          const followersCountTag = document.querySelector('#followers-count')
+          const followingsCountTag = document.querySelector('#followings-count')
+          const followersCount = response.data.followers_count
+          const followingsCount = response.data.followings_count
+          followersCountTag.innerText = followersCount
+          followingsCountTag.innerText = followingsCount
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('#follow-form > input[type=submit]')
+          if (isFollowed == true) {
+            followBtn.value = '언팔로우'
+          } else {
+            followBtn.value = '팔로우'
+          }
+        })
+    })
+</script>
+{% endblock script %}

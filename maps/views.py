@@ -29,7 +29,7 @@ def query_debugger(func):
 # Create your views here.
 @query_debugger
 def map(request):
-    return render(request, "map/map.html")
+    return render(request, "maps/map.html")
 
 
 @query_debugger
@@ -56,7 +56,7 @@ def map_search(request, x, y):
 def search(request):
     park_list = []
     if request.method == "POST":
-        searched = request.POST['searched']
+        searched = request.POST["searched"]
 
         if searched != "":
             park_name = Map.objects.filter(
