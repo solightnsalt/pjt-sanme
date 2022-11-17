@@ -7,7 +7,7 @@ function doOpenCheck(chk) {
       obj_pos[i].style.backgroundColor = "";
       obj_pos[i].style.color = "gray";
     } else {
-      obj_pos[i].style.backgroundColor = "#4b0e66";
+      obj_pos[i].style.backgroundColor = "#03A63C";
       obj_pos[i].style.color = "white";
     }
   }
