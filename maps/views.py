@@ -5,6 +5,7 @@ import functools, time
 from django.db import connection, reset_queries
 from django.conf import settings
 from django.db.models import Q
+from haversine import haversine
 
 
 def query_debugger(func):
@@ -27,7 +28,6 @@ def query_debugger(func):
 
 
 # Create your views here.
-@query_debugger
 def map(request):
     return render(request, "maps/map.html")
 
@@ -40,15 +40,29 @@ def map_search(request, x, y):
     latitude_range = (float(x) - 0.025 , float(x) + 0.025)
     longitude_range = (float(y) - 0.0375, float(y) + 0.0375)
 
+    user_distance = int(haversine((float(x), float(y)), (float(parks[1].latitude), float(parks[1].longitude))) * 1000)
+
+
     for park in parks:
         if park.latitude != '' and park.longitude != '':
             if latitude_range[0] <= float(park.latitude) <= latitude_range[1] and longitude_range[0] <= float(park.longitude) <= longitude_range[1]:
+                
+                
+                user_distance = haversine((float(x), float(y)), (float(park.latitude), float(park.longitude))) * 1000
+                
+                if user_distance <= 1000:
+                    user_distance = str(int(user_distance)) + 'm'
+                else:
+                    user_distance = user_distance / 1000
+                    user_distance = str(format(user_distance, ".2f")) + 'km'
+                
                 parkJson.append(
                     {
                         "name": park.parkNm,
                         "addr": park.lnmadr,
                         "lat": park.latitude,
                         "long": park.longitude,
+                        "userDistance": user_distance,
                     }
                 )
 

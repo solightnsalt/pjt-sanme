@@ -242,6 +242,7 @@ body {
 .map{
     display: flex;
     justify-content: center;
+    margin-top: 10rem;
 }
 
 .map-search{
@@ -255,6 +256,41 @@ body {
 #map-search-result{
     overflow-y: scroll;
     height: 500px;
+}
+
+.map-overlay-box{
+    border-radius: 10px;
+    border: none;
+    padding: 1rem 2rem;
+}
+
+.map-overlay-park-name{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.map-overlay-park-addr,
+.map-overlay-park-distance{
+    font-size: 1.5rem;
+}
+
+.map-overlay-park-name,
+.map-overlay-park-addr,
+.map-overlay-park-distance{
+    margin-bottom: 0.6rem;
+}
+
+.map-close-btn{
+    padding: 3px 10px;
+    border: none 0px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    background-color: #F2ACCD;
+    color: #F0F1F2;
+}
+
+.map-close-btn:hover{
+    background-color: #8a6274;
 }
 
 /* Navbar */
