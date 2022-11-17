@@ -16,6 +16,7 @@ class PostForm(forms.ModelForm):
             "park_address",
             "pet",
             "participate_people",
+            "thumbnail",
             "content",
         ]
         widgets = {

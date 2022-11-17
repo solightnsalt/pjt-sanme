@@ -96,8 +96,8 @@
 
 
   </div>
-
-  {% if request.user == participate.user %}
+  {% for participater in post.participate.all %}
+  {% if request.user == participater %}
   <h1>comment</h1>
   <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
     {% csrf_token %}
@@ -136,6 +136,7 @@
     {% endfor %}
   </div>
   {% endif %}
+  {% endfor %}
   {% endblock content %}
 
   {% block script %}
