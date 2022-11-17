@@ -66,6 +66,7 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
+        "participate":participate
     }
 
     return render(request, "articles/detail.html", context)
