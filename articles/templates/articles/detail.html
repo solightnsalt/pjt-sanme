@@ -22,6 +22,7 @@
             <img src="{{ participater.profile_pic.url }}">
             <h3>{{ participater }}</h3>
             {% if request.user == post.user %}
+
               <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">            
                 <input type="submit" class="btn btn-danger mx-2" value="강퇴">
               </form>
@@ -31,6 +32,7 @@
                 <input type="submit" class="btn btn-danger mx-2" value="취소">
               </form>
               {% endif %}
+
             <!-- <div>
               <a href="#" class="">DM</a>
             </div> -->
@@ -76,10 +78,12 @@
     <div style="font-size: 2em;">
       <dl class="row m-3">
         <dt class="col-4 text-center">작성자</dt>
-        <dd class="col-8"> 
-        <a href="{% url 'accounts:detail' user.pk %}">
-        <img class="post-profile-img" style="max-width: 5%; height: auto" src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}</dd>
-      
+        <dd class="col-8">
+          <a href="{% url 'accounts:detail' user.pk %}">
+            <img class="rounded-circle bg-white"" style=" max-width: 5%; height: auto"
+              src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
+        </dd>
+
         <dt class="col-4 text-center">Title</dt>
         <dd class="col-8">{{ post.title }}</dd>
         <dt class="col-4 text-center">Day</dt>
@@ -92,6 +96,7 @@
         <dd class="col-8">{{ post.content }}</dd>
         <dt class="col-4 text-center">참여여부</dt>
         <dd class="col-8">
+
           {% if post.participate.count >= post.participate_people %}
             <div data-bs-target="#participateModal" data-bs-toggle="modal">모집완료</div>
           {% else %}
@@ -105,6 +110,7 @@
 
           </a>{% if post.participate.count >= post.participate_people %}
           {% else %}
+
           <div data-bs-target="#participateModal" data-bs-toggle="modal">참여자
             {{ post.participate.count}}</span><span>/{{post.participate_people}}</div>
         </dd>{% endif %}
@@ -115,7 +121,7 @@
       </dl>
     </div>
 
-    
+
 
 
   </div>

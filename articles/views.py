@@ -54,6 +54,8 @@ def participate(request, pk):
     # "ParticipateCount": article.participate.count(),
     # }
     # return JsonResponse(context)
+
+
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
@@ -64,7 +66,7 @@ def detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
-    post.hit += 1 
+    post.hit += 1
     post.save()
     context = {
         "post": post,
