@@ -59,11 +59,18 @@ def participate(request, pk):
     # return JsonResponse(context)
 
 
+def delete_participate(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.participate.delete(request.user)
+    return redirect("articles:detail", pk)
+
+
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
-
+    post.hit += 1
+    post.save()
     context = {
         "post": post,
         "comment_form": comment_form,
@@ -268,7 +275,6 @@ def recommend(request, pk):
 
     return render(request, "articles/main.html", context)
 
-
 def search(request):
     popular_list = {}
     if request.method == "GET":
@@ -348,3 +354,6 @@ def searchfail(request):
         "popular": popular_search,
     }
     return render(request, "articles/searchfail.html", context)
+
+def support(request):
+    return render(request, "articles/support.html")

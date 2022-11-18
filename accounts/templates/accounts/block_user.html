@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<section class="home"></section>
+{% if user.blockers %}
+{% for block_user in blockers %}
+<div class="card m-4 p-2">
+    <div class="d-flex justify-content-center">
+        <img src="{{block_user.profile_pic.url}}" class="rounded-circle" alt="" style="height: 50px; width:50px;">
+        <p class="align-self-center pt-3 ms-4">
+            {{ block_user.username }}</a>
+        </p>
+        <a class="ms-5 align-self-center text-decoration-none text-black fw-bold"
+            href="{% url 'accounts:block_user_block' block_user.pk %}">차단 취소</a>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% endblock content %}

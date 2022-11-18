@@ -21,7 +21,7 @@
     </form>
   </div>
   <section class='container'>
-    <div style="height: 200px"></div>
+    <div style="height: 100px"></div>
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -63,57 +63,54 @@
         <span class="visually-hidden">다음</span>
       </button>
     </div>
-    <div class="container">
+    <div class="recommended">
       <div class="mt-3 mb-3">
-        <h3>{{ my_mbti }}인 당신을 위한 산책 추천유저</h3>
+        <h3>#<b>{{ user.mbti }}</b> 인 당신을 위한 산책 메이트</h3>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
+          {% if matched_user %}
           {% for user_info in matched_user %}
             <div class="col mb-5">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="{% static 'images/img_default.jpeg' %}" alt="..."/></a>
+                <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
                 <div class="card-body py-4">
-                  <div class="text-center">
-                    <h5 class="fw-bold">
-                      <p>{{ user_info.nickname }}</p>
-                    </h5>
-                  </div>
+                  <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
                 </div>
                 <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center">
-                    <a class="btn btn-outline-dark" href="#">방문하기</a>
-                  </div>
+                  <a class="btn btn-outline-dark text-center" href="{% url 'accounts:detail' user_info.pk %}">자세히보기</a>
                 </div>
               </div>
             </div>
           {% endfor %}
+          {% else %}
+          <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i></div>
+          {% endif %}
         </div>
       </div>
       <div class="mt-3 mb-3">
-        <h3>Manner Stack Overflow! 산책 매너좋은 유저</h3>
+        <h3>#Manner Stack Overflow! 산책 매너좋은 유저</h3>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
+          {% if hot_user %}
           {% for hot_info in hot_user %}
             <div class="col mb-5">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="{% static 'images/img_default.jpeg' %}" alt="..."/></a>
+                <img class="card-img-top" src="{{ hot_info.profile_pic.url }}" alt="프사"/>
                 <div class="card-body py-4">
-                  <div class="text-center">
-                    <h5 class="fw-bold">
-                      <p>{{ hot_info.nickname }}</p>
-                    </h5>
-                  </div>
+                  <h5 class="fw-bold text-center">{{ hot_info.nickname }}</h5>
                 </div>
                 <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center">
-                    <a class="btn btn-outline-dark" href="#">방문하기</a>
-                  </div>
+                  <a class="btn pos-btn text-center" href="{% url 'accounts:detail' hot_info.pk %}">자세히보기</a>
                 </div>
               </div>
             </div>
           {% endfor %}
+          {% else %}
+          <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i></div>
+          {% endif %}
         </div>
       </div>
-    </div>
-    <div class="wrapper">
+    </div> <!--recommended-->
+    <!--playlist-->
+    {% comment %} <div class="wrapper">
       <i id="left" class="fa-solid fa-angle-left"></i>
       <div class="slide">
         <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/svD4Cq1t_OU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
@@ -128,7 +125,7 @@
         <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/We1LjkaKN_4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
       </div>
       <i id="right" class="fa-solid fa-angle-right"></i>
-    </div>
+    </div> {% endcomment %}
   </section>
 {% endblock content %}
 {% block script %}{% endblock script %}

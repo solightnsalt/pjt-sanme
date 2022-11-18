@@ -7,9 +7,7 @@
 {% block title %}
   | 회원가입{% endblock title %}
 
-{% block style %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/multistep.css' %}">
-{% endblock style %}
+{% block style %}{% endblock style %}
 
 {% block content %}
   <section class="home"></section>
@@ -196,4 +194,11 @@
 {% block script %}
   <script src="{% static 'js/multistep.js' %}"></script>
   <script src="{% static 'js/signup.js' %}"></script>
+  {% comment %} <script>
+    $("button").on("click", function (event) {
+      if (event.originalEvent.detail != 0) {
+        alert("버튼을 눌러 이동해주세요😉");
+      }
+    });
+  </script> {% endcomment %}
 {% endblock script %}

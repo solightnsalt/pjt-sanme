@@ -11,6 +11,7 @@ urlpatterns = [
     path("<int:pk>/", views.detail, name="detail"),
     path("<int:pk>/update/", views.update, name="update"),
     path("<int:pk>/delete/", views.delete, name="delete"),
+    path("<int:pk>/delete_participate/", views.delete_participate, name="delete_participate"),
     path("<int:pk>/comment/", views.comment, name="comment"),
     path(
         "<int:pk>/comment_delete/<int:comment_pk>",
@@ -26,4 +27,5 @@ urlpatterns = [
     path("<int:pk>/recommend/", views.recommend, name="recommend"),
     path("search/", views.search, name="search"),
     path("searchfail/", views.searchfail, name="searchfail"),
+    path("support/", views.support, name="support"),
 ]

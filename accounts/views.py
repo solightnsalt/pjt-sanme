@@ -21,7 +21,7 @@ def login(request):
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect("articles:index")
+                return redirect("articles:main")
         else:
             login_form = AuthenticationForm()
 
@@ -116,6 +116,8 @@ def update(request, pk):
 #             return JsonResponse(context)
 #         return redirect("accounts:detail", you.username)
 #     return redirect("accounts:login")
+
+
 @login_required
 def follow(request, pk):
     accounts = get_user_model().objects.get(pk=pk)
@@ -124,13 +126,56 @@ def follow(request, pk):
     if request.user in accounts.followers.all():
         accounts.followers.remove(request.user)
         accounts.manner_point -= 0.2
+        accounts.manner_point = round(accounts.manner_point, 1)
         accounts.save()
     else:
         accounts.followers.add(request.user)
         accounts.manner_point += 0.2
+        accounts.manner_point = round(accounts.manner_point, 1)
         accounts.save()
     # 상세 페이지로 redirect
     return redirect("accounts:detail", pk)
+
+
+@login_required
+def block(request, pk):
+    user = get_user_model().objects.get(pk=pk)
+    if user != request.user:
+        if user.blockers.filter(pk=request.user.pk).exists():
+            user.blockers.remove(request.user)
+            user.manner_point += 1
+            user.manner_point = round(user.manner_point, 1)
+            user.save()
+        else:
+            user.blockers.add(request.user)
+            user.manner_point -= 1
+            user.manner_point = round(user.manner_point, 1)
+            user.save()
+    return redirect("accounts:detail", pk)
+
+
+@login_required
+def block_user(request):
+    blockers = request.user.blocking.all()
+    context = {
+        "blockers": blockers,
+    }
+    return render(request, "accounts/block_user.html", context)
+
+
+@login_required
+def block_user_block(request, pk):
+    user = get_user_model().objects.get(pk=pk)
+    if user != request.user:
+        if user.blockers.filter(pk=request.user.pk).exists():
+            user.blockers.remove(request.user)
+            user.manner_point += 1
+            user.save()
+        else:
+            user.blockers.add(request.user)
+            user.manner_point -= 1
+            user.save()
+    return redirect("accounts:block_user")
 
 
 def delete(request):
