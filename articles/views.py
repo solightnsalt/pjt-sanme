@@ -56,11 +56,19 @@ def participate(request, pk):
     # return JsonResponse(context)
 
 
+def delete_participate(request, pk):
+    article = Post.objects.get(pk=pk)
+    if request.user in article.participate.all():
+        article.participate.remove(request.user)
+    return redirect("articles:detail", pk)
+
+
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
-
+    post.hit += 1
+    post.save()
     context = {
         "post": post,
         "comment_form": comment_form,
