@@ -2,83 +2,87 @@
 {% load static %}
 
 {% block content %}
-<div style="height:500px"></div>
+  <div style="height:100px"></div>
 
-<div class="container mt-5">
-  <div class="search-box">
-    <form action="{% url 'articles:search' %}" class="search d-flex" role="search" method="">
-      <input type="text" style="display:none" autocomplete="off">
-      <input type="password" style="display:none" autocomplete="off">
-      <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    <div class="popular">
-      {% comment %} <div class="mb-4 d-flex justify-content-center align-items-center">
-        <h4 class="text-center mb-0">인기 검색어</h4>
-        <button type="button" class="close-popular ms-3 btn btn-outline-danger btn-sm" style="font-size: 0.3rem; height:1.5rem;">닫기</button>
-      </div> {% endcomment %}
-      <div class="popular-detail d-flex">
-        <div class="area_keyword" style="">
-          {% for p in popular %}
-            {% if forloop.counter <= 5 %}
-              <h6>
-                <a class="popular-click" href="{% url 'articles:search' %}?searched={{p.title}}">
-                  <span class="badge text-bg-warning">{{ forloop.counter }}</span>
-                  {{p.title}}</h6>
-              </a>
-            {% endif %}
-          {% endfor %} 
+  <div class="container mt-5 mb-3">
+    <div class="search-box">
+      <form action="{% url 'articles:search' %}" class="search d-flex" role="search" method="">
+        <input type="text" style="display:none" autocomplete="off">
+        <input type="password" style="display:none" autocomplete="off">
+        <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <div class="popular">
+        <div class="mb-2 mt-3 d-flex">
+          <h4 class="text-center mb-0">인기 검색어</h4>
+          <button type="button" class="close-popular ms-3 btn btn-outline-danger btn-sm" style="font-size: 0.3rem; height:2.0rem;">닫기</button>
         </div>
-        <div class="area_keyword" style="">
-          {% for p in popular%}
-            {% if forloop.counter > 5 %}
-              <h6>
-                <a class="popular-click" href="{%url 'articles:search' %}?searched={{p.title}}">
-                  <span class="badge text-bg-warning">{{ forloop.counter }}</span>
-                  {{ p.title }}</h6>
-              </a>
-            {% endif %}
-          {% endfor %}
+        <div class="popular-detail d-flex">
+          <!-- 인기 키워드 -->
+          <div class="area_keyword" style="">
+            {% for p in popular %}
+              {% if forloop.counter <= 5 %}
+                <h6>
+                  <a class="popular-click" href="{% url 'articles:search' %}?searched={{p.title}}">
+                    <span class="badge text-bg-warning">{{ forloop.counter }}</span>
+                    {{p.title}}</h6>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="area_keyword" style="">
+            {% for p in popular%}
+              {% if forloop.counter > 5 %}
+                <h6>
+                  <a class="popular-click" href="{%url 'articles:search' %}?searched={{p.title}}">
+                    <span class="badge text-bg-warning">{{ forloop.counter }}</span>
+                    {{ p.title }}</h6>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
       </div>
+      <!-- popular -->
     </div>
+    <!-- search box -->
   </div>
-</div>
-  <div class="search-cate container">
-    <div class="search-cate-words">
-      <a class="search-cate-word" href="?searched={{ search }}&sorted=pop">
-        인기순</a>
-      <a class="search-cate-word ms-3" href="?searched={{ search }}&sorted=recent">최신순</a>
-    </div>
-  </div>
+  <!-- container -->
 
-  <div class="container text-center">
-    <div class="row justify-content-center">
-      {% for board in boards %}
+  <!-- search list -->
+  <div class="container" style="height:800px">
+    <h3 class="fw-bold">산책 메이트</h3>
+    <div class="row mt-3 mb-5">
+      {% for item in search_list %}
         <div class="col-12 col-md-6 col-xl-4">
           <div class="search-card card">
-            <div class="search-card-image-box">
-              {% for photo in board.photo_set.all %}
-                {% if forloop.first %}
-                  <img class="search-card-image" src="{{ photo.image.url }}" alt="">
-                {% endif %}
-              {% endfor %}
+            <div class="card-header">
+              <h4 class="card-title fw-bold m-0">{{item.nickname}}</h4>
             </div>
             <div class="card-body">
-              <h4 class="card-title fw-bold m-0">{{board.title}}</h4>
-              <p class="m-0">written by.
-                {{board.user.profile_name}}</p>
-              <p class="date m-0 text-muted">{{board.updated_at|date:"Y-m-d"}}</p>
-              <p class="m-0">{{board.place}}
-                |
-                {{board.theme}}</p>
-              <p class="mb-3 text-muted">{{ board.like_users.count }}
-                명이 이 글을 좋아합니다</p>
+              {% for photo in item.profile_pic %}
+                <img class="search-card-image" src="{{ photo.image.url }}" alt=""/>
+              {% endfor %}
+              <p class="fw-bold m-1">성별:
+                {% if item.gender == "M" %}
+                  남자
+                {% else %}
+                  여자
+                {% endif %}
+              </p>
+              <p class="fw-bold m-1">MBTI:
+                {{item.mbti}}</p>
+              <p class="fw-bold m-1">성격:
+                {{item.manner}}</p>
+              <p class="fw-bold m-1">성격:
+                {{item.manner}}</p>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
+    <h3 class="fw-bold">공원 목록</h3>
+    <div class="row mt-3 mb-5"></div>
   </div>
 
   {% if request.resolver_match.url_name != 'list' %}
