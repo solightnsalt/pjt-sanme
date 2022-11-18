@@ -12,6 +12,14 @@
 
 {% block content %}
   <section class="home"></section>
+  <div class="search-box">
+    <form action="{%url 'articles:search' %}" class="search d-flex" role="search" method="">
+      <input type="text" style="display:none">
+      <input type="password" style="display:none">
+      <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
   <section class='container'>
     <div style="height: 100px"></div>
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">

@@ -101,3 +101,4 @@ def search(request):
     }
 
     return JsonResponse(data)
+
