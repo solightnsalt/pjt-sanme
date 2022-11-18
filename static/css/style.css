@@ -32,7 +32,6 @@
     font-weight: normal;
     font-style: normal;
 }
-}
 
 @font-face {
     font-family: 'GangwonEduPowerExtraBoldA';
@@ -441,14 +440,14 @@ main {
     padding: 0;
 }
 
-.nav div.main_list ul li:not(.dd-list) {
+.nav div.main_list ul li:not(.dd-toggle, .dd-list) {
     width: auto;
     height: 65px;
     padding: 0;
     padding-right: 3rem;
 }
 
-.nav div.main_list ul li a :not(.dd-btn) {
+.nav div.main_list ul li a:not(.dd-toggle, .dd-btn, .dd-list, .dd-item) {
     text-decoration: none;
     color: rgb(0, 0, 0);
     line-height: 65px;
@@ -470,6 +469,86 @@ main {
     transition: all 0.4s ease;
 }
 
+/* DropDown css*/
+.dd-toggle {
+    position: relative;
+}
+
+.arrow_box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    right: 16%;
+    top: 20%;
+    width: 130px;
+    height: auto;
+	position: relative;
+	background: #f0f1f2;
+	border: 1px solid #f0f1f2;
+    opacity:0;
+    visibility: hidden;
+    transition: .3s;
+    transform: scaleY(0);
+    transform-origin: top center;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 3px -5px 20px #00000029;
+}
+
+.arrow_box:after, .arrow_box:before {
+	bottom: 98%;
+	right: 20%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(240, 241, 242, 0);
+	border-bottom-color: #f0f1f2;
+	border-width: 10px;
+	margin-left: -10px;
+}
+.arrow_box:before {
+	border-color: rgba(240, 241, 242, 0);
+	border-bottom-color: #f0f1f2;
+	border-width: 11px;
+	margin-left: -11px;
+}
+
+.dd-item {
+    text-decoration: none;
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 15px;
+    height: auto;
+    color: #232925;
+}
+
+.dd-toggle ul li{
+    display: block;
+}
+
+.dd-toggle:hover ul {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+.dd-btn {
+    font-family: 'NanumSquareNeo-Variable';
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    height: 70px;
+    width: auto;
+    padding: 10px;
+    background-color: #F0F1F2;
+    border-radius: 5px;
+}
 
 /* Media qurey section */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
@@ -525,73 +604,6 @@ main {
     .nav div.media_button {
         display: block;
     }
-}
-
-/* DropDown css*/
-.dd-toggle {
-    position: relative;
-}
-
-.square {
-    position: absolute;
-    top: 93%;
-    right: 30px;
-    width: 12px;
-    height: 12px;
-    border-top: 1px solid rgba(0,0,0,.15);
-    border-left: 1px solid rgba(0,0,0,.15);
-    background-color: #fff;
-    transform: rotate(45deg);
-    opacity:0;
-    visibility: hidden;
-}
-
-.dd-toggle ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    width: 150px;
-    height: 150px;
-    background-color: #F0F1F2;
-    opacity:0;
-    visibility: hidden;
-    transition: .3s;
-    transform: scaleY(0);
-    transform-origin: top center;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.dd-item {
-    text-decoration: none;
-    font-family: 'NanumSquareNeo-Variable';
-    font-size: 15px;
-    color: #232925;
-}
-
-.dd-toggle ul li{
-    display: block;
-}
-
-.dd-toggle:hover ul,.square{
-    opacity: 1;
-    visibility: visible;
-    transform: scaleY(1);
-}
-
-.dd-btn {
-    font-family: 'NanumSquareNeo-Variable';
-    text-decoration: none;
-    color: #000;
-    font-size: 16px;
-    height: 70px;
-    width: auto;
-    padding: 3px;
-    background-color: #F0F1F2;
-    border-radius: 5px;
 }
 
 /* Nav Animation */

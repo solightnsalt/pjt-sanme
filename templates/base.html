@@ -52,16 +52,21 @@
                     님
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
-                  <div class="square" aria-hidden="true"></div>
-                  <ul>
+                  <ul class="arrow_box">
                     <li class="dd-list">
-                      <a class="dd-item" href="{% url 'accounts:detail' user.pk %}">내 정보</a>
+                      <a class="dd-item" href="{% url 'accounts:detail' user.pk %}">
+                        <i class="bi bi-person-fill"></i>
+                        내 정보</a>
                     </li>
                     <li class="dd-list">
-                      <a class="dd-item" href="{% url 'accounts:update' user.pk %}">정보 수정</a>
+                      <a class="dd-item" href="{% url 'accounts:update' user.pk %}">
+                        <i class="bi bi-pencil-square"></i>
+                        정보 수정</a>
                     </li>
                     <li class="dd-list">
-                      <a class="dd-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+                      <a class="dd-item" href="{% url 'accounts:logout' %}">
+                        <i class="bi bi-box-arrow-right"></i>
+                        로그아웃</a>
                     </li>
                   </ul>
                 </li>
