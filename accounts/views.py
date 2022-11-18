@@ -126,10 +126,12 @@ def follow(request, pk):
     if request.user in accounts.followers.all():
         accounts.followers.remove(request.user)
         accounts.manner_point -= 0.2
+        accounts.manner_point = round(accounts.manner_point, 1)
         accounts.save()
     else:
         accounts.followers.add(request.user)
         accounts.manner_point += 0.2
+        accounts.manner_point = round(accounts.manner_point, 1)
         accounts.save()
     # 상세 페이지로 redirect
     return redirect("accounts:detail", pk)
@@ -142,10 +144,12 @@ def block(request, pk):
         if user.blockers.filter(pk=request.user.pk).exists():
             user.blockers.remove(request.user)
             user.manner_point += 1
+            user.manner_point = round(user.manner_point, 1)
             user.save()
         else:
             user.blockers.add(request.user)
             user.manner_point -= 1
+            user.manner_point = round(user.manner_point, 1)
             user.save()
     return redirect("accounts:detail", pk)
 
