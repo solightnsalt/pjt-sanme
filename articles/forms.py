@@ -13,7 +13,6 @@ class PostForm(forms.ModelForm):
             "title",
             "day",
             "time",
-            "park_address",
             "pet",
             "participate_people",
             "thumbnail",

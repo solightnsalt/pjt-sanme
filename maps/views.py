@@ -58,6 +58,7 @@ def map_search(request, x, y):
                 
                 parkJson.append(
                     {
+                        "id" : park.id,
                         "name": park.parkNm,
                         "addr": park.lnmadr,
                         "lat": park.latitude,
