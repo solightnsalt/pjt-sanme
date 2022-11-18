@@ -260,7 +260,7 @@ body {
 
 .map-overlay-box{
     border-radius: 10px;
-    border: none;
+    border: none 0px;
     padding: 1rem 2rem;
 }
 
@@ -291,6 +291,22 @@ body {
 
 .map-close-btn:hover{
     background-color: #8a6274;
+}
+
+.map-link-btn{
+    margin-left: 1rem;
+    padding: 3px 10px;
+    border: none 0px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: #03A63C;
+    color: #F0F1F2;
+}
+
+.map-link-btn:hover{
+    background-color: #00531d;
+    color: #F0F1F2;
 }
 
 /* Navbar */

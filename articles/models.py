@@ -1,6 +1,7 @@
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.db import models
+from maps.models import Map
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -14,7 +15,7 @@ class Post(models.Model):
     like_user = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_post"
     )
-    park_address = models.CharField(max_length=80)
+    park_address = models.ForeignKey(Map, on_delete=models.CASCADE)
     pet = models.BooleanField(default=False)
     content = models.TextField()
     TIME_CHOICES = (

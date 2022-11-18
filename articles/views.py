@@ -3,6 +3,7 @@ from django.views.decorators.http import require_safe
 from .forms import PostForm, CommentForm
 from accounts.models import User
 from .models import Post, Comment
+from maps.models import Map
 from django.http import JsonResponse
 import json
 
@@ -21,10 +22,12 @@ def main(request):
 
 
 def create(request):
+
     if request.method == "POST":
         post_form = PostForm(request.POST)
         if post_form.is_valid():
             posts = post_form.save(commit=False)
+            posts.park_address = Map.objects.get(pk=request.GET.get("park", ""))
             posts.user = request.user
             posts.save()
             return redirect("articles:board")
