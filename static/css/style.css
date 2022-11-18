@@ -18,10 +18,25 @@
 .rest-5 {
     color: #BF9B6F;
 }
+/* ----------폰트---------- */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 @font-face {
-    font-family: 'SUIT-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-family: 'Happiness-Sans-Title';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Title.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+}
+
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -30,11 +45,11 @@
 	font-weight: 900 !important;
 }
 
+/* ----------공통---------- */
 html,
 body {
     margin: 0;
     padding: 0;
-    font-family: 'SUIT-Regular';
     box-sizing: border-box;
     outline: none;
     font-size: 62.5%;
@@ -56,7 +71,14 @@ body {
     color: #F0F1F2;
 }
 
-/* 공통 */
+header {
+    font-family: 'Happiness-Sans-Title';
+}
+
+main {
+    font-family: 'NanumSquareNeo-Variable';
+}
+
 .pos-btn {
     background-color: #03A63C;
     color: #F0F1F2;
@@ -95,10 +117,14 @@ body {
     }
 }
 
-/* Home */
+
+
+/* 여기부터 추가해서 쓰세요 */
+/*--------------index, main----------------- */
 .home {
     width: 100%;
     height: 100vh;
+    min-height: 1000px;
     background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
     background-position: center top;
     background-size: cover;
@@ -151,13 +177,20 @@ body {
 }
 
 .none-box {
-    height: 100px;
+    height: 450px;
     width: 100vh;
     text-align: center;
     font-size: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 3px -5px 20px #00000029;
+    padding: 200px;
 }
 
-/* 여기부터 추가해서 쓰세요 */
+.recommended {
+    margin-top: 12.5rem;
+}
+
 /* articles */
 /*-------------------- 포스트 디테일-------------------- */
 .modal-participater img {
@@ -238,6 +271,80 @@ body {
     background-color: #d4c7b7;
 }
 
+/*-------------------- account detail------------------------- */
+.pf-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.pf-right {
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+}
+
+.written-p, .written-c, .liked {
+    backdrop-filter: blur(21px) saturate(107%);
+    -webkit-backdrop-filter: blur(21px) saturate(107%);
+    background-color: #FFF;
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    min-height: 25rem;
+    width: 100%;
+    padding: 3.125rem;
+    margin-top: 9.375rem;
+}
+
+.counts {
+    display: flex;
+    margin-top: 20px;
+}
+
+.meters {
+    margin-top: -100px;
+}
+
+/* 매너온도 */
+#article-profile #article-profile-right .meters {
+    clear: both;
+    display: block;
+    width: 150px;
+    background-color: #e9ecef;
+    height: 8px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    position: relative;
+    margin-top: 24px;
+}
+
+#article-profile #article-profile-right .meters .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #495057;
+    height: 8px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+#article-profile #article-profile-right .meters .bar-color-02 {
+    background-color: #de5d06;
+}
+
+#article-profile #article-profile-right .meters .bar-color-03 {
+    background-color: #1561a9;
+}
+
+#article-profile #article-profile-right .meters .bar-color-04 {
+    background-color: #319e45;
+}
+
+
 /*-------------------- 지도 map ------------------------------- */
 .map{
     display: flex;
@@ -300,7 +407,7 @@ body {
     position: fixed;
     line-height: 65px;
     text-align: center;
-    z-index: 1;
+    z-index: 999;
 }
 
 .nav div.logo {
@@ -317,7 +424,7 @@ body {
 }
 
 .nav div.logo a:hover {
-    color: #F2ACCD;
+    color: #03A63C;
 }
 
 .nav div.main_list {
@@ -325,7 +432,7 @@ body {
     float: right;
 }
 
-.nav div.main_list ul {
+.navlinks {
     width: 100%;
     height: 65px;
     display: flex;
@@ -334,14 +441,14 @@ body {
     padding: 0;
 }
 
-.nav div.main_list ul li {
+.nav div.main_list ul li:not(.dd-list) {
     width: auto;
     height: 65px;
     padding: 0;
     padding-right: 3rem;
 }
 
-.nav div.main_list ul li a {
+.nav div.main_list ul li a :not(.dd-btn) {
     text-decoration: none;
     color: rgb(0, 0, 0);
     line-height: 65px;
@@ -349,7 +456,7 @@ body {
 }
 
 .nav div.main_list ul li a:hover {
-    color: #F2ACCD;
+    color: #03A63C;
 }
 
 .navTrigger {
@@ -420,13 +527,71 @@ body {
     }
 }
 
-.dropdown-menu {
+/* DropDown css*/
+.dd-toggle {
+    position: relative;
+}
+
+.square {
+    position: absolute;
+    top: 93%;
+    right: 30px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid rgba(0,0,0,.15);
+    border-left: 1px solid rgba(0,0,0,.15);
+    background-color: #fff;
+    transform: rotate(45deg);
+    opacity:0;
+    visibility: hidden;
+}
+
+.dd-toggle ul {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 150px;
+    height: 150px;
+    background-color: #F0F1F2;
+    opacity:0;
+    visibility: hidden;
+    transition: .3s;
+    transform: scaleY(0);
+    transform-origin: top center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.dd-item {
+    text-decoration: none;
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 15px;
+    color: #232925;
+}
+
+.dd-toggle ul li{
+    display: block;
+}
+
+.dd-toggle:hover ul,.square{
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+.dd-btn {
+    font-family: 'NanumSquareNeo-Variable';
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    height: 70px;
     width: auto;
-    height: auto;
-    background: #F0F1F2;
-    border-radius: 5%;
+    padding: 3px;
+    background-color: #F0F1F2;
+    border-radius: 5px;
 }
 
 /* Nav Animation */
@@ -774,4 +939,250 @@ body {
 #progressbar li.active:after {
     background: #27AE60;
     color: white;
+}
+
+
+/* multistep */
+.signup-body {
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+overflow: hidden;
+background-color: #BF9B6F;
+}
+
+.signup-container{
+width: 500px;
+background: #fff;
+text-align: center;
+padding: 50px 35px 10px 35px;
+backdrop-filter: blur(21px) saturate(107%);
+-webkit-backdrop-filter: blur(21px) saturate(107%);
+background-color: rgba(255, 255, 255, 0.71);
+border-radius: 12px;
+border: 1px solid rgba(209, 213, 219, 0.3);
+text-align: center;
+}
+
+.signup-container header{
+font-size: 35px;
+font-weight: 600;
+margin: 0 0 30px 0;
+}
+
+.signup-container .form-outer{
+width: 100%;
+overflow: hidden;
+}
+
+.signup-container .form-outer form{
+display: flex;
+width: 500%;
+}
+
+.form-outer form .page {
+width: 25%;
+position: relative;
+transition: margin-left 0.3s ease-in-out;  
+}
+
+.form-outer form .page .title{
+text-align: left;
+font-size: 25px;
+font-weight: 500;
+}
+
+.field-box {
+height: 400px
+}
+
+.form-outer form .page .field{
+width: 428px;
+height: 45px;
+margin: 45px 0;
+display: flex;
+position: relative;
+}
+
+.form-outer form .page .field .label{
+position: absolute;
+top: -20px;
+font-weight: 500;
+}
+
+.form-outer form .page .field input{
+height: 100%;
+width: 100%;
+border: 1px solid #03A63C;
+border-radius: 5px;
+padding-left: 15px;
+font-size: 18px;
+}
+
+.form-outer form .page .field button,
+.form-outer form .page .field .submit{
+width: 100%;
+height: calc(100% + 5px);
+border: none;
+border-radius: 5px;
+background: #03A63C;
+color: #F0F1F2;
+font-weight: 500;
+font-size: 18px;
+letter-spacing: 1px;
+cursor: pointer;
+transition: 0.3s ease;
+}
+
+.form-outer form .page .field button:hover{
+background: #06c749;
+}
+
+form .page .btns button .prev{
+margin-right: 3px !important;
+font-size: 17px;
+position: absolute;
+bottom: 10px;
+}
+
+form .page .btns button .next{
+margin-left: 3px !important;
+font-size: 17px;
+position: absolute;
+bottom: 10px;
+}
+.agreement {
+display: flex;
+margin-bottom: 55px;
+}
+
+.textBox {
+margin: 10px 0;
+padding: 5px 20px 0 20px;
+border: 1px solid #06c749;
+font-size: 10px;
+width: 428px;
+height: 350px;
+overflow-y: scroll;
+background: #F0F1F2;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+}
+
+.lastbtns {
+margin-top: 50px;
+}
+
+/* progress-bar */
+.signup-container .progress-bar{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+margin: 40px 0;
+user-select: none;
+}
+
+.signup-container .progress-bar .step{
+position: relative;
+text-align: center;
+width: 100%;
+}
+
+.signup-container .progress-bar .step p{
+font-size: 18px;
+font-weight: 500;
+color: #000;
+margin-bottom: 8px;
+}
+
+.progress-bar .step .bullet{
+position: relative;
+height: 25px;
+width: 25px;
+border: 2px solid #000;
+border-radius: 50px;
+display: inline-block;
+font-weight: 500;
+font-size: 17px;
+line-height: 25px;
+transition: 0.2s;
+}
+
+.progress-bar .step .bullet.active{
+border-color: #03A63C;
+background: #03A63C;
+}
+
+.progress-bar .step .bullet span{
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+}
+
+.progress-bar .step .bullet.active span{
+display: none;
+}
+
+.progress-bar .step .bullet:before,
+.progress-bar .step .bullet:after{
+position: absolute;
+content: '';
+bottom: 8px;
+right: -54px;
+height: 3px;
+width: 44px; 
+background: #262626
+} 
+
+.progress-bar .step p.active{
+color: #03A63C;
+transition: 0.2s linear;
+}
+
+.progress-bar .step .bullet.active:after{
+background: #03A63C;
+transform: scaleX(0);
+transform-origin: left;
+animation: animate 0.3s linear forwards;
+}
+@keyframes animate {
+100%{
+    transform: scaleX(1);
+}
+}
+
+.progress-bar .step:last-child .bullet:before,
+.progress-bar .step:last-child .bullet:after{
+display: none;
+}
+
+.progress-bar .step span{
+font-weight: 700;
+font-size: 17px;
+line-height: 25px;
+position: absolute;
+left: 50%;
+bottom: 0.5px;
+transform:  translateX(-50%);
+}
+
+.progress-bar .step p.active{
+color: #03A63C;
+transition: 0.2s linear;
+}
+
+.progress-bar .step .check{
+position: absolute;
+left: 50%;
+top: 70%;
+font-size: 15px;
+transform: translate(-50%, -50%);
+display: none;
+}
+
+.progress-bar .step .check.active{
+display: block;
+color: #fff;
 }
