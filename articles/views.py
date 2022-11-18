@@ -85,15 +85,14 @@ def detail(request, pk):
 
 def update(request, pk):
     posts = Post.objects.get(pk=pk)
-    if request.method == "POST":
-        post_form = PostForm(request.POST, instance=posts)
-
-        if post_form.is_valid():
-            post_form.save()
-
-            return redirect("articles:index")
-    else:
-        post_form = PostForm(instance=posts)
+    if request.user == posts.user:
+        if request.method == "POST":
+            post_form = PostForm(request.POST, instance=posts)
+            if post_form.is_valid():
+                post_form.save()
+                return redirect("articles:index")
+        else:
+            post_form = PostForm(instance=posts)
 
     return render(request, "articles/create.html", {"post_form": post_form})
 
@@ -278,6 +277,7 @@ def recommend(request, pk):
 
     return render(request, "articles/main.html", context)
 
+
 def search(request):
     popular_list = {}
     if request.method == "GET":
@@ -357,6 +357,7 @@ def searchfail(request):
         "popular": popular_search,
     }
     return render(request, "articles/searchfail.html", context)
+
 
 def support(request):
     return render(request, "articles/support.html")
