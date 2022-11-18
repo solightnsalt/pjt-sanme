@@ -76,7 +76,7 @@ def map_search(request, x, y):
 def search(request):
     park_list = []
     if request.method == "POST":
-        searched = request.POST['searched']
+        searched = request.POST["searched"]
 
         if searched != "":
             park_name = Map.objects.filter(
@@ -102,3 +102,4 @@ def search(request):
     }
 
     return JsonResponse(data)
+

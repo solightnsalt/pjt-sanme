@@ -75,3 +75,8 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class Search(models.Model):
+    title = models.CharField(max_length=10)
+    count = models.PositiveIntegerField(default=0)

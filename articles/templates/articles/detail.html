@@ -22,16 +22,17 @@
             <img src="{{ participater.profile_pic.url }}">
             <h3>{{ participater }}</h3>
             {% if request.user == post.user %}
-            <form class="m-0" action="{% url 'articles:delete_participate' participater.pk %}" method="POST">
-              {% csrf_token %}
-              <input type="submit" class="btn btn-danger mx-2" value="강퇴">
-            </form>
-            {% elif request.user == participater%}
-            <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
-              {% csrf_token %}
-              <input type="submit" class="btn btn-danger mx-2" value="취소">
-            </form>
-            {% endif %}
+
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">            
+                <input type="submit" class="btn btn-danger mx-2" value="강퇴">
+              </form>
+              
+              {% elif request.user == participater %}
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">            
+                <input type="submit" class="btn btn-danger mx-2" value="취소">
+              </form>
+              {% endif %}
+
             <!-- <div>
               <a href="#" class="">DM</a>
             </div> -->
@@ -97,18 +98,22 @@
         <dd class="col-8">
 
           {% if post.participate.count >= post.participate_people %}
-          <p>모집완료</p>
-          <a href="{% url 'articles:participate' post.pk %}">
-            {% elif request.user in post.participate.all %}
+            <div data-bs-target="#participateModal" data-bs-toggle="modal">모집완료</div>
+          {% else %}
+            <a href="{% url 'articles:participate' post.pk %}">
+            {% if request.user in post.participate.all %}
             <button type="button" class="btn btn-danger">참여취소</button>
             {% else %}
             <button type="button" class="btn btn-primary">참여하기</button>
-
             {% endif %}
-          </a>
+          {% endif %}
+
+          </a>{% if post.participate.count >= post.participate_people %}
+          {% else %}
+
           <div data-bs-target="#participateModal" data-bs-toggle="modal">참여자
             {{ post.participate.count}}</span><span>/{{post.participate_people}}</div>
-        </dd>
+        </dd>{% endif %}
         <dt class="col-4 text-center">조회수</dt>
         <dd class="col-8">{{ post.hit }}</dd>
         <dt class="col-4 text-center">생성일</dt>
