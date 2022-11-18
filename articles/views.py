@@ -55,9 +55,8 @@ def participate(request, pk):
     # }
     # return JsonResponse(context)
 def delete_participate(request, pk):
-    article = Post.objects.get(pk=pk)
-    if request.user in article.participate.all():
-        article.participate.remove(request.user)
+    post = Post.objects.get(pk=pk)
+    post.participate.delete(request.user)
     return redirect("articles:detail", pk)
 
 
