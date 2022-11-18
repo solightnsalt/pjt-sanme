@@ -19,23 +19,32 @@
     color: #BF9B6F;
 }
 /* ----------폰트---------- */
+/* main */
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* nav */
+@font-face {
+    font-family: 'Busan';
+    font-style: normal;
+    font-weight: 400;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/govs/busan/Busan/Busan.woff2') format('woff2'),
+    url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/govs/busan/Busan/Busan.woff') format('woff');
+}
+
 @font-face {
     font-family: 'NanumSquareNeo-Variable';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
+/* INDEX P */
 @font-face {
-    font-family: 'Happiness-Sans-Title';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Title.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'GangwonEduPowerExtraBoldA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-family: 'SangSangFlowerRoad';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/SangSangFlowerRoad.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -47,20 +56,15 @@
 /* ----------공통---------- */
 html,
 body {
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
-    font-size: 62.5%;
-    font-size: 10px;
 }
 
 ::selection {
-    background: #03A63C;
-    color: #F0F1F2;
-}
-
-::-moz-selection {
     background: #03A63C;
     color: #F0F1F2;
 }
@@ -71,81 +75,24 @@ body {
 }
 
 header {
-    font-family: 'Happiness-Sans-Title';
+    font-family: 'Busan';
+    font-size: 62.5%;
+    font-size: 10px;
 }
 
 main {
-    font-family: 'NanumSquareNeo-Variable';
+    font-family: 'IBMPlexSansKR-Regular';
 }
 
-.pos-btn {
-    background-color: #03A63C;
-    color: #F0F1F2;
-}
-
-.neg-btn {
-    background-color: #F2ACCD;
-    color: #F0F1F2;
-}
-
-.glass {
-    backdrop-filter: blur(21px) saturate(107%);
-    -webkit-backdrop-filter: blur(21px) saturate(107%);
-    background-color: rgba(255, 255, 255, 0.71);
-    border-radius: 12px;
-    border: 1px solid rgba(209, 213, 219, 0.3);
-    height: auto;
-    width: auto;
-    padding: 6.25rem;
-}
-
-.myH2 {
-    font-size: 4rem;
-}
-
-.myP {
-    padding-left: 15%;
-    padding-right: 15%;
-    font-size: 20px;
-    text-shadow: 5px 5px #F0F1F2;
-}
-
-@media all and (max-width:700px) {
-    .myP {
-        padding: 2%;
-    }
-}
-
-
-
-/* 여기부터 추가해서 쓰세요 */
-/*--------------index, main----------------- */
 .home {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     min-height: 1000px;
     background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
-    background-position: center top;
-    background-size: cover;
-}
-
-.main-bg {
-    width: 100%;
-    height: 100vh;
-    background-image: url(../images/base/bg.png);
-    background-position: center top;
-    background-size: cover;
-}
-
-.glass {
-    backdrop-filter: blur(21px) saturate(107%);
-    -webkit-backdrop-filter: blur(21px) saturate(107%);
-    background-color: rgba(255, 255, 255, 0.71);
-    border-radius: 12px;
-    border: 1px solid rgba(209, 213, 219, 0.3);
-    height: auto;
-    width: auto;
-    padding: 6.25rem;
+    background-repeat: no-repeat; /* 배경이미지X */
+    background-size: cover; /* 요소를 비율에 맞게 커버 */
+    background-position: center top; /* 이미지를 요소의 정가운데로 처리 */
+    background-attachment: fixed; /* 스크롤바 움직일때 이미지가 따라다님 */
 }
 
 .content {
@@ -157,8 +104,202 @@ main {
     align-content: center;
 }
 
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+}
+
+.pos-btn {
+    color: #F0F1F2;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-weight: 500;
+    background: transparent;
+    background-color: #03A63C;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    }
+
+.neg-btn {
+    background-color: #F2ACCD;
+    color: #F0F1F2;
+    width: auto;
+    height: 40px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    
+}
+
+.glass {
+    backdrop-filter: blur(25px) saturate(113%);
+    -webkit-backdrop-filter: blur(25px) saturate(113%);
+    background-color: rgba(255, 255, 255, 0.83);
+    border-radius: 3px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.myH2 {
+    font-size: 4rem;
+}
+
+/* 여기부터 추가해서 쓰세요 */
+/*-------------- index, login ----------------- */
+.index-home {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
+
+.start-container {
+    margin: 12.5rem 0;
+}
+
+.start-btn {
+    font-size: 30px;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
+    text-align: center;
+    background-color: #03A63C;
+    box-shadow: -4px 4px 0px #F0F1F2;
+    box-decoration-break: clone;
+    border-radius: 3px;
+    width: auto;
+    text-decoration: none;
+    overflow: hidden;
+    padding: 10px 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+}
+
+.start-btn:hover {
+    text-decoration: none;
+    color: #000;
+}
+.start-btn:before {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #fff;
+    animation: shiny-btn1 3s ease-in-out infinite;
+}
+
+.start-btn:hover{
+    opacity: .7;
+}
+
+.start-btn:active{
+    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.3), -4px -4px 6px 0 rgba(116, 125, 136, .2), inset -4px -4px 6px 0 rgba(255,255,255,.2), inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+}
+
+@keyframes shiny-btn1 {
+    0% { transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { transform: scale(50) rotate(45deg); opacity: 0; }
+}
+
+.Ptop {
+    font-family: 'SangSangFlowerRoad';
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 2px 1px rgba(139, 139, 139, 0.4);
+    position: relative;
+    bottom: -10%;
+    left: -10%;
+    transform: rotate(-5grad);
+}
+
+.Pbottom {
+    font-size: 28px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 2px 1px rgba(139, 139, 139, 0.4);
+    margin-top: -8.125rem;
+}
+
+.main-bg {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../images/base/bg.png);
+    background-position: center top;
+    background-size: cover;
+}
+
+.login-container {
+    color: rgb(0, 0, 0);
+    text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
+    text-align: center;
+    background-color: #F0F1F2;
+    box-shadow: -5px 5px 0px #03A63C;
+    box-decoration-break: clone;
+    border-radius: 3px;
+    width: auto;
+    padding: 30px 35px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    margin-top: 6.25rem;
+}
+
 .pf_list {
     margin-right: 100px;
+}
+
+.find li, .to-signup {
+    text-decoration: none;
+    list-style: none;
+    font-size: 90%;
+    color:#085e25;
+    cursor: pointer;
 }
 
 
@@ -451,7 +592,7 @@ main {
     text-decoration: none;
     color: rgb(0, 0, 0);
     line-height: 65px;
-    font-size: 2.4rem;
+    font-size: 1.5625rem;
 }
 
 .nav div.main_list ul li a:hover {
@@ -479,45 +620,26 @@ main {
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
-    right: 16%;
-    top: 20%;
-    width: 130px;
+    right: 0%;
+    top: 100%;
+    width: 150px;
     height: auto;
-	position: relative;
-	background: #f0f1f2;
-	border: 1px solid #f0f1f2;
+	background: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
     opacity:0;
     visibility: hidden;
     transition: .3s;
     transform: scaleY(0);
     transform-origin: top center;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 3px -5px 20px #00000029;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
 }
 
-.arrow_box:after, .arrow_box:before {
-	bottom: 98%;
-	right: 20%;
-	border: solid transparent;
-	content: "";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-
-.arrow_box:after {
-	border-color: rgba(240, 241, 242, 0);
-	border-bottom-color: #f0f1f2;
-	border-width: 10px;
-	margin-left: -10px;
-}
-.arrow_box:before {
-	border-color: rgba(240, 241, 242, 0);
-	border-bottom-color: #f0f1f2;
-	border-width: 11px;
-	margin-left: -11px;
+li .dd-list {
+    height: auto;
 }
 
 .dd-item {
@@ -541,13 +663,21 @@ main {
 .dd-btn {
     font-family: 'NanumSquareNeo-Variable';
     text-decoration: none;
-    color: #000;
+    font-weight: 700;
     font-size: 15px;
-    height: 70px;
+    height: 30px;
     width: auto;
-    padding: 10px;
-    background-color: #F0F1F2;
+    padding: 10px 20px;
+    color: #000;
     border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
 }
 
 /* Media qurey section */

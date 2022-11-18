@@ -4,25 +4,28 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
-<div class="map">
-  <div class="map-search">
-    <h2>공원 검색하기</h2>
-    <form id="map-search-form" action="" method="POST">
-      {% csrf_token %}
-      <input class="form-control" type="search" placeholder="공원 | 주소 검색" name="searched" aria-label="Search">
-      <button class="map-search-btn btn pos-btn" type="submit">검색하기</button>
-    </form>
-    <div id="map-search-result">
-      <div class="map-search-result-detail my-3">
-        <p class="mb-0 fs-4">공원 이름 또는 지역을 입력해주세요</p>
+  <div class="map">
+    <div class="map-search">
+      <h2>공원 검색하기</h2>
+      <form id="map-search-form" action="" method="POST">
+        {% csrf_token %}
+        <input class="form-control" type="search" placeholder="공원 | 주소 검색" name="searched" aria-label="Search">
+        <button class="map-search-btn btn pos-btn" type="submit">검색하기</button>
+      </form>
+      <div id="map-search-result">
+        <div class="map-search-result-detail my-3">
+          <p class="mb-0 fs-4">공원 이름 또는 지역을 입력해주세요</p>
+        </div>
       </div>
     </div>
+    <div>
+      <button type="button" onclick="getUserLocation()" class="btn pos-btn mb-4" id="getMyPositionBtn">
+        내 위치
+        <!--<img src="{% static 'images/location.png' %}" alt="현재위치">-->
+      </button>
+      <div id="map" style="width: 70vw; height:600px;"></div>
+    </div>
   </div>
-  <div>
-    <button type="button" onclick="getUserLocation()" class="btn pos-btn mb-4" id="getMyPositionBtn">내 위치 가져오기</button>
-    <div id="map" style="width: 70vw; height:600px;"></div>
-  </div>
-</div>
 {% endblock content %}
 
 {% block script %}
@@ -46,34 +49,44 @@
     // --------------------------------------------------------------------------------------------------------------------
     // 지도 컨트롤
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-    var mapTypeControl = new kakao.maps.MapTypeControl();
+    var mapTypeControl = new kakao
+      .maps
+      .MapTypeControl();
 
     // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
     // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
     // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-    var zoomControl = new kakao.maps.ZoomControl();
+    var zoomControl = new kakao
+      .maps
+      .ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     // --------------------------------------------------------------------------------------------------------------------
 
-
     // ---------------------------------------------------------------------------------------------------------
 
     // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
+    var geocoder = new kakao
+      .maps
+      .services
+      .Geocoder();
 
     // 주소로 좌표를 검색합니다
-    function getParkLocation(e){
+    function getParkLocation(e) {
       var addSearch = document.querySelector(`#${e.id}`)
       var parkLat = addSearch.dataset.latId
       var parkLong = addSearch.dataset.longId
 
-      var coords = new kakao.maps.LatLng(parkLat, parkLong);
+      var coords = new kakao
+        .maps
+        .LatLng(parkLat, parkLong);
 
       // 결과값으로 받은 위치를 마커로 표시합니다
-      var marker = new kakao.maps.Marker({map: map, position: coords});
+      var marker = new kakao
+        .maps
+        .Marker({map: map, position: coords});
 
       // 기존에 마커가 있다면 제거
       marker.setMap(null);
@@ -88,72 +101,93 @@
     function locationLoadSuccess(pos) {
       // 현재 위치 받아오기
       const x = pos.coords.latitude
-      const y = pos.coords.longitude
+      const y = pos
+        .coords
+        .longitude
 
         axios({method: 'get', url: `/map/map/${x}/${y}`})
         .then(response => {
-              console.log(response.data)
-              var parks = response.data.parkJson
+          console.log(response.data)
+          var parks = response.data.parkJson
 
-              var imageSrc = "/static/images/star.png"; 
+          var imageSrc = "/static/images/star.png";
 
-              for(let i=0; i < parks.length; i++){
-                var data = parks[i];
-                displayMarker(data);
-            }
-        
-            // 지도에 마커를 표시하는 함수입니다    
-            function displayMarker(data) { 
+          for (let i = 0; i < parks.length; i++) {
+            var data = parks[i];
+            displayMarker(data);
+          }
+
+          // 지도에 마커를 표시하는 함수입니다
+          function displayMarker(data) {
 
             // 마커 이미지의 이미지 크기 입니다
-            var imageSize = new kakao.maps.Size(35, 35); 
-            
-            // 마커 이미지를 생성합니다    
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            var imageSize = new kakao
+              .maps
+              .Size(35, 35);
+
+            // 마커 이미지를 생성합니다
+            var markerImage = new kakao
+              .maps
+              .MarkerImage(imageSrc, imageSize);
 
             // 마커 생성
-            var marker = new kakao.maps.Marker({
+            var marker = new kakao
+              .maps
+              .Marker({
                 map: map,
-                position: new kakao.maps.LatLng(data.lat, data.long),
-                image : markerImage
-            });
-            var overlay = new kakao.maps.CustomOverlay({
-                yAnchor: 1.5,
-                position: marker.getPosition()
-            });
-            
+                position: new kakao
+                  .maps
+                  .LatLng(data.lat, data.long),
+                image: markerImage
+              });
+            var overlay = new kakao
+              .maps
+              .CustomOverlay({yAnchor: 1.5, position: marker.getPosition()});
+
             var content = document.createElement('div')
-            content.classList.add('map-overlay-box')
+            content
+              .classList
+              .add('map-overlay-box')
             content.style.cssText = 'background: white; border: 1px solid black';
 
             var parkName = document.createElement('p')
-            parkName.classList.add('map-overlay-park-name')
-            parkName.innerHTML =  data.name;
+            parkName
+              .classList
+              .add('map-overlay-park-name')
+            parkName.innerHTML = data.name;
 
             var parkAddr = document.createElement('p')
-            parkAddr.classList.add('map-overlay-park-addr')
-            parkAddr.innerHTML =  data.addr;
+            parkAddr
+              .classList
+              .add('map-overlay-park-addr')
+            parkAddr.innerHTML = data.addr;
 
             var parkDis = document.createElement('p')
-            parkDis.classList.add('map-overlay-park-distance')
+            parkDis
+              .classList
+              .add('map-overlay-park-distance')
             parkDis.innerHTML = "내 위치와의 거리: " + data.userDistance;
-            
+
             var closeBtn = document.createElement('button')
-            closeBtn.classList.add('map-close-btn')
+            closeBtn
+              .classList
+              .add('map-close-btn')
             closeBtn.innerHTML = '닫기';
             closeBtn.onclick = function () {
-                overlay.setMap(null);
+              overlay.setMap(null);
             };
             content.append(parkName, parkAddr, parkDis)
             content.appendChild(closeBtn)
             overlay.setContent(content);
-        
-            kakao.maps.event.addListener(marker, 'click', function() {
-                overlay.setMap(map);
-            });
-        }
-        })
 
+            kakao
+              .maps
+              .event
+              .addListener(marker, 'click', function () {
+                overlay.setMap(map);
+              });
+          }
+        })
 
       var currentPos = new kakao
         .maps
@@ -161,12 +195,16 @@
 
       // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
       map.panTo(currentPos);
-            
+
       // 마커 생성
-      var marker = new kakao.maps.Marker({
-        position: currentPos,
-        image : new kakao.maps.MarkerImage("/static/images/located.png", new kakao.maps.Size(50, 50))
-      });
+      var marker = new kakao
+        .maps
+        .Marker({
+          position: currentPos,
+          image: new kakao
+            .maps
+            .MarkerImage("/static/images/located.png", new kakao.maps.Size(50, 50))
+        });
 
       // 기존에 마커가 있다면 제거
       marker.setMap(null);
@@ -179,9 +217,10 @@
 
     // 내 위치 가지고 오기
     function getUserLocation() {
-      navigator.geolocation.getCurrentPosition(locationLoadSuccess, loactionLoadError)
+      navigator
+        .geolocation
+        .getCurrentPosition(locationLoadSuccess, loactionLoadError)
     }
-
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
