@@ -264,3 +264,7 @@ def recommend(request, pk):
     }
 
     return render(request, "articles/main.html", context)
+
+
+def support(request):
+    return render(request, "articles/support.html")

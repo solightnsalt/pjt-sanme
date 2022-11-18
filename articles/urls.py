@@ -24,4 +24,5 @@ urlpatterns = [
     ),
     path("<int:pk>/participate/", views.participate, name="participate"),
     path("<int:pk>/recommend/", views.recommend, name="recommend"),
+    path("support/", views.support, name="support"),
 ]
