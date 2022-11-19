@@ -96,6 +96,7 @@ def search(request, x, y):
                         
                         park_list.append(
                             {
+                                "id" : park.id,
                                 "name": park.parkNm,
                                 "addr": park.lnmadr,
                                 "parkType": park.parkSe,

@@ -60,20 +60,8 @@
 
 <div class='container'>
   <div class="d-flex">
-    <div id="map" style="width:350px;height:350px;"></div>
+    <div id="staticMap" style="width:600px;height:350px;"></div>    
 
-    <script type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
-    <script>
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
-        };
-
-      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-      var map = new kakao.maps.Map(mapContainer, mapOption); 
-    </script>
 
     <div style="font-size: 2em;">
       <dl class="row m-3">
@@ -146,6 +134,7 @@
       <div class="comment-detail">
         <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
         <p id="comment-update-{{ comment.pk }}-content" class="comment-content">{{ comment.content }}</p>
+        
         {% if request.user.pk == comment.user.pk %}
         <form class="comment-update-form" id="form-comment-update-{{ comment.pk }}"
           action="{% url 'articles:comment_update' post.pk comment.pk %}" method="post" style="display:none;">
@@ -175,6 +164,38 @@
   {% endblock content %}
 
   {% block script %}
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5a06118ba07d4964a2e24ae9f85e906f"></script>
+  <script>
+  var currentLat = {{ latitude }}
+  var currentLong = {{ longitude }}
+
+  // 마커 이미지의 이미지 크기 입니다
+  var imageSize = new kakao.maps.Size(35, 35)
+  
+  var imageSrc = "/static/images/star.png";
+
+  // 마커 이미지를 생성합니다    
+  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+    
+  // 이미지 지도에 표시할 마커입니다
+  // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+  var marker = {
+      position: new kakao.maps.LatLng(currentLat , currentLong), 
+      text: '여기서 만나요!', // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+      image : markerImage
+    }
+
+  var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+      staticMapOption = { 
+          center: new kakao.maps.LatLng(currentLat , currentLong), // 이미지 지도의 중심좌표
+          level: 3, // 이미지 지도의 확대 레벨
+          marker: marker // 이미지 지도에 표시할 마커 
+      }
+
+  // 이미지 지도를 생성합니다
+  var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
