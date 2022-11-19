@@ -24,10 +24,12 @@ def main(request):
 
 
 def create(request):
+
     if request.method == "POST":
         post_form = PostForm(request.POST)
         if post_form.is_valid():
             posts = post_form.save(commit=False)
+            posts.park_address = Map.objects.get(pk=request.GET.get("park", ""))
             posts.user = request.user
             posts.save()
             return redirect("articles:board")
@@ -59,6 +61,7 @@ def participate(request, pk):
     # return JsonResponse(context)
 
 
+# 취소
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
@@ -82,15 +85,14 @@ def detail(request, pk):
 
 def update(request, pk):
     posts = Post.objects.get(pk=pk)
-    if request.method == "POST":
-        post_form = PostForm(request.POST, instance=posts)
-
-        if post_form.is_valid():
-            post_form.save()
-
-            return redirect("articles:index")
-    else:
-        post_form = PostForm(instance=posts)
+    if request.user == posts.user:
+        if request.method == "POST":
+            post_form = PostForm(request.POST, instance=posts)
+            if post_form.is_valid():
+                post_form.save()
+                return redirect("articles:index")
+        else:
+            post_form = PostForm(instance=posts)
 
     return render(request, "articles/create.html", {"post_form": post_form})
 
@@ -275,6 +277,7 @@ def recommend(request, pk):
 
     return render(request, "articles/main.html", context)
 
+
 def search(request):
     popular_list = {}
     if request.method == "GET":
@@ -282,11 +285,11 @@ def search(request):
         sort = request.GET.get("sorted", "")
 
         if not search.isdigit() and not search == "":
-            #
-            if User.objects.filter(
-                Q(nickname__icontains=search)
-                | Q(mbti__icontains=search)
-                | Q(gender__icontains=search)
+            # 검색받을 항목
+            if Post.objects.filter(
+                Q(title__icontains=search)
+                | Q(content__icontains=search)
+                | Q(day__icontains=search)
             ):
                 popular_list[search] = popular_list.get(search, 0) + 1
 
@@ -301,25 +304,20 @@ def search(request):
                 s.save()
         popular = Search.objects.order_by("-count")[:10]
 
-        search_list = User.objects.filter(
-            Q(nickname__icontains=search)
-            | Q(mbti__icontains=search)
-            | Q(gender__icontains=search)
+        search_list = Post.objects.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(day__icontains=search)
         )
 
         if search:
             if search_list:
                 pass
 
-            # if sort == "pop":
-            #     search_list = search_list.order_by("-like_users")
-            #     sort = "pop"
-            #     print(search_list)
-
-            # if sort == "recent":
-            #     search_list = search_list.order_by("-updated_at")
-            #     sort = "recent"
-            #     print(search_list)
+            if sort == "recent":
+                search_list = search_list.order_by("-updated_at")
+                sort = "recent"
+                print(search_list)
 
             page = int(request.GET.get("p", 1))
             pagenator = Paginator(search_list, 5)
@@ -329,7 +327,6 @@ def search(request):
             print(boards)
             print(search_list)
             print(popular)
-            print(sort)
             return render(
                 request,
                 "articles/search.html",
@@ -354,6 +351,7 @@ def searchfail(request):
         "popular": popular_search,
     }
     return render(request, "articles/searchfail.html", context)
+
 
 def support(request):
     return render(request, "articles/support.html")

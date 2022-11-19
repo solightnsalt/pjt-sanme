@@ -12,14 +12,17 @@
 
 {% block content %}
   <section class="home"></section>
-  <div class="search-box">
-    <form action="{%url 'articles:search' %}" class="search d-flex" role="search" method="">
-      <input type="text" style="display:none">
-      <input type="password" style="display:none">
-      <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
+  <section class="container mt-5">
+    <div class="search-box">
+      <h3>메이트 찾아보기 🔎 </h3>
+      <form action="{%url 'articles:search' %}" class="search d-flex" role="search" method="">
+        <input type="text" style="display:none">
+        <input type="password" style="display:none">
+        <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </section>
   <section class='container'>
     <div style="height: 100px"></div>
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
@@ -71,7 +74,11 @@
           {% for user_info in matched_user %}
             <div class="col mb-5">
               <div class="card h-100">
-                <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
+                {% if user_info.image %}
+                  <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
+                {% else %}
+                  <img class="card-img-top" src={% static "images/img_default.jpeg" %} alt="프사"/>
+                {% endif %}
                 <div class="card-body py-4">
                   <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
                 </div>

@@ -6,6 +6,7 @@ from django.db import connection, reset_queries
 from django.conf import settings
 from django.db.models import Q
 from haversine import haversine
+from operator import itemgetter
 
 
 def query_debugger(func):
@@ -58,6 +59,7 @@ def map_search(request, x, y):
                 
                 parkJson.append(
                     {
+                        "id" : park.id,
                         "name": park.parkNm,
                         "addr": park.lnmadr,
                         "lat": park.latitude,
@@ -72,7 +74,7 @@ def map_search(request, x, y):
     return JsonResponse(data)
 
 
-def search(request):
+def search(request, x, y):
     park_list = []
     if request.method == "POST":
         searched = request.POST["searched"]
@@ -84,17 +86,33 @@ def search(request):
                 | Q(lnmadr__icontains=searched)
             )
 
+            user_distance = int(haversine((float(x), float(y)), (float(park_name[1].latitude), float(park_name[1].longitude))) * 1000)
+
             if len(park_name) > 0:
                 for park in park_name:
-                    park_list.append(
-                        {
-                            "name": park.parkNm,
-                            "addr": park.lnmadr,
-                            "parkType": park.parkSe,
-                            "lat": park.latitude,
-                            "long": park.longitude,
-                        }
-                    )
+                    if park.latitude != '' and park.longitude != '':
+                            
+                        user_distance = haversine((float(x), float(y)), (float(park.latitude), float(park.longitude))) * 1000
+                        
+                        park_list.append(
+                            {
+                                "name": park.parkNm,
+                                "addr": park.lnmadr,
+                                "parkType": park.parkSe,
+                                "lat": park.latitude,
+                                "long": park.longitude,
+                                "userDistance": float(user_distance),
+                            }
+                        )
+
+    park_list = sorted(park_list, key=itemgetter('userDistance'), reverse=False) 
+
+    for park in park_list:
+        if park['userDistance'] <= 1000:
+            park['userDistance'] = int(park['userDistance']) + 'm'
+        else:
+            park['userDistance'] = park['userDistance'] / 1000
+            park['userDistance'] = format(park['userDistance'], ".2f") + 'km'
 
     data = {
         "parkJson": park_list,

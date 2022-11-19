@@ -19,25 +19,29 @@
         <a href="{% url 'accounts:detail' participater.pk %}" class="modal-participater"
           style="color: black; text-decoration: none;">
           <div class="d-flex align-items-center">
-            <img src="{{ participater.profile_pic.url }}">
+            <img src="{{ participater.profile_pic.url }}"></a>
             <h3>{{ participater }}</h3>
             {% if request.user == post.user %}
 
-              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">            
+
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
                 <input type="submit" class="btn btn-danger mx-2" value="강퇴">
               </form>
               
               {% elif request.user == participater %}
-              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">            
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
                 <input type="submit" class="btn btn-danger mx-2" value="취소">
               </form>
               {% endif %}
+
 
             <!-- <div>
               <a href="#" class="">DM</a>
             </div> -->
           </div>
-        </a>
+        
         {% endfor %}
         {% else %}
         <div class="text-center">참여자가 없습니다.</div>
@@ -80,7 +84,7 @@
         <dt class="col-4 text-center">작성자</dt>
         <dd class="col-8">
           <a href="{% url 'accounts:detail' user.pk %}">
-            <img class="rounded-circle bg-white"" style=" max-width: 5%; height: auto"
+            <img class="rounded-circle bg-white" style=" max-width: 5%; height: auto"
               src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
         </dd>
 
@@ -98,15 +102,15 @@
         <dd class="col-8">
 
           {% if post.participate.count >= post.participate_people %}
-            <div data-bs-target="#participateModal" data-bs-toggle="modal">모집완료</div>
+          <div data-bs-target="#participateModal" data-bs-toggle="modal">모집완료</div>
           {% else %}
-            <a href="{% url 'articles:participate' post.pk %}">
+          <a href="{% url 'articles:participate' post.pk %}">
             {% if request.user in post.participate.all %}
             <button type="button" class="btn btn-danger">참여취소</button>
             {% else %}
             <button type="button" class="btn btn-primary">참여하기</button>
             {% endif %}
-          {% endif %}
+            {% endif %}
 
           </a>{% if post.participate.count >= post.participate_people %}
           {% else %}
@@ -124,7 +128,12 @@
 
 
 
+
   </div>
+  {% if request.user == post.user %}
+  <a class="btn btn-primary my-3 float-right" href="{% url 'articles:update' post.pk %}">수정하기</a>
+  <a class="btn btn-danger my-3 float-right" href="{% url 'articles:delete' post.pk %}">삭제하기</a>
+  {% endif %}
   {% for participater in post.participate.all %}
   {% if request.user == post.user or request.user == participater %}
   <h1>comment</h1>
