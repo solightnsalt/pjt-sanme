@@ -89,7 +89,8 @@ class User(AbstractUser):
     agree = models.BooleanField(default=False)  # 약관내용
 
     profile_pic = ProcessedImageField(  # 프로필사진
-        upload_to="images/",
+        upload_to="profile/%Y%m%d/",
+        default="../static/images/profile_default.png",
         blank=True,
         processors=[ResizeToFill(360, 360)],
         format="JPEG",
@@ -102,4 +103,3 @@ class User(AbstractUser):
     blocking = models.ManyToManyField(
         "self", symmetrical=False, related_name="blockers"
     )
-
