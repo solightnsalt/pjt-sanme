@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_safe
+from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from accounts.models import User
 from maps.models import Map
@@ -8,18 +9,71 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
+import random
 
 # Create your views here.
 @require_safe
 def index(request):
     return render(request, "articles/index.html")
 
-
+@login_required
 def main(request):
+    mbti_info = {
+        "ENTJ": ["ISFP", "INFP", "ESFP", "ESTP"],
+        "ENTP": ["ISFJ", "ISTJ", "ENTP", "ESTJ"],
+        "INTJ": ["ESFP", "ESTP", "ISFP", "INTP"],
+        "INTP": ["ESFP", "ESTP", "ISFP", "INFP"],
+        "ESTJ": ["INFP", "ISFP", "INTP", "ENTP"],
+        "ESFJ": ["INTP", "ISTP", "ENTP", "ENFP"],
+        "ISTJ": ["ENFP", "ENTP", "ISFP", "INFP"],
+        "ISFJ": ["ENTP", "ENFP", "INTP", "ISTP"],
+        "ENFJ": ["ISTP", "INTP", "ESTP", "ESFP"],
+        "ENFP": ["ISTJ", "ISTJ", "ESFJ", "ESTJ"],
+        "INFJ": ["ESTP", "ESFP", "ISTP", "INTP"],
+        "INFP": ["ESTJ", "ENTJ", "INTJ", "ISTJ"],
+        "ESTP": ["INFJ", "INTJ", "ENFJ", "ENTJ"],
+        "ESFP": ["INTJ", "INFJ", "ENTJ", "ENFJ"],
+        "ISTP": ["ENFJ", "ESFJ", "INFJ", "ISFJ"],
+        "ISFP": ["ENTJ", "ESTJ", "INTJ", "ISTJ"],
+    }
+    # mbti에 따른 유저 3명 추출하기
+    # 유저 정보를 가져옴
+    my_data = User.objects.get(pk=request.user.pk)
+    # 유저의 mbti
+    my_mbti = my_data.mbti
+    # 해당 유저와 잘 맞는 유저 리스트
+    matched_user = []
+    # mbti 키, 값
+    try:
+        for mbti_key, mbti_value in mbti_info.items():
+            # 유저의 mbti가 키에 있으면
+            if my_mbti == mbti_key:
+                # 값에 해당하는 유저를 골라냄
+                for info in mbti_value:
+                    user_data = User.objects.filter(mbti=info)
+                    # 유저 데이터가 하나의 mbti에 2개 이상일 경우
+                    if len(user_data) <= 2:
+                        # 1개만 랜덤으로 추려냄
+                        user_data = random.choice(user_data)
+                    matched_user.append(user_data)
+        # 결과적으로 3개의 유저 데이터 도출
+        matched_user = random.sample(matched_user, 3)
+    except IndexError:
+        print("해당하는 유저가 없습니다")
+    except ValueError:
+        print("데이터가 없습니다.")
+
+    # 매너유저 3명
+    hot_user = User.objects.all().order_by("-manner_point")[:3]
     posts = Post.objects.all()
+    print(hot_user)
     context = {
         "posts": posts,
+        "my_mbti": my_mbti,
+        "matched_user": matched_user,
+        "hot_user": hot_user,
     }
+
     return render(request, "articles/main.html", context)
 
 
@@ -214,68 +268,6 @@ def board(request):
         "post": post,
     }
     return render(request, "articles/board.html", context)
-
-
-import random
-
-
-def recommend(request, pk):
-    # mbti 별 잘 맞는 유형
-    mbti_info = {
-        "ENTJ": ["ISFP", "INFP", "ESFP", "ESTP"],
-        "ENTP": ["ISFJ", "ISTJ", "ENTP", "ESTJ"],
-        "INTJ": ["ESFP", "ESTP", "ISFP", "INTP"],
-        "INTP": ["ESFP", "ESTP", "ISFP", "INFP"],
-        "ESTJ": ["INFP", "ISFP", "INTP", "ENTP"],
-        "ESFJ": ["INTP", "ISTP", "ENTP", "ENFP"],
-        "ISTJ": ["ENFP", "ENTP", "ISFP", "INFP"],
-        "ISFJ": ["ENTP", "ENFP", "INTP", "ISTP"],
-        "ENFJ": ["ISTP", "INTP", "ESTP", "ESFP"],
-        "ENFP": ["ISTJ", "ISTJ", "ESFJ", "ESTJ"],
-        "INFJ": ["ESTP", "ESFP", "ISTP", "INTP"],
-        "INFP": ["ESTJ", "ENTJ", "INTJ", "ISTJ"],
-        "ESTP": ["INFJ", "INTJ", "ENFJ", "ENTJ"],
-        "ESFP": ["INTJ", "INFJ", "ENTJ", "ENFJ"],
-        "ISTP": ["ENFJ", "ESFJ", "INFJ", "ISFJ"],
-        "ISFP": ["ENTJ", "ESTJ", "INTJ", "ISTJ"],
-    }
-    # mbti에 따른 유저 3명 추출하기
-    # 유저 정보를 가져옴
-    my_data = User.objects.get(pk=pk)
-    # 유저의 mbti
-    my_mbti = my_data.mbti
-    # 해당 유저와 잘 맞는 유저 리스트
-    matched_user = []
-    # mbti 키, 값
-    try:
-        for mbti_key, mbti_value in mbti_info.items():
-            # 유저의 mbti가 키에 있으면
-            if my_mbti == mbti_key:
-                # 값에 해당하는 유저를 골라냄
-                for info in mbti_value:
-                    user_data = User.objects.filter(mbti=info)
-                    # 유저 데이터가 하나의 mbti에 2개 이상일 경우
-                    if len(user_data) <= 2:
-                        # 1개만 랜덤으로 추려냄
-                        user_data = random.choice(user_data)
-                    matched_user.append(user_data)
-        # 결과적으로 3개의 유저 데이터 도출
-        matched_user = random.sample(matched_user, 3)
-    except IndexError:
-        print("해당하는 유저가 없습니다")
-    except ValueError:
-        print("데이터가 없습니다.")
-
-    # 매너유저 3명
-    hot_user = User.objects.all().order_by("-manner_point")[:3]
-    print(hot_user)
-    context = {
-        "my_mbti": my_mbti,
-        "matched_user": matched_user,
-        "hot_user": hot_user,
-    }
-
-    return render(request, "articles/main.html", context)
 
 
 def search(request):
