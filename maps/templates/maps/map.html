@@ -4,18 +4,26 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
-<div class="map">
-  <div class="map-search">
-    <h2>공원 검색하기</h2>
-    <form id="map-search-form" action="" method="POST">
-      {% csrf_token %}
-      <input class="form-control" type="search" placeholder="공원 | 주소 검색" name="searched" aria-label="Search">
-      <button class="map-search-btn btn pos-btn" type="submit">검색하기</button>
-    </form>
-    <div id="map-search-result">
-      <div class="map-search-result-detail my-3">
-        <p class="mb-0 fs-4">공원 이름 또는 지역을 입력해주세요</p>
+  <div class="map">
+    <div class="map-search">
+      <h2>공원 검색하기</h2>
+      <form id="map-search-form" action="" method="POST">
+        {% csrf_token %}
+        <input class="form-control" type="search" placeholder="공원 | 주소 검색" name="searched" aria-label="Search">
+        <button class="map-search-btn btn pos-btn" type="submit">검색하기</button>
+      </form>
+      <div id="map-search-result">
+        <div class="map-search-result-detail my-3">
+          <p class="mb-0 fs-4">공원 이름 또는 지역을 입력해주세요</p>
+        </div>
       </div>
+    </div>
+    <div>
+      <button type="button" onclick="getUserLocation()" class="btn pos-btn mb-4" id="getMyPositionBtn">
+        내 위치
+        <!--<img src="{% static 'images/location.png' %}" alt="현재위치">-->
+      </button>
+      <div id="map" style="width: 70vw; height:600px;"></div>
     </div>
   </div>
   <div>
@@ -27,8 +35,6 @@
 
 {% block script %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5a06118ba07d4964a2e24ae9f85e906f&libraries=services"></script>
-  <script src="{% static 'js/map.js' %}">
-  </script>
+  <script src="{% static 'js/map.js' %}"></script>
 {% endblock script %}

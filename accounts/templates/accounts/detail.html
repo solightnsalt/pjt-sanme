@@ -159,7 +159,7 @@
 
             <!-- 수정 및 삭제 -->
             {% if request.user == user %}
-              <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn mx-3">수정</a>
+              <a href="{% url 'accounts:update' user.pk %}#pf_wrapper" type="button" class="btn pos-btn mx-3">수정</a>
               <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">회원탈퇴</a>
             {% endif %}
           </div>
