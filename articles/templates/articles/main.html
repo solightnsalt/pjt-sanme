@@ -11,8 +11,7 @@
 {% block style %}{% endblock style %}
 
 {% block content %}
-  <section class="home"></section>
-  <section class="container mt-5">
+  <section class="home">
     <div class="search-box">
       <h3>메이트 찾아보기 🔎 </h3>
       <form action="{%url 'articles:search' %}" class="search d-flex" role="search" method="">
@@ -31,7 +30,7 @@
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
-      <div class="carousel-inner">
+      {% comment %} <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="https://images.unsplash.com/photo-1636625554502-634b6697f4ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="한강공원">
           <div class="carousel-caption d-none d-md-block">
@@ -56,7 +55,7 @@
             <a href="https://www.ggtour.or.kr/story/travel.php?tmenu=&smenu=&stitle=&tsort=1&msort=141&board_code=5&board=5&s_category_name=&s_view_yn=&key=&no=73419&mode=newdetail&page=1&s_tag=%EB%8F%99%ED%83%84%ED%98%B8%EC%88%98%EA%B3%B5%EC%9B%90&s_admin_no=">산책부터 야경까지</a>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">이전</span>
@@ -74,11 +73,7 @@
           {% for user_info in matched_user %}
             <div class="col mb-5">
               <div class="card h-100">
-                {% if user_info.image %}
                   <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
-                {% else %}
-                  <img class="card-img-top" src={% static "images/img_default.jpeg" %} alt="프사"/>
-                {% endif %}
                 <div class="card-body py-4">
                   <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
                 </div>

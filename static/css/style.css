@@ -331,6 +331,16 @@ main {
     margin-top: 12.5rem;
 }
 
+.search-box {
+    padding: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+
+}
+
 /* articles */
 /*-------------------- 포스트 디테일-------------------- */
 .modal-participater img {
@@ -1161,30 +1171,33 @@ li .dd-list {
 
 /* multistep */
 .signup-body {
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-overflow: hidden;
-background-color: #BF9B6F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background: transparent;
+    padding-top: 12.5rem;
 }
 
 .signup-container{
 width: 500px;
-background: #fff;
 text-align: center;
 padding: 50px 35px 10px 35px;
-backdrop-filter: blur(21px) saturate(107%);
--webkit-backdrop-filter: blur(21px) saturate(107%);
-background-color: rgba(255, 255, 255, 0.71);
-border-radius: 12px;
 border: 1px solid rgba(209, 213, 219, 0.3);
-text-align: center;
+text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
+background-color: #F0F1F2;
+box-shadow: -5px 5px 0px #03A63C;
+box-decoration-break: clone;
+border-radius: 3px;
+transition: all 0.3s ease;
+display: inline-block;
+outline: none;
 }
 
 .signup-container header{
 font-size: 35px;
-font-weight: 600;
+font-weight: 400;
 margin: 0 0 30px 0;
 }
 
@@ -1216,7 +1229,7 @@ height: 400px
 
 .form-outer form .page .field{
 width: 428px;
-height: 45px;
+height: auto;
 margin: 45px 0;
 display: flex;
 position: relative;
@@ -1224,8 +1237,15 @@ position: relative;
 
 .form-outer form .page .field .label{
 position: absolute;
-top: -20px;
+top: -27px;
 font-weight: 500;
+}
+
+.form-outer form .page .field .personality {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    line-height: 2;
 }
 
 .form-outer form .page .field input{
@@ -1240,7 +1260,7 @@ font-size: 18px;
 .form-outer form .page .field button,
 .form-outer form .page .field .submit{
 width: 100%;
-height: calc(100% + 5px);
+height: 45px;
 border: none;
 border-radius: 5px;
 background: #03A63C;
@@ -1381,7 +1401,7 @@ font-size: 17px;
 line-height: 25px;
 position: absolute;
 left: 50%;
-bottom: 0.5px;
+bottom: -1px;
 transform:  translateX(-50%);
 }
 
