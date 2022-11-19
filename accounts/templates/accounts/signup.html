@@ -7,8 +7,6 @@
 {% block title %}
   | 회원가입{% endblock title %}
 
-{% block style %}{% endblock style %}
-
 {% block content %}
   <section class="home"></section>
   <div class="signup-body" style="height: 1000px">
@@ -116,7 +114,7 @@
               </div>
               <div class="field">
                 <div class="label">성격</div>
-                {% render_field form.manner class="d-flex flex-row flex-wrap" %}
+                {% render_field form.manner class="d-flex flex-wrap lh-lg" %}
               </div>
               <div class="field">
                 <div class="label">흡연여부</div>

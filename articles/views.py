@@ -3,7 +3,6 @@ from django.views.decorators.http import require_safe
 from .forms import PostForm, CommentForm
 from accounts.models import User
 from maps.models import Map
-from maps.models import Map
 from .models import Post, Comment, Search
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -62,6 +61,7 @@ def participate(request, pk):
     # return JsonResponse(context)
 
 
+# 취소
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
@@ -287,11 +287,11 @@ def search(request):
         sort = request.GET.get("sorted", "")
 
         if not search.isdigit() and not search == "":
-            #
-            if User.objects.filter(
-                Q(nickname__icontains=search)
-                | Q(mbti__icontains=search)
-                | Q(gender__icontains=search)
+            # 검색받을 항목
+            if Post.objects.filter(
+                Q(title__icontains=search)
+                | Q(content__icontains=search)
+                | Q(day__icontains=search)
             ):
                 popular_list[search] = popular_list.get(search, 0) + 1
 
@@ -306,25 +306,20 @@ def search(request):
                 s.save()
         popular = Search.objects.order_by("-count")[:10]
 
-        search_list = User.objects.filter(
-            Q(nickname__icontains=search)
-            | Q(mbti__icontains=search)
-            | Q(gender__icontains=search)
+        search_list = Post.objects.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(day__icontains=search)
         )
 
         if search:
             if search_list:
                 pass
 
-            # if sort == "pop":
-            #     search_list = search_list.order_by("-like_users")
-            #     sort = "pop"
-            #     print(search_list)
-
-            # if sort == "recent":
-            #     search_list = search_list.order_by("-updated_at")
-            #     sort = "recent"
-            #     print(search_list)
+            if sort == "recent":
+                search_list = search_list.order_by("-updated_at")
+                sort = "recent"
+                print(search_list)
 
             page = int(request.GET.get("p", 1))
             pagenator = Paginator(search_list, 5)
@@ -334,7 +329,6 @@ def search(request):
             print(boards)
             print(search_list)
             print(popular)
-            print(sort)
             return render(
                 request,
                 "articles/search.html",
