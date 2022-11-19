@@ -61,12 +61,11 @@ def participate(request, pk):
     # }
     # return JsonResponse(context)
 
-
+# 취소
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
     return redirect("articles:detail", pk)
-
 
 def detail(request, pk):
     post = Post.objects.get(pk=pk)

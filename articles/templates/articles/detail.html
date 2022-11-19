@@ -19,25 +19,29 @@
         <a href="{% url 'accounts:detail' participater.pk %}" class="modal-participater"
           style="color: black; text-decoration: none;">
           <div class="d-flex align-items-center">
-            <img src="{{ participater.profile_pic.url }}">
+            <img src="{{ participater.profile_pic.url }}"></a>
             <h3>{{ participater }}</h3>
             {% if request.user == post.user %}
 
-            <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
-              <input type="submit" class="btn btn-danger mx-2" value="강퇴">
-            </form>
 
-            {% elif request.user == participater %}
-            <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
-              <input type="submit" class="btn btn-danger mx-2" value="취소">
-            </form>
-            {% endif %}
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
+                <input type="submit" class="btn btn-danger mx-2" value="강퇴">
+              </form>
+              
+              {% elif request.user == participater %}
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
+                <input type="submit" class="btn btn-danger mx-2" value="취소">
+              </form>
+              {% endif %}
+
 
             <!-- <div>
               <a href="#" class="">DM</a>
             </div> -->
           </div>
-        </a>
+        
         {% endfor %}
         {% else %}
         <div class="text-center">참여자가 없습니다.</div>
@@ -80,7 +84,7 @@
         <dt class="col-4 text-center">작성자</dt>
         <dd class="col-8">
           <a href="{% url 'accounts:detail' user.pk %}">
-            <img class="rounded-circle bg-white"" style=" max-width: 5%; height: auto"
+            <img class="rounded-circle bg-white" style=" max-width: 5%; height: auto"
               src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
         </dd>
 
