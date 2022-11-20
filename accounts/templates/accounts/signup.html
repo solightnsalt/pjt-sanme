@@ -116,10 +116,11 @@
                 <div class="label">MBTI</div>
                 {% render_field form.mbti class="form-control" %}
               </div>
-              <div class="field">
+              <div class="field" style="height:160px">
                 <div class="label">성격</div>
-                {% render_field form.manner class="d-flex flex-wrap lh-lg" %}
+                {% render_field form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5"%}
               </div>
+              
               <div class="field">
                 <div class="label">흡연여부</div>
                 {% render_field form.smoking class="form-control" %}
