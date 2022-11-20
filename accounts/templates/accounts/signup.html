@@ -93,8 +93,12 @@
                 {% render_field form.gender %}
               </div>
               <div class="field">
-                <div class="label">지역</div>
-                <input type="text" id="address_kakao" name="address"/>
+                <div class="label">주소</div>
+                <input type="text" id="address_kakao" name="address"/><br>
+              </div>
+              <div class="field">
+                <div class="label">상세주소</div>
+                {% render_field form.address_detail class="form-control" %}
               </div>
             </div>
             <div class="field btns">
