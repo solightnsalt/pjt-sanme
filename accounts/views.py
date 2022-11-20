@@ -21,7 +21,7 @@ def login(request):
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect(request.Get.get('next') or "articles:main")
+                return redirect(request.GET.get("next") or "articles:main")
         else:
             login_form = AuthenticationForm()
 

@@ -88,7 +88,8 @@ main {
     width: 100%;
     height: 100%;
     min-height: 1000px;
-    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    /* background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80); */
+    background-image: url(../images/bg/bd-top.png);
     background-repeat: no-repeat; /* 배경이미지X */
     background-size: cover; /* 요소를 비율에 맞게 커버 */
     background-position: center top; /* 이미지를 요소의 정가운데로 처리 */
@@ -144,14 +145,14 @@ main {
     }
 
 .neg-btn {
-    background-color: #F2ACCD;
     color: #F0F1F2;
-    width: auto;
+    width: 130px;
     height: 40px;
     border-radius: 5px;
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
+    background-color: #F2ACCD;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -159,9 +160,26 @@ main {
     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
     7px 7px 20px 0px rgba(0,0,0,.1),
     4px 4px 5px 0px rgba(0,0,0,.1);
-    outline: none;
-    
+    outline: none;   
 }
+
+.awf-btn {
+    color: #F0F1F2;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-weight: 500;
+    background: transparent;
+    background-color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;}
 
 .glass {
     backdrop-filter: blur(25px) saturate(113%);
@@ -623,15 +641,20 @@ th, td {
 /*-------------------- account detail------------------------- */
 .pf-box {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-content: flex-start;
     align-items: center;
-    padding: 100px 0;
+    width: 100%;
+
 }
 
 .pf-right {
     display: flex;
     flex-direction: column;
-    padding-left: 100px;
+}
+
+.pf-history {
+    width: 100%;
 }
 
 .written-p, .written-c, .liked {
@@ -644,6 +667,10 @@ th, td {
     width: 100%;
     padding: 3.125rem;
     margin-top: 9.375rem;
+}
+
+.liked {
+    margin-bottom: 200px;
 }
 
 .counts {
@@ -659,7 +686,7 @@ th, td {
 #article-profile #article-profile-right .meters {
     clear: both;
     display: block;
-    width: 150px;
+    width: 80%;
     background-color: #e9ecef;
     height: 8px;
     border-radius: 100px;
@@ -706,7 +733,7 @@ th, td {
     background:#000;
     display:inline-block;
     color:#fff;
-    border-radius:3px 3px 0px 0px;
+    border-radius:5px 5px 0px 0px;
     box-shadow: 0 0.5rem 0.8rem #00000080;
 }
 .panels{
@@ -718,6 +745,7 @@ th, td {
     border-radius:3px;
     overflow:hidden;
     padding:20px;  
+    border-radius:0px 0px 5px 5px;
 }
 .panel{
     display:none;
@@ -956,6 +984,7 @@ li .dd-list {
     color: #000;
     border-radius: 5px;
     background: transparent;
+    background-color: #03A63C;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -1427,7 +1456,7 @@ font-weight: 500;
 height: 400px
 }
 
-.form-outer form .page .field{
+.form-outer form .page .field {
 width: 428px;
 height: auto;
 margin: 45px 0;
@@ -1439,13 +1468,6 @@ position: relative;
 position: absolute;
 top: -27px;
 font-weight: 500;
-}
-
-.form-outer form .page .field .personality {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    line-height: 2;
 }
 
 .form-outer form .page .field input{
