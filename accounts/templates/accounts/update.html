@@ -40,8 +40,10 @@
             {% render_field user_form.birth class="form-control" %}
             <div class="panel-title">성별</div>
             {% render_field user_form.gender class="form-control" %}
-            <div class="panel-title">지역</div>
+            <div class="panel-title">주소</div>
             {% render_field user_form.address class="form-control" %}
+            <div class="panel-title">상세주소</div>
+            {% render_field user_form.address_detail class="form-control" %}
           </div>
           <div class="panel" id="three-panel">
             <div class="panel-title">MBTI</div>
