@@ -125,6 +125,7 @@ def delete_participate(request, pk):
 
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
+    day = post.day
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
     post.hit += 1
@@ -133,6 +134,8 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
+        'day' : day.strftime("%Y/%m/%d"),
+        "name" : post.park_address.parkNm,
         "latitude": post.park_address.latitude,
         "longitude": post.park_address.longitude,
     }

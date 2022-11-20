@@ -34,13 +34,16 @@
           <div id="mainListDiv" class="main_list">
             <ul class="navlinks">
               <li>
-                <a href="{% url 'map:map' %}">주변공원</a>
+                <a href="{% url 'map:map' %}">공원찾기</a>
+              </li>
+              <li>
+                <a href="#">친구찾기</a>
               </li>
               <li>
                 <a href="{% url 'articles:board' %}">산책해요</a>
               </li>
               <li class="pf_list">
-                <a href="{% url 'articles:support' %}">고객지원</a>
+                <a href="#">고객지원</a>
               </li>
               {% if request.user.is_authenticated %}
                 <li class="dd-toggle">

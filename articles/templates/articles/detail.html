@@ -5,119 +5,103 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
-  <!-- 참여자 모달 -->
-  <div class="modal fade title-font" id="participateModal" tabindex="-1" aria-labelledby="participateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="participateModalLabel">참여자</h5>
-        </div>
-        <div class="modal-body">
-          {% if post.participate.all %}
-            {% for participater in post.participate.all %}
-              <a href="{% url 'accounts:detail' participater.pk %}" class="modal-participater" style="color: black; text-decoration: none;">
-                <div class="d-flex align-items-center">
-                  <img src="{{ participater.get_photo_url }}">
-                </a>
-                <h3>{{ participater }}</h3>
-                {% if request.user == post.user %}
+<!-- 참여자 모달 -->
+<div class="modal fade title-font" id="participateModal" tabindex="-1" aria-labelledby="participateModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="participateModalLabel">참여자</h5>
+      </div>
+      <div class="modal-body">
+        {% if post.participate.all %}
+        {% for participater in post.participate.all %}
+        <a href="{% url 'accounts:detail' participater.pk %}" class="modal-participater"
+          style="color: black; text-decoration: none;">
+          <div class="d-flex align-items-center">
+            <img src="{{ participater.profile_pic.url }}"></a>
+            <h3>{{ participater }}</h3>
+            {% if request.user == post.user %}
 
-                  <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-danger mx-2" value="강퇴">
-                  </form>
 
-                {% elif request.user == participater %}
-                  <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-danger mx-2" value="취소">
-                  </form>
-                {% endif %}
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
+                <input type="submit" class="btn btn-danger mx-2" value="강퇴">
+              </form>
+              
+              {% elif request.user == participater %}
+              <form class="m-0" action="{% url 'articles:delete_participate' post.pk %}" method="POST">
+                {% csrf_token %}            
+                <input type="submit" class="btn btn-danger mx-2" value="취소">
+              </form>
+              {% endif %}
 
-                <!-- <div> <a href="#" class="">DM</a> </div> -->
-              </div>
 
-            {% endfor %}
-          {% else %}
-            <div class="text-center">참여자가 없습니다.</div>
-          {% endif %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn" style="background-color: #03A63C;" data-bs-dismiss="modal">Close</button>
-        </div>
+            <!-- <div>
+              <a href="#" class="">DM</a>
+            </div> -->
+          </div>
+        
+        {% endfor %}
+        {% else %}
+        <div class="text-center">참여자가 없습니다.</div>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" style="background-color: #03A63C;" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div class='container'>
-  <div class="d-flex">
-    <div id="staticMap" style="width:600px;height:350px;"></div>    
-
-
-    <div style="font-size: 2em;">
-      <dl class="row m-3">
-        <dt class="col-4 text-center">작성자</dt>
-        <dd class="col-8">
-          <a href="{% url 'accounts:detail' user.pk %}">
-            <img class="rounded-circle bg-white" style=" max-width: 5%; height: auto"
-              src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
-        </dd>
-
-        <dt class="col-4 text-center">Title</dt>
-        <dd class="col-8">{{ post.title }}</dd>
-        <dt class="col-4 text-center">Day</dt>
-        <dd class="col-8">{{ post.day }}</dd>
-        <dt class="col-4 text-center">Time</dt>
-        <dd class="col-8">{{post.time}}</dd>
-        <dt class="col-4 text-center">애완동물 유/무</dt>
-        <dd class="col-8">{{post.pet}}</dd>
-        <dt class="col-4 text-center">내용</dt>
-        <dd class="col-8">{{ post.content }}</dd>
-        <dt class="col-4 text-center">참여여부</dt>
-        <dd class="col-8">
-
-            </a>
-            {% if post.participate.count >= post.participate_people %}
-            {% else %}
-
-              <div data-bs-target="#participateModal" data-bs-toggle="modal">참여자
-                {{ post.participate.count}}</span><span>/{{post.participate_people}}</div>
-            </dd>
-          {% endif %}
-          <dt class="col-4 text-center">조회수</dt>
-          <dd class="col-8">{{ post.hit }}</dd>
-          <dt class="col-4 text-center">생성일</dt>
-          <dd class="col-8">{{ post.created_at|date:'Y-m-d' }}</dd>
-        </dl>
-      </div>
-
-    </div>
 
 
 
-
-
+<div class='detail-info-all d-flex flex-column align-items-center'>
+  <div class="detail-map">
+    <div id="staticMap" style="width:600px;height:350px;"></div>  
   </div>
+
+  <div class="d-flex">
+    <div>
+        <p class="detail-info mb-2">작성자</p>
+        <p class="detail-info mb-2">만나는 날</p>
+        <p class="detail-info mb-2">만나는 시간</p>
+        <p class="detail-info mb-2">애완동물</p>
+        <p class="detail-info mb-2">참여자</p>
+    </div>
+    <div>
+      <p class="detail-info-an mb-2"><a class="detail-info-name"href="{% url 'accounts:detail' user.pk %}">{{ post.user.nickname }}</a></p>
+      <p class="detail-info-an mb-2">{{ day }}</p>
+      <p class="detail-info-an mb-2">{{ post.time }}</p>
+      {% if post.pet == False %}
+      <p class="detail-info-an mb-2">애완동물 없음</p>
+      {% else %}
+      <p class="detail-info-an mb-2">애완동물과 같이 산책</p>
+      {% endif %}
+      <p class="detail-info-an mb-2">{{ post.participate.count}} / {{ post.participate_people }}</p>
+    </div>
+  </div>
+
+  <div class="container d-flex detail-content">
+    <p class="detail-content-detail">{{ post.content }}</p>
+  </div>
+
+  <p class="detail-content-up">{{ post.updated_at }}에 생성</p>
+
   {% if request.user == post.user %}
-  <a class="btn btn-primary my-3 float-right" href="{% url 'articles:update' post.pk %}">수정하기</a>
-  <a class="btn btn-danger my-3 float-right" href="{% url 'articles:delete' post.pk %}">삭제하기</a>
+  <div>
+    <a class="btn btn-primary my-3 float-right" href="{% url 'articles:update' post.pk %}">수정하기</a>
+    <a class="btn btn-danger my-3 float-right" href="{% url 'articles:delete' post.pk %}">삭제하기</a>
+  </div>
   {% endif %}
-  {% for participater in post.participate.all %}
-  {% if request.user == post.user or request.user == participater %}
+
+
+
   <h1>comment</h1>
   <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
     {% csrf_token %}
-    {% bootstrap_form comment_form %}
-    <input class="btn pos-btn" type="submit" value="Submit">
+    {% render_field comment_form.content class="comment-form form-control" %}
+    <input class="mt-2 btn pos-btn" type="submit" value="Submit">
   </form>
 
   <div class="comments">
@@ -125,9 +109,13 @@
     <div class="comment" data-comment-id="{{ comment.pk }}">
       <img class="comment-profile-img" src="{{ comment.user.profile_pic.url }}" alt="{{ comment.user.profile_pic }}">
       <div class="comment-detail">
-        <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
+        <div class="d-flex align-items-center">
+          <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
+          {% if request.user == post.user %}
+            <button class="comment-part">같이 산책하기</button>
+          {% endif %}
+        </div>
         <p id="comment-update-{{ comment.pk }}-content" class="comment-content">{{ comment.content }}</p>
-        
         {% if request.user.pk == comment.user.pk %}
         <form class="comment-update-form" id="form-comment-update-{{ comment.pk }}"
           action="{% url 'articles:comment_update' post.pk comment.pk %}" method="post" style="display:none;">
@@ -140,71 +128,21 @@
               id="comment-update-{{ comment.pk }}">취소</p>
           </div>
         </form>
-
-        <div class="comments">
-          {% for comment in comments %}
-            <div class="comment" data-comment-id="{{ comment.pk }}">
-              <img class="comment-profile-img" src="{{ comment.user.get_photo_url }}" alt="{{ comment.user.get_photo_url }}">
-              <div class="comment-detail">
-                <p class="comment-profile-name">
-                  <a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a>
-                </p>
-                <p id="comment-update-{{ comment.pk }}-content" class="comment-content">{{ comment.content }}</p>
-                {% if request.user.pk == comment.user.pk %}
-                  <form class="comment-update-form" id="form-comment-update-{{ comment.pk }}" action="{% url 'articles:comment_update' post.pk comment.pk %}" method="post" style="display:none;">
-                    <input class="comment-update" id="comment-update-input-{{ comment.pk }}" type="text" value="{{comment.content}}">
-                    <div class="d-flex">
-                      <p class="comment-control-update" onclick="comment_update_ok(this)" id="comment-update-ok-{{ comment.pk }}" data-postup-id="{{ post.pk }}" data-commentup-id="{{ comment.pk }}">수정 완료</p>
-                      <p class="comment-control-update-exit ms-3" onclick="comment_update_exit(this)" id="comment-update-{{ comment.pk }}">취소</p>
-                    </div>
-                  </form>
-                  <div class="comment-control" id="control-comment-update-{{ comment.pk }}">
-                    <p class="comment-control-update" onclick="comment_update(this)" id="comment-update-{{ comment.pk }}" data-postup-id="{{ post.pk }}" data-commentup-id="{{ comment.pk }}">수정</p>
-                    <p class="comment-control-delete" onclick="comment_delete(this)" id="comment-delete-{{ comment.pk }}" data-postdel-id="{{ post.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</p>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
+        <div class="comment-control" id="control-comment-update-{{ comment.pk }}">
+          <p class="comment-control-update" onclick="comment_update(this)" id="comment-update-{{ comment.pk }}"
+            data-postup-id="{{ post.pk }}" data-commentup-id="{{ comment.pk }}">수정</p>
+          <p class="comment-control-delete" onclick="comment_delete(this)" id="comment-delete-{{ comment.pk }}"
+            data-postdel-id="{{ post.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</p>
         </div>
-      {% endif %}
+        {% endif %}
+      </div>
+    </div>
     {% endfor %}
+  </div>
 
   {% endblock content %}
 
   {% block script %}
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5a06118ba07d4964a2e24ae9f85e906f"></script>
-  <script>
-  var currentLat = {{ latitude }}
-  var currentLong = {{ longitude }}
-
-  // 마커 이미지의 이미지 크기 입니다
-  var imageSize = new kakao.maps.Size(35, 35)
-  
-  var imageSrc = "/static/images/star.png";
-
-  // 마커 이미지를 생성합니다    
-  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
-    
-  // 이미지 지도에 표시할 마커입니다
-  // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-  var marker = {
-      position: new kakao.maps.LatLng(currentLat , currentLong), 
-      text: '여기서 만나요!', // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-      image : markerImage
-    }
-
-  var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
-      staticMapOption = { 
-          center: new kakao.maps.LatLng(currentLat , currentLong), // 이미지 지도의 중심좌표
-          level: 3, // 이미지 지도의 확대 레벨
-          marker: marker // 이미지 지도에 표시할 마커 
-      }
-
-  // 이미지 지도를 생성합니다
-  var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-  </script>
-
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
@@ -212,38 +150,26 @@
     const commentForm = document.querySelector("#comment-form")
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
+    commentForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      console.log(event)
+      axios({
+        method: 'post',
+        url: `/${event.target.dataset.postId}/comment/`,
+        headers: { 'X-CSRFToken': csrftoken },
+        data: new FormData(commentForm)
+      })
+        .then(response => {
+          console.log(response.data)
+          const comments = document.querySelector(".comments")
+          comments.textContent = ""
+          const commentData = response.data.commentData
+          const user = response.data.user
 
-    <script>
-      // 댓글 생성 비동기
-      const commentForm = document.querySelector("#comment-form")
-      const csrftoken = document
-        .querySelector('[name=csrfmiddlewaretoken]')
-        .value
+          for (let i = 0; i < commentData.length; i++) {
 
-        commentForm
-        .addEventListener('submit', function (event) {
-          event.preventDefault();
-          console.log(event)
-          axios({
-            method: 'post',
-            url: `/${event.target.dataset.postId}/comment/`,
-            headers: {
-              'X-CSRFToken': csrftoken
-            },
-            data: new FormData(commentForm)
-          }).then(response => {
-            console.log(response.data)
-            const comments = document.querySelector(".comments")
-            comments.textContent = ""
-            const commentData = response.data.commentData
-            const user = response
-              .data
-              .user
-
-              for (let i = 0; i < commentData.length; i++) {
-
-                if (user === commentData[i].user_id) {
-                  comments.insertAdjacentHTML('beforeend', `
+            if (user === commentData[i].user_id) {
+              comments.insertAdjacentHTML('beforeend', `
             <div class="comment" data-comment-id="${commentData[i].commentPk}">
               <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
               <div class="comment-detail">
@@ -263,8 +189,8 @@
               </div>
             </div>
             `)
-                } else {
-                  comments.insertAdjacentHTML('beforeend', `
+            } else {
+              comments.insertAdjacentHTML('beforeend', `
             <div class="comment">
               <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
               <div class="comment-detail">
@@ -273,37 +199,31 @@
               </div>
             </div>
             `)
-                }
-              }
-              commentForm
-              .reset()
-          })
-        })
-    </script>
-
-    <script>
-      // 댓글 삭제 비동기
-      const comment_delete = (e) => {
-        const comment_id = document
-          .querySelector(`#${e.id}`)
-          .id
-          console
-          .log(event.target.dataset)
-        axios({
-          method: 'post',
-          url: `/${event.target.dataset.postdelId}/comment_delete/${event.target.dataset.commentdelId}`,
-          headers: {
-            'X-CSRFToken': csrftoken
+            }
           }
-        }).then(response => {
-          const comments = document.querySelector(".comments")
-          comments.textContent = ""
-          const commentData = response.data.commentData
-          const user = response.data.user
+          commentForm.reset()
+        })
+    })
+  </script>
 
-          for (let i = 0; i < commentData.length; i++) {
-            if (user === commentData[i].user_id) {
-              comments.insertAdjacentHTML('beforeend', `
+  <script>
+    // 댓글 삭제 비동기
+    const comment_delete = (e) => {
+      const comment_id = document.querySelector(`#${e.id}`).id
+      console.log(event.target.dataset)
+      axios({
+        method: 'post',
+        url: `/${event.target.dataset.postdelId}/comment_delete/${event.target.dataset.commentdelId}`,
+        headers: { 'X-CSRFToken': csrftoken }
+      }).then(response => {
+        const comments = document.querySelector(".comments")
+        comments.textContent = ""
+        const commentData = response.data.commentData
+        const user = response.data.user
+
+        for (let i = 0; i < commentData.length; i++) {
+          if (user === commentData[i].user_id) {
+            comments.insertAdjacentHTML('beforeend', `
               <div class="comment" data-comment-id="${commentData[i].commentPk}">
                 <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
                 <div class="comment-detail">
@@ -323,8 +243,8 @@
                 </div>
               </div>
               `)
-            } else {
-              comments.insertAdjacentHTML('beforeend', `
+          } else {
+            comments.insertAdjacentHTML('beforeend', `
               <div class="comment">
                 <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
                 <div class="comment-detail">
@@ -333,37 +253,37 @@
                 </div>
               </div>
               `)
-            }
           }
-        })
-      }
-    </script>
+        }
+      })
+    } 
+  </script>
 
-    <script>
-      // 댓글 수정 비동기
-      const comment_update_ok = (e) => {
-        const commentId = event.target.dataset.commentupId
-        const postId = event.target.dataset.postupId
-        const commentInput = document.querySelector(`#comment-update-input-${commentId}`)
+  <script>
+    // 댓글 수정 비동기
+    const comment_update_ok = (e) => {
+      const commentId = event.target.dataset.commentupId
+      const postId = event.target.dataset.postupId
+      const commentInput = document.querySelector(`#comment-update-input-${commentId}`)
 
-        axios({
-          method: 'post',
-          url: `/${postId}/comment_update/${commentId}`,
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          data: {
-            'content': commentInput.value
-          }
-        }).then(response => {
-          const comments = document.querySelector(".comments")
-          comments.textContent = ""
-          const commentData = response.data.commentData
-          const user = response.data.user
+      axios({
+        method: 'post',
+        url: `/${postId}/comment_update/${commentId}`,
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        data: {
+          'content': commentInput.value
+        }
+      }).then(response => {
+        const comments = document.querySelector(".comments")
+        comments.textContent = ""
+        const commentData = response.data.commentData
+        const user = response.data.user
 
-          for (let i = 0; i < commentData.length; i++) {
-            if (user === commentData[i].user_id) {
-              comments.insertAdjacentHTML('beforeend', `
+        for (let i = 0; i < commentData.length; i++) {
+          if (user === commentData[i].user_id) {
+            comments.insertAdjacentHTML('beforeend', `
           <div class="comment" data-comment-id="${commentData[i].commentPk}">
             <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
             <div class="comment-detail">
@@ -383,8 +303,8 @@
             </div>
           </div>
           `)
-            } else {
-              comments.insertAdjacentHTML('beforeend', `
+          } else {
+            comments.insertAdjacentHTML('beforeend', `
           <div class="comment">
             <img class="comment-profile-img" src="${commentData[i].profile_img}" alt="유저 이미지">
             <div class="comment-detail">
@@ -393,36 +313,58 @@
             </div>
           </div>
           `)
-            }
           }
-        })
-      }
+        }
+      })
+    }
 
-      const comment_update = (e) => {
-        const comment_id = document
-          .querySelector(`#${e.id}`)
-          .id
-        const commentUpdateForm = document.querySelector(`#form-${e.id}`)
-        const commentControl = document.querySelector(`#control-${e.id}`)
-        const commentContent = document.querySelector(`#${e.id}-content`)
-        console.log(comment_id)
-        console.log(commentControl.style)
-        commentUpdateForm.style.display = "block"
-        commentControl.style.display = "none"
-        commentContent.style.display = "none"
-      }
+    const comment_update = (e) => {
+      const comment_id = document.querySelector(`#${e.id}`).id
+      const commentUpdateForm = document.querySelector(`#form-${e.id}`)
+      const commentControl = document.querySelector(`#control-${e.id}`)
+      const commentContent = document.querySelector(`#${e.id}-content`)
+      console.log(comment_id)
+      console.log(commentControl.style)
+      commentUpdateForm.style.display = "block"
+      commentControl.style.display = "none"
+      commentContent.style.display = "none"
+    }
 
-      const comment_update_exit = (e) => {
-        const comment_id = document
-          .querySelector(`#${e.id}`)
-          .id
-        const commentUpdateForm = document.querySelector(`#form-${e.id}`)
-        const commentControl = document.querySelector(`#control-${e.id}`)
-        const commentContent = document.querySelector(`#${e.id}-content`)
-        console.log(commentUpdateForm.style)
-        commentUpdateForm.style.display = "none"
-        commentControl.style.display = "flex"
-        commentContent.style.display = "block"
+    const comment_update_exit = (e) => {
+      const comment_id = document.querySelector(`#${e.id}`).id
+      const commentUpdateForm = document.querySelector(`#form-${e.id}`)
+      const commentControl = document.querySelector(`#control-${e.id}`)
+      const commentContent = document.querySelector(`#${e.id}-content`)
+      console.log(commentUpdateForm.style)
+      commentUpdateForm.style.display = "none"
+      commentControl.style.display = "flex"
+      commentContent.style.display = "block"
+    }
+  </script>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5a06118ba07d4964a2e24ae9f85e906f"></script>
+  <script>
+
+  var parkLat = {{ latitude }}
+  var parkLong = {{ longitude }}
+  var parkName = '{{ name }}에서 산책해요!'
+  // 이미지 지도에 표시할 마커입니다
+  // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+  var markers = [
+      {
+          position: new kakao.maps.LatLng(parkLat, parkLong), 
+          text: parkName // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
       }
-    </script>
+  ];
+  
+  var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+      staticMapOption = { 
+          center: new kakao.maps.LatLng(parkLat, parkLong), // 이미지 지도의 중심좌표
+          level: 5, // 이미지 지도의 확대 레벨
+          marker: markers // 이미지 지도에 표시할 마커 
+      };    
+  
+  // 이미지 지도를 생성합니다
+  var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+  </script>
   {% endblock script %}
