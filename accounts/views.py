@@ -181,4 +181,4 @@ def block_user_block(request, pk):
 def delete(request):
     request.user.delete()
     auth_logout(request)
-    return redirect("accounts:index")
+    return redirect("articles:index")

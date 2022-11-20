@@ -93,15 +93,18 @@
                   {% render_field form.gender %}
                 </div>
                 <div class="field">
-                  <div class="label">지역</div>
-                  <input type="text" id="address_kakao" name="address"/>
+                 <div class="label">주소</div>
+                 <input type="text" id="address_kakao" name="address"/><br>
+                </div>
+               <div class="field">
+                 <div class="label">상세주소</div>
+                  {% render_field form.address_detail class="form-control" %}
                 </div>
               </div>
               <div class="field btns">
                 <button class="prev-1 prev">이전</button>
                 <div>&nbsp;&nbsp;&nbsp;</div>
-                <button class="next-1 next">다음</button>
-              </div>
+                <button class="next-1 next">다음</button> 
             </div>
             <!--폼페이지3 기타정보-->
             <div class="page">
@@ -112,10 +115,14 @@
                   <div class="label">MBTI</div>
                   {% render_field form.mbti class="form-control" %}
                 </div>
-                <div class="field">
+               <!-- <div class="field">
                   <div class="label personality">성격</div>
                   {% render_field form.manner %}
-                </div>
+                </div> -->
+                    <div class="field" style="height:160px">
+                <div class="label">성격</div>
+                {% render_field form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5"%}
+              </div>
                 <div class="field">
                   <div class="label">흡연여부</div>
                   {% render_field form.smoking class="form-control" %}
@@ -129,7 +136,6 @@
                 <button class="prev-2 prev">이전</button>
                 <div>&nbsp;&nbsp;&nbsp;</div>
                 <button class="next-2 next">다음</button>
-              </div>
             </div>
             <!--폼페이지4 프로필-->
             <div class="page">
