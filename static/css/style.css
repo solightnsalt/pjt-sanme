@@ -476,10 +476,82 @@ th, td {
     border-radius: 50%;
 }
 
+.comment-form{
+    height: 3rem;
+}
+
+.detail-map{
+    display: flex;
+    justify-content: center;
+    width:100vw;
+    background-color: #a0d097;
+}
+
+.detail-info-all{
+    padding-top: 7rem;
+}
+
+.detail-info, .detail-info-an{
+    margin: 1rem ;
+    font-size: 1.5rem;
+}
+
+.detail-info-an{
+    font-weight: bold;
+}
+
+.detail-info-name{
+    text-decoration: none;
+    color:#000;
+}
+
+.detail-info-name:hover{
+    color:rgb(134, 134, 134);
+}
+
+.detail-content{
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.detail-content-word{
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+}
+.detail-content-detail{
+    min-height: 150px;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    border-radius: 10px;
+    padding: 0.5rem 2rem;
+    background-color: #a0d097;
+    font-size: 1.5rem;
+}
+
+.detail-content-up{
+    margin-top: 1rem;
+    color: rgb(139, 139, 139);
+}
+
 /* 댓글 */
 .comment {
     display: flex;
     margin: 2rem 15%;
+}
+
+.comment-part{
+    font-size: 0.7rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 1rem;
+    background-color: rgb(3 166 60);
+    color: #e1f1e7;
+}
+
+.comment-part:hover{
+    background-color: rgb(145, 170, 154);
+    color: #e1f1e7;
 }
 
 .comment-profile-img {
@@ -489,7 +561,7 @@ th, td {
 }
 
 .comment-detail {
-    padding: 2.5rem;
+    padding: 1rem 2.5rem;
     margin-left: 2rem;
     border-radius: 20px;
     background-color: #bf9b6f42;
@@ -509,7 +581,8 @@ th, td {
 
 .comment-content {
     margin-bottom: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .comment-control {
@@ -528,7 +601,7 @@ th, td {
     cursor: pointer;
     color: #000;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     text-decoration: none;
 }
 
