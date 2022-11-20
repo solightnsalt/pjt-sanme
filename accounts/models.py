@@ -103,3 +103,10 @@ class User(AbstractUser):
     blocking = models.ManyToManyField(
         "self", symmetrical=False, related_name="blockers"
     )
+
+    @property
+    def get_photo_url(self):
+
+        if self.profile_pic:
+            return self.profile_pic.url
+        return "../static/images/profile_default.png"
