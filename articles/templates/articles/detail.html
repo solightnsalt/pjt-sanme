@@ -48,66 +48,42 @@
       </div>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-  <div class='container'>
-    <div class="d-flex">
-      <div id="map" style="width:350px;height:350px;"></div>
+<div class='container'>
+  <div class="d-flex">
+    <div id="staticMap" style="width:600px;height:350px;"></div>    
 
-      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
-      <script>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-          mapOption = {
-            center: new kakao
-              .maps
-              .LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-          };
 
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao
-          .maps
-          .Map(mapContainer, mapOption);
-      </script>
+    <div style="font-size: 2em;">
+      <dl class="row m-3">
+        <dt class="col-4 text-center">작성자</dt>
+        <dd class="col-8">
+          <a href="{% url 'accounts:detail' user.pk %}">
+            <img class="rounded-circle bg-white" style=" max-width: 5%; height: auto"
+              src="{{ post.user.profile_pic.url }}" alt="{{ post.user.profile_pic }}"></a>{{ post.user }}
+        </dd>
 
-      <div style="font-size: 2em;">
-        <dl class="row m-3">
-          <dt class="col-4 text-center">작성자</dt>
-          <dd class="col-8">
-            <a href="{% url 'accounts:detail' user.pk %}">
-              <img class="rounded-circle bg-white" style=" max-width: 5%; height: auto" src="{{ post.user.get_photo_url }}" alt="{{ post.user.get_photo_url }}"></a>{{ post.user }}
-          </dd>
-
-          <dt class="col-4 text-center">Title</dt>
-          <dd class="col-8">{{ post.title }}</dd>
-          <dt class="col-4 text-center">Day</dt>
-          <dd class="col-8">{{ post.day }}</dd>
-          <dt class="col-4 text-center">Time</dt>
-          <dd class="col-8">{{post.time}}</dd>
-          <dt class="col-4 text-center">애완동물 유/무</dt>
-          <dd class="col-8">{{post.pet}}</dd>
-          <dt class="col-4 text-center">내용</dt>
-          <dd class="col-8">{{ post.content }}</dd>
-          <dt class="col-4 text-center">참여여부</dt>
-          <dd class="col-8">
-
-            {% if post.participate.count >= post.participate_people %}
-              <div data-bs-target="#participateModal" data-bs-toggle="modal">모집완료</div>
-            {% else %}
-              <a href="{% url 'articles:participate' post.pk %}">
-                {% if request.user in post.participate.all %}
-                  <button type="button" class="btn btn-danger">참여취소</button>
-                {% else %}
-                  <button type="button" class="btn btn-primary">참여하기</button>
-                {% endif %}
-              {% endif %}
+        <dt class="col-4 text-center">Title</dt>
+        <dd class="col-8">{{ post.title }}</dd>
+        <dt class="col-4 text-center">Day</dt>
+        <dd class="col-8">{{ post.day }}</dd>
+        <dt class="col-4 text-center">Time</dt>
+        <dd class="col-8">{{post.time}}</dd>
+        <dt class="col-4 text-center">애완동물 유/무</dt>
+        <dd class="col-8">{{post.pet}}</dd>
+        <dt class="col-4 text-center">내용</dt>
+        <dd class="col-8">{{ post.content }}</dd>
+        <dt class="col-4 text-center">참여여부</dt>
+        <dd class="col-8">
 
             </a>
             {% if post.participate.count >= post.participate_people %}
@@ -125,17 +101,44 @@
       </div>
 
     </div>
-    {% if request.user == post.user %}
-      <a class="btn btn-primary my-3 float-right" href="{% url 'articles:update' post.pk %}">수정하기</a>
-      <a class="btn btn-danger my-3 float-right" href="{% url 'articles:delete' post.pk %}">삭제하기</a>
-    {% endif %}
-    {% for participater in post.participate.all %}
-      {% if request.user == post.user or request.user == participater %}
-        <h1>comment</h1>
-        <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
-          {% csrf_token %}
-          {% bootstrap_form comment_form %}
-          <input class="btn pos-btn" type="submit" value="Submit">
+
+
+
+
+
+  </div>
+  {% if request.user == post.user %}
+  <a class="btn btn-primary my-3 float-right" href="{% url 'articles:update' post.pk %}">수정하기</a>
+  <a class="btn btn-danger my-3 float-right" href="{% url 'articles:delete' post.pk %}">삭제하기</a>
+  {% endif %}
+  {% for participater in post.participate.all %}
+  {% if request.user == post.user or request.user == participater %}
+  <h1>comment</h1>
+  <form action="{% url 'articles:comment' post.pk %}" method="POST" id="comment-form" data-post-id="{{ post.pk }}">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input class="btn pos-btn" type="submit" value="Submit">
+  </form>
+
+  <div class="comments">
+    {% for comment in comments %}
+    <div class="comment" data-comment-id="{{ comment.pk }}">
+      <img class="comment-profile-img" src="{{ comment.user.profile_pic.url }}" alt="{{ comment.user.profile_pic }}">
+      <div class="comment-detail">
+        <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
+        <p id="comment-update-{{ comment.pk }}-content" class="comment-content">{{ comment.content }}</p>
+        
+        {% if request.user.pk == comment.user.pk %}
+        <form class="comment-update-form" id="form-comment-update-{{ comment.pk }}"
+          action="{% url 'articles:comment_update' post.pk comment.pk %}" method="post" style="display:none;">
+          <input class="comment-update" id="comment-update-input-{{ comment.pk }}" type="text"
+            value="{{comment.content}}">
+          <div class="d-flex">
+            <p class="comment-control-update" onclick="comment_update_ok(this)" id="comment-update-ok-{{ comment.pk }}"
+              data-postup-id="{{ post.pk }}" data-commentup-id="{{ comment.pk }}">수정 완료</p>
+            <p class="comment-control-update-exit ms-3" onclick="comment_update_exit(this)"
+              id="comment-update-{{ comment.pk }}">취소</p>
+          </div>
         </form>
 
         <div class="comments">
@@ -170,7 +173,45 @@
   {% endblock content %}
 
   {% block script %}
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5a06118ba07d4964a2e24ae9f85e906f"></script>
+  <script>
+  var currentLat = {{ latitude }}
+  var currentLong = {{ longitude }}
+
+  // 마커 이미지의 이미지 크기 입니다
+  var imageSize = new kakao.maps.Size(35, 35)
+  
+  var imageSrc = "/static/images/star.png";
+
+  // 마커 이미지를 생성합니다    
+  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+    
+  // 이미지 지도에 표시할 마커입니다
+  // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+  var marker = {
+      position: new kakao.maps.LatLng(currentLat , currentLong), 
+      text: '여기서 만나요!', // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+      image : markerImage
+    }
+
+  var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+      staticMapOption = { 
+          center: new kakao.maps.LatLng(currentLat , currentLong), // 이미지 지도의 중심좌표
+          level: 3, // 이미지 지도의 확대 레벨
+          marker: marker // 이미지 지도에 표시할 마커 
+      }
+
+  // 이미지 지도를 생성합니다
+  var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    // 댓글 생성 비동기
+    const commentForm = document.querySelector("#comment-form")
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
 
     <script>
       // 댓글 생성 비동기

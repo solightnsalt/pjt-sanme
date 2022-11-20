@@ -133,6 +133,8 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
+        "latitude": post.park_address.latitude,
+        "longitude": post.park_address.longitude,
     }
 
     return render(request, "articles/detail.html", context)
@@ -145,7 +147,7 @@ def update(request, pk):
             post_form = PostForm(request.POST, instance=posts)
             if post_form.is_valid():
                 post_form.save()
-                return redirect("articles:index")
+                return redirect("articles:detail", posts.pk)
         else:
             post_form = PostForm(instance=posts)
 
