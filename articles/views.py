@@ -102,18 +102,17 @@ def participate(request, pk):
     if request.user in article.participate.all():
         # 참여하기 삭제하고
         article.participate.remove(request.user)
-        # is_participated = False
+        is_participated = False
     else:
         # 참여하기 추가하고
         article.participate.add(request.user)
-        # is_participated = True
-    # 상세 페이지로 redirect
-    return redirect("articles:detail", pk)
-    # context = {
-    # "is_participated": is_participated,
-    # "ParticipateCount": article.participate.count(),
-    # }
-    # return JsonResponse(context)
+        is_participated = True
+
+    data = {
+       "isPart": is_participated, 
+       "partNumCount": article.participate.count(),
+    }
+    return JsonResponse(data)
 
 
 # 취소

@@ -5,6 +5,7 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
+
 <!-- 참여자 모달 -->
 <div class="modal fade title-font" id="participateModal" tabindex="-1" aria-labelledby="participateModalLabel"
   aria-hidden="true">
@@ -78,7 +79,7 @@
       {% else %}
       <p class="detail-info-an mb-2">애완동물과 같이 산책</p>
       {% endif %}
-      <p class="detail-info-an mb-2">{{ post.participate.count}} / {{ post.participate_people }}</p>
+      <p class="detail-info-an mb-2"><span id="part-num">{{ post.participate.count }}</span> / {{ post.participate_people }}</p>
     </div>
   </div>
 
@@ -112,7 +113,13 @@
         <div class="d-flex align-items-center">
           <p class="comment-profile-name"><a class="comment-profile-name" href="#">{{ comment.user.nickname }}</a></p>
           {% if request.user == post.user %}
-            <button class="comment-part">같이 산책하기</button>
+            {% if comment.user != request.user %}
+              {% if comment.user.pk in post.participate.all %}
+              <button id="part-btn" data-post-id="{{ post.pk }}" data-part-id="{{ comment.user.pk }}" class="comment-part-del">산책 취소</button>
+              {% else %}
+              <button id="part-btn" data-post-id="{{ post.pk }}" data-part-id="{{ comment.user.pk }}" class="comment-part">같이 산책하기</button>
+              {% endif %}
+            {% endif %}
           {% endif %}
         </div>
         <p id="comment-update-{{ comment.pk }}-content" class="comment-content">{{ comment.content }}</p>
@@ -144,6 +151,34 @@
 
   {% block script %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    // 참여버튼
+    const partBtn = document.querySelector('#part-btn')
+    const partNum = document.querySelector('#part-num')
+
+    partBtn.addEventListener('click', function(event){
+      console.log(event.target.dataset.postId)
+      axios({
+        method: 'get',
+        url: `/${event.target.dataset.postId}/participate/`
+      })
+      .then(response => {
+        console.log(response.data.isPart)
+        if (response.data.isPart === true) {
+          event.target.classList.add('comment-part-del')
+          partBtn.innerText = '산책 취소'
+          partNum.innerText = response.data.partNumCount
+          event.target.classList.remove('comment-part')
+        } else {
+          event.target.classList.add('comment-part')
+          partBtn.innerText = '같이 산책하기'
+          partNum.innerText = response.data.partNumCount
+          event.target.classList.remove('comment-part-del')
+        }
+      })
+    })
+  </script>
 
   <script>
     // 댓글 생성 비동기
