@@ -74,7 +74,11 @@
           {% for user_info in matched_user %}
             <div class="col mb-5">
               <div class="card h-100">
-                <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
+                {% if user_info.image %}
+                  <img class="card-img-top" src="{{ user_info.profile_pic.url }}" alt="프사"/>
+                {% else %}
+                  <img class="card-img-top" src={% static "images/img_default.jpeg" %} alt="프사"/>
+                {% endif %}
                 <div class="card-body py-4">
                   <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
                 </div>

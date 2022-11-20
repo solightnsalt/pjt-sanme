@@ -1,31 +1,69 @@
 {% extends 'base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
 {% load django_bootstrap5 %}
+
+{% block title %}
+  | 프로필 수정{% endblock title %}
+
+{% block style %}{% endblock style %}
+
 {% block content %}
   <section class="home"></section>
-  <div style="height: 1000px">
-    <div class="container mt-3 mb-3">
-      <h1>수정하기</h1>
+  <div>
+    <h1>프로필 수정</h1>
+    <div class="wrapper" id="pf_wrapper">
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {% bootstrap_form user_form %}
-        <button class="pos-btn" type="submit">수정하기</button>
+        <input class="radio" id="one" name="group" type="radio" checked="checked">
+        <input class="radio" id="two" name="group" type="radio">
+        <input class="radio" id="three" name="group" type="radio">
+        <input class="radio" id="four" name="group" type="radio">
+        <div class="tabs">
+          <label class="tab" id="one-tab" for="one">기본 정보</label>
+          <label class="tab" id="two-tab" for="two">상세 정보</label>
+          <label class="tab" id="three-tab" for="three">기타 정보</label>
+          <label class="tab" id="four-tab" for="four">프로필 설정</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="one-panel">
+            <div class="panel-title">아이디</div>
+            {% render_field user_form.username class="form-control inactive" %}
+            <div class="panel-title">비밀번호</div>
+            {% render_field user_form.password class="form-control" %}
+            <div class="panel-title">이메일 주소</div>
+            {% render_field user_form.email class="form-control" %}
+          </div>
+          <div class="panel" id="two-panel">
+            <div class="panel-title">생년월일</div>
+            {% render_field user_form.birth class="form-control" %}
+            <div class="panel-title">성별</div>
+            {% render_field user_form.gender class="form-control" %}
+            <div class="panel-title">주소</div>
+            {% render_field user_form.address class="form-control" %}
+            <div class="panel-title">상세주소</div>
+            {% render_field user_form.address_detail class="form-control" %}
+          </div>
+          <div class="panel" id="three-panel">
+            <div class="panel-title">MBTI</div>
+            {% render_field user_form.mbti class="form-control" %}
+            <div class="panel-title">성격</div>
+            {% render_field user_form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5 col-8"%}
+            <div class="panel-title">흡연여부</div>
+            {% render_field user_form.smoking class="form-control" %}
+            <div class="panel-title">애완동물 유무</div>
+            {% render_field user_form.pet %}
+          </div>
+          <div class="panel" id="four-panel">
+            <div class="panel-title">닉네임</div>
+            {% render_field user_form.nickname class="form-control" %}
+            <div class="panel-title">프로필 사진</div>
+            {% render_field user_form.profile_pic class="form-control" %}
+          </div>
+          <button class="pos-btn" type="submit">수정</button>
+        </div>
       </form>
-    </div>
-    <div class="container none-box">
-      <div class="d-flex align-items-start">
-        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>
-          <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</button>
-          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-          <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
-        </div>
-        <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-        </div>
-      </div>
     </div>
   </div>
 {% endblock content %}
