@@ -87,7 +87,7 @@ main {
 .home {
     width: 100%;
     height: 100%;
-    min-height: 1000px;
+    min-height: 300px;
     /* background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80); */
     background-image: url(../images/bg/bd-top.png);
     background-repeat: no-repeat; /* 배경이미지X */
@@ -97,13 +97,14 @@ main {
 }
 
 .content {
-    padding-top: 18.75rem;
+    padding: 6.25rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    min-height: 37.5rem;
+    min-height: 50rem;
+    background: transparent;
 }
 
 .custom-btn {
@@ -340,7 +341,7 @@ main {
 
 .none-box {
     height: 450px;
-    width: 100vh;
+    width: 100%;
     text-align: center;
     font-size: 20px;
     background-color: #fff;
@@ -354,7 +355,7 @@ main {
 }
 
 .inner-box {
-    padding: 25rem;
+    padding: 25rem 12.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -736,32 +737,57 @@ th, td {
 }
 
 /* 프로필수정 */
+.idfield {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #313438;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+}
+
 .wrapper{
     display:flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
 }
 .tab{
     cursor: pointer;
     padding:10px 20px;
     margin:0px 2px;
-    background:#000;
+    background:#03A63C;
     display:inline-block;
     color:#fff;
     border-radius:5px 5px 0px 0px;
-    box-shadow: 0 0.5rem 0.8rem #00000080;
+    box-shadow: 0 0.5rem 0.8rem #;
 }
 .panels{
     background:#fffffff6;
     box-shadow: 0 2rem 2rem #00000080;
-    min-height:200px;
+    min-height: 600px;
     width:100%;
     max-width:500px;
-    border-radius:3px;
-    overflow:hidden;
     padding:20px;  
     border-radius:0px 0px 5px 5px;
+    overflow-wrap: break-word;
+    position: relative;
 }
+
+.panel-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 185px;
+}
+
 .panel{
     display:none;
     animation: fadein .8s;
@@ -775,8 +801,8 @@ th, td {
     }
 }
 .panel-title{
-    font-size:1.5em;
-    font-weight:bold
+    font-size: 1.2em;
+    font-weight: bold;
 }
 .radio{
     display:none;
@@ -793,7 +819,7 @@ th, td {
 #four:checked ~ .tabs #four-tab{
     background:#fffffff6;
     color:#000;
-    border-top: 3px solid #000;
+    border-top: 3px solid #03A63C;
 }
 
 /*-------------------- 지도 map ------------------------------- */
@@ -1009,7 +1035,7 @@ li .dd-list {
     outline: none;
 }
 
-/* Media qurey section */
+/* Media query section */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .container {
         margin: 0;
@@ -1277,8 +1303,12 @@ li .dd-list {
 }
 
 .affix {
+    margin-top: 20px 0 40px 40px;
     padding: 0;
-    background-color: #FFF;
+    background-color: #fff;
+    border-radius: 50px;
+    box-shadow: -4px 4px 0px #F0F1F2;
+    transition: all 0.3s ease;
 }
 
 /* 회원가입 form styles*/
@@ -1659,4 +1689,27 @@ display: none;
 .progress-bar .step .check.active{
 display: block;
 color: #fff;
+}
+
+
+/* footer */
+footer {
+    position: relative;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+}
+
+.footer-bg {
+    background-image: url(../images/bg/bg-footer.png);
+    min-height: 300px;
+    background-repeat: no-repeat; /* 배경이미지X */
+    background-size: cover; /* 요소를 비율에 맞게 커버 */
+    background-position: 50% 170%;
+    background-attachment: fixed; /* 스크롤바 움직일때 이미지가 따라다님 */   
 }
