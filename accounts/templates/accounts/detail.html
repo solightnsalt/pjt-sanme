@@ -14,7 +14,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="followerModalLabel">Followers</h5>
+          <h5 class="modal-title w-100 text-center fw-bold" id="followerModalLabel">Followers</h5>
         </div>
         <div class="modal-body">
           {% if user.followers.all %}
@@ -33,7 +33,7 @@
           {% endif %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn pos-btn" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
@@ -61,24 +61,17 @@
           {% endif %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn pos-btn" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
   <!-- 프로필 -->
   <section class="home"></section>
-  <div style="height: 1000px">
-    <div class="container px-4 px-lg-5 my-5">
-      <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-3">
-
-          {% if user.profile_pic %}
-            <div class="rounded-circle bg-white" style="width:200px; height:200px; background-image:url({{ user.profile_pic.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);"></div>
-          {% else %}
-            <div class="rounded-circle" style="width:200px; height:200px; background-image:url('https://dummyimage.com/35x35/000/fff');"></div>
-          {% endif %}
-        </div>
+  <div class="container">
+    <div class="content">
+      <div class="pf-box">
+        <div class="rounded-circle bg-white" style="width:300px; height:300px; background-image:url({{ user.get_photo_url }}); background-repeat:no-repeat; background-position:center; background-size:contain;"></div>
         <!--프사 옆-->
         <div class="pf-right">
           <div class="pf-detail">
@@ -113,9 +106,6 @@
               </div>
             </div>
           </div>
-          {% if request.user == user %}
-            <a href="{% url 'accounts:block_user' %}" class="btn btn-outline-dark">차단 목록</a>
-          {% endif %}
           <!-- 팔로워 표시 -->
           <div class="counts">
             <div class="me-5">
@@ -159,12 +149,11 @@
 
             <!-- 수정 및 삭제 -->
             {% if request.user == user %}
-
-              <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn mx-3">수정</a>
-              <button type="button" class="btn neg-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn me-2">수정</a>
+              <button type="button" class="btn neg-btn me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 회원탈퇴
               </button>
-              
+              <a href="{% url 'accounts:block_user' %}" class="btn awf-btn">차단 목록</a>
               <!-- Modal -->
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -179,13 +168,11 @@
                     <div class="modal-footer">
                       <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">탈퇴</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                      
                     </div>
                   </div>
                 </div>
               </div>
               <!-- <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">회원탈퇴</a> -->
-
             {% endif %}
           </div>
         </div>
