@@ -40,14 +40,16 @@
             {% render_field user_form.birth class="form-control" %}
             <div class="panel-title">성별</div>
             {% render_field user_form.gender class="form-control" %}
-            <div class="panel-title">지역</div>
+            <div class="panel-title">주소</div>
             {% render_field user_form.address class="form-control" %}
+            <div class="panel-title">상세주소</div>
+            {% render_field user_form.address_detail class="form-control" %}
           </div>
           <div class="panel" id="three-panel">
             <div class="panel-title">MBTI</div>
             {% render_field user_form.mbti class="form-control" %}
             <div class="panel-title">성격</div>
-            {% render_field user_form.manner class="d-flex flex-wrap lh-lg" %}
+            {% render_field user_form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5 col-8"%}
             <div class="panel-title">흡연여부</div>
             {% render_field user_form.smoking class="form-control" %}
             <div class="panel-title">애완동물 유무</div>

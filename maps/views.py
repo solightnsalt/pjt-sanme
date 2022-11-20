@@ -38,28 +38,40 @@ def map_search(request, x, y):
     parks = Map.objects.all()
     parkJson = []
 
-    latitude_range = (float(x) - 0.025 , float(x) + 0.025)
+    latitude_range = (float(x) - 0.025, float(x) + 0.025)
     longitude_range = (float(y) - 0.0375, float(y) + 0.0375)
 
-    user_distance = int(haversine((float(x), float(y)), (float(parks[1].latitude), float(parks[1].longitude))) * 1000)
-
+    user_distance = int(
+        haversine(
+            (float(x), float(y)), (float(parks[1].latitude), float(parks[1].longitude))
+        )
+        * 1000
+    )
 
     for park in parks:
-        if park.latitude != '' and park.longitude != '':
-            if latitude_range[0] <= float(park.latitude) <= latitude_range[1] and longitude_range[0] <= float(park.longitude) <= longitude_range[1]:
-                
-                
-                user_distance = haversine((float(x), float(y)), (float(park.latitude), float(park.longitude))) * 1000
-                
+        if park.latitude != "" and park.longitude != "":
+            if (
+                latitude_range[0] <= float(park.latitude) <= latitude_range[1]
+                and longitude_range[0] <= float(park.longitude) <= longitude_range[1]
+            ):
+
+                user_distance = (
+                    haversine(
+                        (float(x), float(y)),
+                        (float(park.latitude), float(park.longitude)),
+                    )
+                    * 1000
+                )
+
                 if user_distance <= 1000:
-                    user_distance = str(int(user_distance)) + 'm'
+                    user_distance = str(int(user_distance)) + "m"
                 else:
                     user_distance = user_distance / 1000
-                    user_distance = str(format(user_distance, ".2f")) + 'km'
-                
+                    user_distance = str(format(user_distance, ".2f")) + "km"
+
                 parkJson.append(
                     {
-                        "id" : park.id,
+                        "id": park.id,
                         "name": park.parkNm,
                         "addr": park.lnmadr,
                         "lat": park.latitude,
@@ -86,17 +98,29 @@ def search(request, x, y):
                 | Q(lnmadr__icontains=searched)
             )
 
-            user_distance = int(haversine((float(x), float(y)), (float(park_name[1].latitude), float(park_name[1].longitude))) * 1000)
+            user_distance = int(
+                haversine(
+                    (float(x), float(y)),
+                    (float(park_name[1].latitude), float(park_name[1].longitude)),
+                )
+                * 1000
+            )
 
             if len(park_name) > 0:
                 for park in park_name:
-                    if park.latitude != '' and park.longitude != '':
-                            
-                        user_distance = haversine((float(x), float(y)), (float(park.latitude), float(park.longitude))) * 1000
-                        
+                    if park.latitude != "" and park.longitude != "":
+
+                        user_distance = (
+                            haversine(
+                                (float(x), float(y)),
+                                (float(park.latitude), float(park.longitude)),
+                            )
+                            * 1000
+                        )
+
                         park_list.append(
                             {
-                                "id" : park.id,
+                                "id": park.id,
                                 "name": park.parkNm,
                                 "addr": park.lnmadr,
                                 "parkType": park.parkSe,
@@ -106,18 +130,17 @@ def search(request, x, y):
                             }
                         )
 
-    park_list = sorted(park_list, key=itemgetter('userDistance'), reverse=False) 
+    park_list = sorted(park_list, key=itemgetter("userDistance"), reverse=False)
 
     for park in park_list:
-        if park['userDistance'] <= 1000:
-            park['userDistance'] = int(park['userDistance']) + 'm'
+        if park["userDistance"] <= 1000:
+            park["userDistance"] = int(park["userDistance"]) + "m"
         else:
-            park['userDistance'] = park['userDistance'] / 1000
-            park['userDistance'] = format(park['userDistance'], ".2f") + 'km'
+            park["userDistance"] = park["userDistance"] / 1000
+            park["userDistance"] = format(park["userDistance"], ".2f") + "km"
 
     data = {
         "parkJson": park_list,
     }
 
     return JsonResponse(data)
-

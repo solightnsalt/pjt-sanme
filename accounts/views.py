@@ -21,7 +21,7 @@ def login(request):
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect("articles:main")
+                return redirect(request.Get.get('next') or "articles:main")
         else:
             login_form = AuthenticationForm()
 
@@ -181,4 +181,4 @@ def block_user_block(request, pk):
 def delete(request):
     request.user.delete()
     auth_logout(request)
-    return redirect("accounts:index")
+    return redirect("articles:index")
