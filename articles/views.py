@@ -6,7 +6,7 @@ from accounts.models import User
 from maps.models import Map
 from .models import Post, Comment, Search
 from django.db.models import Q
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 import json
 import random
@@ -15,6 +15,7 @@ import random
 @require_safe
 def index(request):
     return render(request, "articles/index.html")
+
 
 @login_required
 def main(request):
@@ -263,9 +264,20 @@ def comment_update(request, pk, comment_pk):
 
 
 def board(request):
-    post = Post.objects.all().order_by("-pk")
+    posts = Post.objects.all().order_by("-pk")
+    page = request.GET.get("page")
+    paginator = Paginator(posts, 10)
+    try:
+        page_obj = paginator.get_page(page)
+    except PageNotAnInteger:
+        page = 1
+        page_obj = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        page_obj = paginator.page(page)
+
     context = {
-        "post": post,
+        "post": page_obj,
     }
     return render(request, "articles/board.html", context)
 

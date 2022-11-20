@@ -96,12 +96,13 @@ main {
 }
 
 .content {
-    padding-top: 12.5rem;
+    padding-top: 18.75rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
+    min-height: 37.5rem;
 }
 
 .custom-btn {
@@ -180,6 +181,7 @@ main {
     width: 100%;
     height: 100%;
     min-height: 100%;
+    background: linear-gradient(135deg, white 50%);
     background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
     background-position: center;
     background-size: cover;
@@ -188,6 +190,7 @@ main {
     align-items: center;
     align-content: flex-start;
     justify-content: flex-start;
+    position: relative;
 }
 
 .start-container {
@@ -259,9 +262,10 @@ main {
 
 .Pbottom {
     font-size: 28px;
-    font-weight: 500;
-    color: rgb(0, 0, 0);
-    text-shadow: 0 2px 1px rgba(139, 139, 139, 0.4);
+    font-weight: 700;
+    color: #000;
+    filter: drop-shadow(.10em .05em white );
+    /* mix-blend-mode: difference; */
     margin-top: -8.125rem;
 }
 
@@ -331,7 +335,139 @@ main {
     margin-top: 12.5rem;
 }
 
+.inner-box {
+    padding: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 6.25rem);
+}
+
+#profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(10px, 0.8vw, 20px);
+    justify-content: center;
+    margin-left: 80px;
+    width: clamp(600px, 80vw, 1400px);
+}
+
+#profiles > .profile {
+    aspect-ratio: 7 / 8;
+    backdrop-filter: blur(0.75vw);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 1vw;
+    cursor: pointer;
+    transition: background-color 250ms;
+    width: calc(25% - clamp(10px, 0.8vw, 20px));
+}
+
+#profiles > .profile:hover {
+    backdrop-filter: blur(1vw);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile > .profile-content {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(100% - clamp(8px, 1vw, 12px));
+    justify-content: center;
+    padding: clamp(8px, 1vw, 12px);
+}
+
+.profile > .profile-content > .profile-pic {
+    aspect-ratio: 1;
+    border: clamp(3px, 0.4vw, 5px) solid white;
+    border-radius: 100%;
+    flex-shrink: 0;
+    height: 70%;
+    position: relative;
+}
+
+.profile > .profile-content > .profile-pic > .profile-pic-image {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 100%;
+    height: calc(100% - clamp(10px, 1.5vw, 20px));
+    margin: clamp(5px, 0.75vw, 10px);
+    object-fit: cover;
+    width: calc(100% - clamp(10px, 1.5vw, 20px));
+}
+
+.profile > .profile-content > .profile-name {
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(1em, 2vw, 2em);
+    margin: 0px;
+    text-align: center;
+}
+
 /* articles */
+/*-------------------- 게시판  -------------------- */
+.board-box {
+    padding-top: 6.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    min-height: 37.5rem;
+}
+.sm-box {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.sm-box thead th:nth-child(1) {
+    width: 30%;
+}
+
+.sm-box thead th:nth-child(2) {
+    width: 25%;
+}
+
+.sm-box thead th:nth-child(3) {
+    width: 5%;
+}
+
+.sm-box thead th:nth-child(4) {
+    width: 5%;
+}
+
+.sm-box thead th:nth-child(5) {
+    width: 5%;
+}
+
+.sm-box thead th:nth-child(6) {
+    width: 25%;
+}
+
+.sm-box thead th:nth-child(7) {
+    width: 5%;
+}
+
+th, td {
+    padding: 20px;
+}
+
+.board-box tr td a {
+    text-decoration: none;
+    color: black;
+}
+
+.active>.page-link, .page-link.active {
+    background-color: #03A63C;
+}
+
+.disabled>.page-link, .page-link.disabled {
+    background-color: white;
+}
+
+
+
 /*-------------------- 포스트 디테일-------------------- */
 .modal-participater img {
     width: 50px;
@@ -562,6 +698,7 @@ main {
 #map-search-result{
     overflow-y: scroll;
     height: 500px;
+    width: 18.75rem;
 }
 
 .map-overlay-box{
@@ -1161,30 +1298,33 @@ li .dd-list {
 
 /* multistep */
 .signup-body {
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-overflow: hidden;
-background-color: #BF9B6F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background: transparent;
+    padding-top: 12.5rem;
 }
 
 .signup-container{
 width: 500px;
-background: #fff;
 text-align: center;
 padding: 50px 35px 10px 35px;
-backdrop-filter: blur(21px) saturate(107%);
--webkit-backdrop-filter: blur(21px) saturate(107%);
-background-color: rgba(255, 255, 255, 0.71);
-border-radius: 12px;
 border: 1px solid rgba(209, 213, 219, 0.3);
-text-align: center;
+text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
+background-color: #F0F1F2;
+box-shadow: -5px 5px 0px #03A63C;
+box-decoration-break: clone;
+border-radius: 3px;
+transition: all 0.3s ease;
+display: inline-block;
+outline: none;
 }
 
 .signup-container header{
 font-size: 35px;
-font-weight: 600;
+font-weight: 400;
 margin: 0 0 30px 0;
 }
 
@@ -1216,7 +1356,7 @@ height: 400px
 
 .form-outer form .page .field{
 width: 428px;
-height: 45px;
+height: auto;
 margin: 45px 0;
 display: flex;
 position: relative;
@@ -1224,8 +1364,15 @@ position: relative;
 
 .form-outer form .page .field .label{
 position: absolute;
-top: -20px;
+top: -27px;
 font-weight: 500;
+}
+
+.form-outer form .page .field .personality {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    line-height: 2;
 }
 
 .form-outer form .page .field input{
@@ -1240,7 +1387,7 @@ font-size: 18px;
 .form-outer form .page .field button,
 .form-outer form .page .field .submit{
 width: 100%;
-height: calc(100% + 5px);
+height: 45px;
 border: none;
 border-radius: 5px;
 background: #03A63C;
@@ -1381,7 +1528,7 @@ font-size: 17px;
 line-height: 25px;
 position: absolute;
 left: 50%;
-bottom: 0.5px;
+bottom: -1px;
 transform:  translateX(-50%);
 }
 
