@@ -14,7 +14,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="followerModalLabel">Followers</h5>
+          <h5 class="modal-title w-100 text-center fw-bold" id="followerModalLabel">Followers</h5>
         </div>
         <div class="modal-body">
           {% if user.followers.all %}
@@ -33,7 +33,7 @@
           {% endif %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn pos-btn" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
@@ -61,208 +61,196 @@
           {% endif %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" style="background-color: #319e45;" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn pos-btn" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
   <!-- 프로필 -->
-  <section class="home"></section>
-  <div style="height: 1000px">
-    <div class="container px-4 px-lg-5 my-5">
-      <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-3">
-
-          {% if user.profile_pic %}
-            <div class="rounded-circle bg-white" style="width:200px; height:200px; background-image:url({{ user.profile_pic.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);"></div>
-          {% else %}
-            <div class="rounded-circle" style="width:200px; height:200px; background-image:url('https://dummyimage.com/35x35/000/fff');"></div>
-          {% endif %}
-        </div>
-        <!--프사 옆-->
-        <div class="pf-right">
-          <div class="pf-detail">
-            <h3 class="display-7 fw-bolder">{{ user }}</h3>
-            <p class="small mb-1 lh-lg">
-              닉네임 :
-              {{user.nickname}}<br>
-              사는 지역 :
-              {{user.address}}&nbsp{{user.address_detail}}<br>
-              MBTI :
-              {{user.mbti}}<br>
-              매너 온도 :
-              {{user.manner_point}}℃
-              {% if user.manner_point < 36.5 %}
-                <i>🥵</i>
-              {% elif user.manner_point == 36.5 %}🙂
-              {% else %}
-                😍
-              {% endif %}
-            </p>
-            <div id="article-profile">
-              <div id="article-profile-right">
-                <div class="meters">
-                  {% if user.manner_point < 36.5 %}
-                    <div class="bar bar-color-02" style="width:41%;"></div>
-                  {% elif user.manner_point == 36.5 %}
-                    <div class="bar bar-color-03" style="width:41%;"></div>
-                  {% else %}
-                    <div class="bar bar-color-04" style="width:41%;"></div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-          {% if request.user == user %}
-            <a href="{% url 'accounts:block_user' %}" class="btn btn-outline-dark">차단 목록</a>
-          {% endif %}
-          <!-- 팔로워 표시 -->
-          <div class="counts">
-            <div class="me-5">
-              <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
-            </div>
-            <div class="me-5">
-              <p class="fs-6" data-bs-target="#followerModal" data-bs-toggle="modal">
-                팔로워
-                <span class="ms-2 fw-bold" id="followers-count">
-                  {{ user.followers.count }}
-                </span>
-              </p>
-            </div>
-            <div class="me-5">
-              <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
-              </p>
-            </div>
-          </div>
-          <div class="pf-btns">
-            {% if request.user != user %}
-              <a href="{% url 'accounts:follow' user.pk %}">
-                {% if request.user in user.followers.all %}
-                  <button type="button" class="btn btn-danger">팔로우 취소</button>
+  <section class="home">
+    <div class="container">
+      <div class="content">
+        <div class="pf-box">
+          <div class="rounded-circle bg-white" style="width:300px; height:300px; background-image:url({{ user.get_photo_url }}); background-repeat:no-repeat; background-position:center; background-size:contain;"></div>
+          <!--프사 옆-->
+          <div class="pf-right">
+            <div class="pf-detail">
+              <h3 class="display-7 fw-bolder">{{ user }}</h3>
+              <p class="small mb-1 lh-lg">
+                닉네임 :
+                {{user.nickname}}<br>
+                사는 지역 :
+                {{user.address}}&nbsp{{user.address_detail}}<br>
+                MBTI :
+                {{user.mbti}}<br>
+                매너 온도 :
+                {{user.manner_point}}℃
+                {% if user.manner_point < 36.5 %}
+                  <i>🥵</i>
+                {% elif user.manner_point == 36.5 %}🙂
                 {% else %}
-                  <button type="button" class="btn btn-primary">팔로우</button>
+                  😍
                 {% endif %}
-              </a>
-            {% endif %}
-            <!-- 차단 버튼 -->
-            {% if request.user != user %}
-              <a href="{% url 'accounts:block' user.pk %}">
-                {% if request.user in user.blockers.all %}
-                  <button type="button" class="btn btn-danger">차단 취소</button>
-                {% else %}
-                  <button type="button" class="btn btn-primary">차단</button>
-                {% endif %}
-              </a>
-            {% endif %}
-            <!-- 팔로우 버튼(비동기) -->
-            <!-- {% if request.user != user %} <form id='follow-form' data-user-id='{{ user.pk }}'> {% csrf_token %} {% if request.user in user.followers.all %} <input type='submit' class="neg-btn" value="언팔로우"> {% else %} <input type='submit' class="pos-btn" value='팔로우'> {% endif %} </form> {% endif %} -->
-
-            <!-- 수정 및 삭제 -->
-            {% if request.user == user %}
-
-              <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn mx-3">수정</a>
-              <button type="button" class="btn neg-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                회원탈퇴
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">회원탈퇴</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      정말 탈퇴하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                      <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">탈퇴</a>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                      
-                    </div>
+              </p>
+              <div id="article-profile">
+                <div id="article-profile-right">
+                  <div class="meters">
+                    {% if user.manner_point < 36.5 %}
+                      <div class="bar bar-color-02" style="width:41%;"></div>
+                    {% elif user.manner_point == 36.5 %}
+                      <div class="bar bar-color-03" style="width:41%;"></div>
+                    {% else %}
+                      <div class="bar bar-color-04" style="width:41%;"></div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
-              <!-- <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">회원탈퇴</a> -->
+            </div>
+            <!-- 팔로워 표시 -->
+            <div class="counts">
+              <div class="me-5">
+                <p class="fs-6">게시물<span class="ms-2 fw-bold">{{ user.post_set.count }}</span></p>
+              </div>
+              <div class="me-5">
+                <p class="fs-6" data-bs-target="#followerModal" data-bs-toggle="modal">
+                  팔로워
+                  <span class="ms-2 fw-bold" id="followers-count">
+                    {{ user.followers.count }}
+                  </span>
+                </p>
+              </div>
+              <div class="me-5">
+                <p class="fs-6">팔로우<span class="ms-2 fw-bold" id="followings-count">{{ user.followings.count }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="pf-btns">
+              {% if request.user != user %}
+                <a href="{% url 'accounts:follow' user.pk %}">
+                  {% if request.user in user.followers.all %}
+                    <button type="button" class="btn btn-danger">팔로우 취소</button>
+                  {% else %}
+                    <button type="button" class="btn btn-primary">팔로우</button>
+                  {% endif %}
+                </a>
+              {% endif %}
+              <!-- 차단 버튼 -->
+              {% if request.user != user %}
+                <a href="{% url 'accounts:block' user.pk %}">
+                  {% if request.user in user.blockers.all %}
+                    <button type="button" class="btn btn-danger">차단 취소</button>
+                  {% else %}
+                    <button type="button" class="btn btn-primary">차단</button>
+                  {% endif %}
+                </a>
+              {% endif %}
+              <!-- 팔로우 버튼(비동기) -->
+              <!-- {% if request.user != user %} <form id='follow-form' data-user-id='{{ user.pk }}'> {% csrf_token %} {% if request.user in user.followers.all %} <input type='submit' class="neg-btn" value="언팔로우"> {% else %} <input type='submit' class="pos-btn" value='팔로우'> {% endif %} </form> {% endif %} -->
 
-            {% endif %}
+              <!-- 수정 및 삭제 -->
+              {% if request.user == user %}
+                <a href="{% url 'accounts:update' user.pk %}" type="button" class="btn pos-btn me-2">수정</a>
+                <button type="button" class="btn neg-btn me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  회원탈퇴
+                </button>
+                <a href="{% url 'accounts:block_user' %}" class="btn awf-btn">차단 목록</a>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">회원탈퇴</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        정말 탈퇴하시겠습니까?
+                      </div>
+                      <div class="modal-footer">
+                        <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">탈퇴</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <a href="{% url 'accounts:delete' %}" type="button" class="btn neg-btn">회원탈퇴</a> -->
+              {% endif %}
+            </div>
           </div>
         </div>
-      </div>
-      <!--content-->
-      <div class="pf-history">
-        <div class="written-p">
-          <h3>작성한 글</h3>
-          <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
-          <table class="table">
-            <thead>
-              <tr class="thead-dark">
-                <th>#</th>
-                <th>글 제목</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for article in user.post_set.all %}
-                <tr>
-                  <td>{{ forloop.counter}}</td>
-                  <td>
-                    <a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a>
-                  </td>
+        <!--content-->
+        <div class="pf-history">
+          <div class="written-p">
+            <h3>작성한 글</h3>
+            <p class="text-muted">{{ user.post_set.count }}개를 작성하였습니다.</p>
+            <table class="table">
+              <thead>
+                <tr class="thead-dark">
+                  <th>#</th>
+                  <th>글 제목</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="written-c">
-          <h3>작성한 댓글</h3>
-          <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
-          <table class="table">
-            <thead>
-              <tr class="thead-dark">
-                <th>#</th>
-                <th>댓글 내용</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for comment in user.comment_set.all %}
-                <tr>
-                  <td>{{ forloop.counter}}</td>
-                  <td>
-                    <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
-                  </td>
+              </thead>
+              <tbody>
+                {% for article in user.post_set.all %}
+                  <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>
+                      <a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="written-c">
+            <h3>작성한 댓글</h3>
+            <p class="text-muted">{{ user.comment_set.count }}개를 작성하였습니다.</p>
+            <table class="table">
+              <thead>
+                <tr class="thead-dark">
+                  <th>#</th>
+                  <th>댓글 내용</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <!--written-c-->
-        <div class="liked">
-          <h3>좋아요 누른 글</h3>
-          <p class="text-muted">
-            {% if user.like_articles %}{{ user.like_articles.count }}
-            {% else %}0
-            {% endif %}개의 글에 좋아요를 표시하였습니다.</p>
-          <table class="table">
-            <thead>
-              <tr class="thead-dark">
-                <th>#</th>
-                <th>좋아요 표시한 글</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for article in user.like_articles.all %}
-                <tr>
-                  <td>{{ forloop.counter}}</td>
-                  <td>
-                    <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
-                  </td>
+              </thead>
+              <tbody>
+                {% for comment in user.comment_set.all %}
+                  <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>
+                      <a href="{% url 'articles:detail' comment.article_id %}">{{comment.content}}</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!--written-c-->
+          <div class="liked">
+            <h3>좋아요 누른 글</h3>
+            <p class="text-muted">
+              {% if user.like_articles %}{{ user.like_articles.count }}
+              {% else %}0
+              {% endif %}개의 글에 좋아요를 표시하였습니다.</p>
+            <table class="table">
+              <thead>
+                <tr class="thead-dark">
+                  <th>#</th>
+                  <th>좋아요 표시한 글</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for article in user.like_articles.all %}
+                  <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>
+                      <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!--liked-->
         </div>
-        <!--liked-->
       </div>
     </div>
   </section>

@@ -87,8 +87,9 @@ main {
 .home {
     width: 100%;
     height: 100%;
-    min-height: 1000px;
-    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    min-height: 300px;
+    /* background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80); */
+    background-image: url(../images/bg/bd-top.png);
     background-repeat: no-repeat; /* 배경이미지X */
     background-size: cover; /* 요소를 비율에 맞게 커버 */
     background-position: center top; /* 이미지를 요소의 정가운데로 처리 */
@@ -96,13 +97,14 @@ main {
 }
 
 .content {
-    padding-top: 18.75rem;
+    padding: 6.25rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    min-height: 37.5rem;
+    min-height: 50rem;
+    background: transparent;
 }
 
 .custom-btn {
@@ -144,14 +146,14 @@ main {
     }
 
 .neg-btn {
-    background-color: #F2ACCD;
     color: #F0F1F2;
-    width: auto;
+    width: 130px;
     height: 40px;
     border-radius: 5px;
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
+    background-color: #F2ACCD;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -159,9 +161,26 @@ main {
     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
     7px 7px 20px 0px rgba(0,0,0,.1),
     4px 4px 5px 0px rgba(0,0,0,.1);
-    outline: none;
-    
+    outline: none;   
 }
+
+.awf-btn {
+    color: #F0F1F2;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-weight: 500;
+    background: transparent;
+    background-color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;}
 
 .glass {
     backdrop-filter: blur(25px) saturate(113%);
@@ -322,7 +341,7 @@ main {
 
 .none-box {
     height: 450px;
-    width: 100vh;
+    width: 100%;
     text-align: center;
     font-size: 20px;
     background-color: #fff;
@@ -336,7 +355,7 @@ main {
 }
 
 .inner-box {
-    padding: 25rem;
+    padding: 25rem 12.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -476,10 +495,82 @@ th, td {
     border-radius: 50%;
 }
 
+.comment-form{
+    height: 3rem;
+}
+
+.detail-map{
+    display: flex;
+    justify-content: center;
+    width:100vw;
+    background-color: #a0d097;
+}
+
+.detail-info-all{
+    padding-top: 7rem;
+}
+
+.detail-info, .detail-info-an{
+    margin: 1rem ;
+    font-size: 1.5rem;
+}
+
+.detail-info-an{
+    font-weight: bold;
+}
+
+.detail-info-name{
+    text-decoration: none;
+    color:#000;
+}
+
+.detail-info-name:hover{
+    color:rgb(134, 134, 134);
+}
+
+.detail-content{
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.detail-content-word{
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+}
+.detail-content-detail{
+    min-height: 150px;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    border-radius: 10px;
+    padding: 0.5rem 2rem;
+    background-color: #a0d097;
+    font-size: 1.5rem;
+}
+
+.detail-content-up{
+    margin-top: 1rem;
+    color: rgb(139, 139, 139);
+}
+
 /* 댓글 */
 .comment {
     display: flex;
     margin: 2rem 15%;
+}
+
+.comment-part{
+    font-size: 0.7rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 1rem;
+    background-color: rgb(3 166 60);
+    color: #e1f1e7;
+}
+
+.comment-part:hover{
+    background-color: rgb(145, 170, 154);
+    color: #e1f1e7;
 }
 
 .comment-profile-img {
@@ -489,7 +580,7 @@ th, td {
 }
 
 .comment-detail {
-    padding: 2.5rem;
+    padding: 1rem 2.5rem;
     margin-left: 2rem;
     border-radius: 20px;
     background-color: #bf9b6f42;
@@ -509,7 +600,8 @@ th, td {
 
 .comment-content {
     margin-bottom: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .comment-control {
@@ -528,7 +620,7 @@ th, td {
     cursor: pointer;
     color: #000;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     text-decoration: none;
 }
 
@@ -550,15 +642,20 @@ th, td {
 /*-------------------- account detail------------------------- */
 .pf-box {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-content: flex-start;
     align-items: center;
-    padding: 100px 0;
+    width: 100%;
+
 }
 
 .pf-right {
     display: flex;
     flex-direction: column;
-    padding-left: 100px;
+}
+
+.pf-history {
+    width: 100%;
 }
 
 .written-p, .written-c, .liked {
@@ -571,6 +668,10 @@ th, td {
     width: 100%;
     padding: 3.125rem;
     margin-top: 9.375rem;
+}
+
+.liked {
+    margin-bottom: 200px;
 }
 
 .counts {
@@ -586,7 +687,7 @@ th, td {
 #article-profile #article-profile-right .meters {
     clear: both;
     display: block;
-    width: 150px;
+    width: 80%;
     background-color: #e9ecef;
     height: 8px;
     border-radius: 100px;
@@ -621,31 +722,57 @@ th, td {
 }
 
 /* 프로필수정 */
+.idfield {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #313438;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+}
+
 .wrapper{
     display:flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
 }
 .tab{
     cursor: pointer;
     padding:10px 20px;
     margin:0px 2px;
-    background:#000;
+    background:#03A63C;
     display:inline-block;
     color:#fff;
-    border-radius:3px 3px 0px 0px;
-    box-shadow: 0 0.5rem 0.8rem #00000080;
+    border-radius:5px 5px 0px 0px;
+    box-shadow: 0 0.5rem 0.8rem #;
 }
 .panels{
     background:#fffffff6;
     box-shadow: 0 2rem 2rem #00000080;
-    min-height:200px;
+    min-height: 600px;
     width:100%;
     max-width:500px;
-    border-radius:3px;
-    overflow:hidden;
     padding:20px;  
+    border-radius:0px 0px 5px 5px;
+    overflow-wrap: break-word;
+    position: relative;
 }
+
+.panel-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 185px;
+}
+
 .panel{
     display:none;
     animation: fadein .8s;
@@ -659,8 +786,8 @@ th, td {
     }
 }
 .panel-title{
-    font-size:1.5em;
-    font-weight:bold
+    font-size: 1.2em;
+    font-weight: bold;
 }
 .radio{
     display:none;
@@ -677,7 +804,7 @@ th, td {
 #four:checked ~ .tabs #four-tab{
     background:#fffffff6;
     color:#000;
-    border-top: 3px solid #000;
+    border-top: 3px solid #03A63C;
 }
 
 /*-------------------- 지도 map ------------------------------- */
@@ -883,6 +1010,7 @@ li .dd-list {
     color: #000;
     border-radius: 5px;
     background: transparent;
+    background-color: #03A63C;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -892,7 +1020,7 @@ li .dd-list {
     outline: none;
 }
 
-/* Media qurey section */
+/* Media query section */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .container {
         margin: 0;
@@ -1160,8 +1288,12 @@ li .dd-list {
 }
 
 .affix {
+    margin-top: 20px 0 40px 40px;
     padding: 0;
-    background-color: #FFF;
+    background-color: #fff;
+    border-radius: 50px;
+    box-shadow: -4px 4px 0px #F0F1F2;
+    transition: all 0.3s ease;
 }
 
 /* 회원가입 form styles*/
@@ -1354,7 +1486,7 @@ font-weight: 500;
 height: 400px
 }
 
-.form-outer form .page .field{
+.form-outer form .page .field {
 width: 428px;
 height: auto;
 margin: 45px 0;
@@ -1366,13 +1498,6 @@ position: relative;
 position: absolute;
 top: -27px;
 font-weight: 500;
-}
-
-.form-outer form .page .field .personality {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    line-height: 2;
 }
 
 .form-outer form .page .field input{
@@ -1549,4 +1674,27 @@ display: none;
 .progress-bar .step .check.active{
 display: block;
 color: #fff;
+}
+
+
+/* footer */
+footer {
+    position: relative;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+}
+
+.footer-bg {
+    background-image: url(../images/bg/bg-footer.png);
+    min-height: 300px;
+    background-repeat: no-repeat; /* 배경이미지X */
+    background-size: cover; /* 요소를 비율에 맞게 커버 */
+    background-position: 50% 170%;
+    background-attachment: fixed; /* 스크롤바 움직일때 이미지가 따라다님 */   
 }
