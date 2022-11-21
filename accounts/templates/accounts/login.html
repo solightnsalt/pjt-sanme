@@ -13,7 +13,7 @@
       {% csrf_token %}
       {% render_field login_form.username class="form-control w-70" placeholder="아이디를 입력하세요" type="text" name="id" id="logId" %}
       {% render_field login_form.password class="form-control w-70 my-2" placeholder="비밀번호를 입력하세요" %}
-      <!--아이디저장, 찾기-->
+      <!-- 아이디저장, 찾기 -->
       <div class="box d-flex flex-row justify-content-between my-1">
         <span class="input-wrap">
           <input type="checkbox" name="saveId" id="saveId" style="cursor: hand; cursor: pointer">
