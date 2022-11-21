@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     # aws setting
     "storages",
     # chat
-    "channels",
+    "chat",
     # apps
     "accounts",
     "articles",
@@ -218,14 +218,3 @@ else:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
-
-ASGI_APPLICATION = "sanmepjt.routing.application"
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-}
