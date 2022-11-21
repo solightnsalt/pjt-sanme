@@ -29,10 +29,12 @@ def query_debugger(func):
 
 
 # Create your views here.
+@login_required
 def map(request):
     return render(request, "maps/map.html")
 
 
+@login_required
 @query_debugger
 def map_search(request, x, y):
     parks = Map.objects.all()
@@ -86,6 +88,7 @@ def map_search(request, x, y):
     return JsonResponse(data)
 
 
+@login_required
 def search(request, x, y):
     park_list = []
     if request.method == "POST":
