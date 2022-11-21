@@ -217,6 +217,11 @@ main {
     position: relative;
 }
 
+.input-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .start-container {
     margin: 12.5rem 0;
 }

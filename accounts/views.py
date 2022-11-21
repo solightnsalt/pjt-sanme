@@ -22,7 +22,7 @@ def login(request):
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
 
-                return redirect(request.GET.get('next') or "articles:main")
+                return redirect(request.GET.get("next") or "articles:main")
 
         else:
             login_form = AuthenticationForm()
@@ -35,6 +35,7 @@ def login(request):
         return HttpResponseRedirect("/")
 
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect("accounts:login")
@@ -55,6 +56,7 @@ def signup(request):
     return render(request, "accounts/signup.html", context)
 
 
+@login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     context = {
@@ -180,6 +182,7 @@ def block_user_block(request, pk):
     return redirect("accounts:block_user")
 
 
+@login_required
 def delete(request):
     request.user.delete()
     auth_logout(request)
