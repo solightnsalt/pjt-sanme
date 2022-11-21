@@ -22,9 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 import os, json
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # SECRET_KEY 파일 위치
 secret_file = os.path.join(BASE_DIR, "secrets.json")
@@ -43,21 +40,14 @@ def get_secret(setting, secrets=secrets):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    "Sanmebeanstalk-env.eba-4rfc539i.ap-northeast-2.elasticbeanstalk.com",
-    "127.0.0.1",
-    "localhost",
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # aws setting
-    "storages",
-    # chat
     "channels",
     "chat",
     # apps
@@ -118,13 +108,12 @@ WSGI_APPLICATION = "sanmepjt.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# 기존 기본값
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 # Password validation
@@ -164,60 +153,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STC_ROOT = "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 # Media files
-# MEDIA_ROOT = BASE_DIR / "media"
-# MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-# 미디어 개발과 배포환경 분리
-DEBUG = os.getenv("DEBUG") == "True"
-
-if DEBUG:
-    MEDIA_ROOT = BASE_DIR / "media"
-    MEDIA_URL = "/media/"
-
-else:
-    # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    DEFAULT_FILE_STORAGE = "sanmepjt.storages.MediaStorage"
-
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-
-    AWS_REGION = "ap-northeast-2"
-    AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
-        AWS_STORAGE_BUCKET_NAME,
-        AWS_REGION,
-    )
-
-# 데이터베이스 개발과 배포환경 분리
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("sanme_rds"),  # db이름
-            "USER": "postgres",
-            "PASSWORD": os.getenv("sanme1313"),  # RDS 마스터암호
-            "HOST": os.getenv(
-                "sanme.cvprnt3cn8kv.ap-northeast-2.rds.amazonaws.com"
-            ),  # 엔드포인트
-            "PORT": "5432",  # 포트
-        }
-    }
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
