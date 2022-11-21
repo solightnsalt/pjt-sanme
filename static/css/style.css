@@ -564,8 +564,23 @@ th, td {
     color: #e1f1e7;
 }
 
+.comment-part-del{
+    font-size: 0.7rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 1rem;
+    background-color: #F2ACCD;
+    color: #e1f1e7;
+}
+
 .comment-part:hover{
     background-color: rgb(145, 170, 154);
+    color: #e1f1e7;
+}
+
+.comment-part-del:hover{
+    background-color: #f1328b;
     color: #e1f1e7;
 }
 
