@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_safe
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from .forms import CustomUserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,6 +16,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 
+@require_safe
 def login(request):
     if request.user.is_anonymous:
         if request.method == "POST":

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Map
 import functools, time
+from django.contrib.auth.decorators import login_required
 from django.db import connection, reset_queries
 from django.conf import settings
 from django.db.models import Q
