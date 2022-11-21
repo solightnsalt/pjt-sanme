@@ -66,6 +66,11 @@
           <input type="number" name="participate_people" class="form-control" value="2" required="" id="participate_people">
         </div>
         <div class="mb-3">
+          <label class="form-label" for="thumbnail">Thumbnail</label>
+          {% render_field form.thumbnail class="form-control" %}
+        </div>
+        <div class="mb-3">
+
           <label class="form-label" for="id_content">Content</label>
           <textarea name="content" cols="40" rows="10" class="form-control" placeholder="Content" required="" id="id_content"></textarea>
         </div>
@@ -88,6 +93,7 @@
         <div class="mb-3">
           <label class="form-label" for="id_time">Time</label>
           <select name="time" class="form-select" required="" id="id_time">
+
             <option value="" selected="">---------</option>
             <option value="00:00">00:00</option>
             <option value="01:00">01:00</option>
@@ -126,6 +132,7 @@
           <input type="number" name="participate_people" class="form-control" placeholder="{{post_form.participate_people}}" required="" id="participate_people">
         </div>
         <div class="mb-3">
+
           <label class="form-label" for="id_content">Content</label>
           <textarea name="content" cols="40" rows="10" class="form-control" placeholder="{{post_form.content}}" required="" id="id_content"></textarea>
         </div>
