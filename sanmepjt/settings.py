@@ -22,9 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 import os, json
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # SECRET_KEY 파일 위치
 secret_file = os.path.join(BASE_DIR, "secrets.json")
@@ -43,21 +40,14 @@ def get_secret(setting, secrets=secrets):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    "Sanmebeanstalk-env.eba-4rfc539i.ap-northeast-2.elasticbeanstalk.com",
-    "127.0.0.1",
-    "localhost",
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # aws setting
-    "storages",
-    # chat
     "channels",
     "chat",
     # apps
@@ -118,13 +108,12 @@ WSGI_APPLICATION = "sanmepjt.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# 기존 기본값
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 # Password validation
@@ -164,13 +153,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STC_ROOT = "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 # Media files
-# MEDIA_ROOT = BASE_DIR / "media"
-# MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

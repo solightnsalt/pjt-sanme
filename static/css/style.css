@@ -1,4 +1,12 @@
 /* Borderless-credit-app Color Theme Swatches in Hex */
+:root {
+    --border: 3px;
+    --color1: #6be89b;
+    --color2: #0076a5;
+    --from: 30deg;
+    --distance: 46%;
+}    
+
 .point-2 {
     color: #F2ACCD;
 }
@@ -65,12 +73,12 @@ body {
 }
 
 ::selection {
-    background: #03A63C;
+    background: #D0E6A5;
     color: #F0F1F2;
 }
 
 ::-webkit-selection {
-    background: #03A63C;
+    background: #D0E6A5;
     color: #F0F1F2;
 }
 
@@ -134,7 +142,7 @@ main {
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
-    background-color: #03A63C;
+    background-color: #86E3CE;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -153,7 +161,7 @@ main {
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
-    background-color: #F2ACCD;
+    background-color: #FA897B;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -201,7 +209,8 @@ main {
     height: 100%;
     min-height: 100%;
     background: linear-gradient(135deg, white 50%);
-    background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    /* background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80); */
+    background-image: url(../images/bg/bg-index.png);
     background-position: center;
     background-size: cover;
     display: flex;
@@ -222,7 +231,7 @@ main {
     color: rgb(0, 0, 0);
     text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
     text-align: center;
-    background-color: #03A63C;
+    background-color: #86E3CE;
     box-shadow: -4px 4px 0px #F0F1F2;
     box-decoration-break: clone;
     border-radius: 3px;
@@ -301,7 +310,7 @@ main {
     text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
     text-align: center;
     background-color: #F0F1F2;
-    box-shadow: -5px 5px 0px #03A63C;
+    box-shadow: -5px 5px 0px #86E3CE;
     box-decoration-break: clone;
     border-radius: 3px;
     width: auto;
@@ -321,7 +330,7 @@ main {
     text-decoration: none;
     list-style: none;
     font-size: 90%;
-    color:#085e25;
+    color:#CCABD8;
     cursor: pointer;
 }
 
@@ -478,7 +487,7 @@ th, td {
 }
 
 .active>.page-link, .page-link.active {
-    background-color: #03A63C;
+    background-color: #86E3CE;
 }
 
 .disabled>.page-link, .page-link.disabled {
@@ -503,7 +512,7 @@ th, td {
     display: flex;
     justify-content: center;
     width:100vw;
-    background-color: #a0d097;
+    background-color: #D0E6A5;
 }
 
 .detail-info-all{
@@ -543,7 +552,7 @@ th, td {
     margin-bottom: 0;
     border-radius: 10px;
     padding: 0.5rem 2rem;
-    background-color: #a0d097;
+    background-color: #D0E6A5;
     font-size: 1.5rem;
 }
 
@@ -564,7 +573,7 @@ th, td {
     border-radius: 5px;
     border: 0;
     margin-left: 1rem;
-    background-color: rgb(3 166 60);
+    background-color: #86E3CE;
     color: #e1f1e7;
 }
 
@@ -642,7 +651,7 @@ th, td {
 .comment-control-update:hover,
 .comment-control-update-exit:hover,
 .comment-control-delete:hover {
-    color: rgb(255, 0, 0);
+    color: #CCABD8;
 }
 
 .comment-update {
@@ -651,17 +660,53 @@ th, td {
     border: none;
     padding: 0.5rem 1rem;
     font-size: 1.3rem;
-    background-color: #d4c7b7;
+    background-color: #FFDD94;
 }
 
 /*-------------------- account detail------------------------- */
+.pic-outer {
+    position: relative;
+    padding: 30px;
+}
+
+.photo-outer::after {
+    content: '';
+    border-radius: 999px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: conic-gradient(
+    from var(--from),
+    var(--color1),
+    var(--color2) var(--distance),
+    transparent var(--distance)
+    );
+    -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--border)),
+    #fff calc(100% - var(--border) + 1px)
+    );
+    mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--border)),
+    #fff calc(100% - var(--border) + 1px)
+    );
+}
+
+img {
+border-radius: 999px;
+display: block;
+}
+
 .pf-box {
     display: flex;
     justify-content: space-evenly;
     align-content: flex-start;
     align-items: center;
     width: 100%;
-
 }
 
 .pf-right {
@@ -768,7 +813,7 @@ th, td {
     display:inline-block;
     color:#fff;
     border-radius:5px 5px 0px 0px;
-    box-shadow: 0 0.5rem 0.8rem #;
+    box-shadow: 0 0.5rem 0.8rem;
 }
 .panels{
     background:#fffffff6;
