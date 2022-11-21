@@ -56,8 +56,6 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     # aws setting
     "storages",
-    # chat
-    "chat",
     # apps
     "accounts",
     "articles",
@@ -79,8 +77,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-ASGI_APPLICATION = "sanmepjt.asgi.application"
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
