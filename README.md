@@ -1,6 +1,6 @@
-# 👨🏻‍🤝‍👨🏻산메 : 산책 메이트
+# ![logo](README.assets/navlogo.png) 산책 메이트
 
-![산메](README.assets/데이트 (1)-1667998132712-4.png)
+<img src="README.assets/logo.png" alt="logo" style="zoom:67%;" />
 
 ## 링크
 
@@ -12,7 +12,24 @@
 
 ## 멤버
 
-[<img src="README.assets/kimbap918.png" alt="최준혁" style="zoom: 25%;" />](https://github.com/kimbap918) [<img src="README.assets/JeongJinGan.png" alt="간정진" style="zoom:25%;" />](https://github.com/JeongJinGan) [<img src="README.assets/solightnsalt.png" alt="김다솔" style="zoom:25%;" />](https://github.com/solightnsalt) [<img src="README.assets/woocheolll.png" alt="신우철" style="zoom:25%;" />](https://github.com/woocheolll) [<img src="README.assets/jejoonlee.png" alt="이제준" style="zoom:25%;" />](https://github.com/jejoonlee)
+[![image-20221121173712473](README.assets/image-20221121173712473.png)](https://github.com/kimbap918/sanme_proj/graphs/contributors)
+
+
+
+### 역할 분담
+
+#### Front-end
+
++ 김다솔
+
+
+
+#### Back-end
+
++ 이제준
++ 신우철
++ 간정진
++ 최준혁
 
 
 
@@ -20,45 +37,41 @@
 
 ## 프로젝트 개요
 
-+ 목적
+### 목적
 
-  웹 프레임워크 Django와 HTML / CSS / JavaScript를 활용한 콘텐츠 기반 커뮤니티 웹 플랫폼 개발
-
-  
-
-+ 프로젝트 기간
-
-  11.22 (화)
++ 웹 프레임워크 Django와 HTML / CSS / JavaScript를 활용한 콘텐츠 기반 커뮤니티 웹 플랫폼 개발
 
 
 
-+ 주제
+### 프로젝트 기간
 
-  **산책 메이트**를 찾는 웹 서비스 (친구 말고 산책 메이트 👩‍❤️‍👨)
++ 2022.11.10(목) ~ 2022.11.21(월)
 
 
 
-+ 기술 스택 
+### 주제
 
-   ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
-
-   
-
-+ 호스팅
-
-  ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+근처의 **산책 메이트**를 찾는 웹 서비스 (친구 말고 산책 메이트 👩‍❤️‍👨)
 
 
 
 
 
-## 역할 분담
+## 사용 기술
 
-+ 최준혁
-+ 간정진
-+ 김다솔
-+ 신우철
-+ 이제준
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![jquery](https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)  
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+
+![git](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white) ![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+
+
+
+
+
+## 호스팅
+
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) 
 
 
 
@@ -66,9 +79,34 @@
 
 ## 주요 기능
 
+### 추천 유저 
+
+1. 가입 시 작성한 mbti를 반영한 추천 유저를 보여줍니다. 
+2. 산책 매너 점수가 높은 순으로 3명의 유저를 보여줍니다.
 
 
 
+### 전국 공원 정보
+
+1. 전국 도시 공원 정보 표준 데이터 정보를 사용하여 전국의 공원을 조회할 수 있습니다.
+2. 내 현재 위치 기반으로 공원 거리를 계산하여 가까운 공원 순으로 나열합니다.
+
+
+
+### 산책 메이트 찾기
+
+1. 글쓰기 버튼을 누르면 지도 페이지로 이동하여 근처의 원하는 공원을 선택할 수 있습니다.
+2. 공원 선택 후 원하는 날짜와 시간, 인원 등의 정보를 포함한 글을 작성합니다. 
+3. 참여를 원하는 사용자는 댓글로 참여 의사를 표시합니다.
+4. 작성자는 댓글을 작성한 사용자 중 원하는 사용자를 산책에 참여시킬 수 있습니다.
+
+
+
+### 유저
+
+1. 가입은 프로그래스바를 사용하여 가입 진행 정도를 알아볼 수 있습니다.
+2. 원하는 유저를 팔로우, 차단 할 수 있습니다.
+3. 유저 간 평가를 당근마켓 온도점수를 차용해 보여줍니다.
 
 
 

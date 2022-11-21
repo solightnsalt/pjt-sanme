@@ -25,24 +25,26 @@
   <section class='container'>
     <div class="recommended">
       <div class="mt-3 mb-5">
-        <h3>#<b>{{ user.mbti }}</b> 인 당신을 위한 산책 메이트</h3>
+        <h3>#<b>{{ user.mbti }}</b>
+          인 당신을 위한 산책 메이트</h3>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
           {% if matched_user %}
-          {% for user_info in matched_user %}
-            <div class="col mb-5">
-              <div class="card h-100">
+            {% for user_info in matched_user %}
+              <div class="col mb-5">
+                <div class="card h-100">
                   <img class="card-img-top" src="{{ user_info.get_photo_url }}" alt="프사"/>
-                <div class="card-body py-4">
-                  <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
-                </div>
-                <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
-                  <a class="btn btn-outline-dark text-center" href="{% url 'accounts:detail' user_info.pk %}">자세히보기</a>
+                  <div class="card-body py-4">
+                    <h5 class="fw-bold text-center">{{ user_info.nickname }}</h5>
+                  </div>
+                  <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
+                    <a class="btn btn-outline-dark text-center" href="{% url 'accounts:detail' user_info.pk %}">자세히보기</a>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% endfor %}
+            {% endfor %}
           {% else %}
-          <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i></div>
+            <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i>
+            </div>
           {% endif %}
         </div>
       </div>
@@ -50,63 +52,27 @@
         <h3>#Manner Stack Overflow! 산책매너 좋은 유저</h3>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4">
           {% if hot_user %}
-          {% for hot_info in hot_user %}
-            <div class="col mb-5">
-              <div class="card h-100">
-                <img class="card-img-top" src="{{ hot_info.get_photo_url }}" alt="프사"/>
-                <div class="card-body py-4">
-                  <h5 class="fw-bold text-center">{{ hot_info.nickname }}</h5>
-                </div>
-                <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
-                  <a class="btn pos-btn text-center" href="{% url 'accounts:detail' hot_info.pk %}">자세히보기</a>
+            {% for hot_info in hot_user %}
+              <div class="col mb-5">
+                <div class="card h-100">
+                  <img class="card-img-top" src="{{ hot_info.get_photo_url }}" alt="프사"/>
+                  <div class="card-body py-4">
+                    <h5 class="fw-bold text-center">{{ hot_info.nickname }}</h5>
+                  </div>
+                  <div class="card-footer bg-light p-4 pt-0 border-top-0 bg-transparent">
+                    <a class="btn pos-btn text-center" href="{% url 'accounts:detail' hot_info.pk %}">자세히보기</a>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% endfor %}
+            {% endfor %}
           {% else %}
-          <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i></div>
+            <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i>
+            </div>
           {% endif %}
         </div>
       </div>
-    </div> <!--recommended-->
-    {% comment %} <div class="recommended"> <!--test-->
-      <div class="mt-3 mb-3">
-        <h3>#Manner Stack Overflow! test</h3>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gx-4"  id="profiles">
-          {% if hot_user %}
-          {% for hot_info in hot_user %}
-          <div class="profile">
-            <div class="profile-content">
-              <div class="profile-pic">
-                <img class="profile-pic-image" src="{{ hot_info.get_photo_url }}">
-              </div>
-              <h3 class="profile-name">{{ hot_info.nickname }}</h3>
-            </div>
-          </div>
-          {% endfor %}
-          {% else %}
-          <div class="none-box">추천 유저가 없어요<i class="fa-regular fa-face-frown"></i></div>
-          {% endif %}
-        </div>
-      </div>
-    </div> <!--recommended--> {% endcomment %}
-    <!--playlist-->
-    {% comment %} <div class="wrapper">
-      <i id="left" class="fa-solid fa-angle-left"></i>
-      <div class="slide">
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/svD4Cq1t_OU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/0K4T6ho9stg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/tOI-csUHoP8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/q-Ap8G8ax1c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/k1V4ho7w_Ww" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/y4lb56RsS_k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/zv4rS5ZQbKE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/5nzPRLR5HEo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/5svlvTirzpg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-        <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/We1LjkaKN_4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
-      </div>
-      <i id="right" class="fa-solid fa-angle-right"></i>
-    </div> {% endcomment %}
+    </div>
+    <!--recommended-->
   </section>
 {% endblock content %}
 {% block script %}{% endblock script %}
