@@ -217,6 +217,11 @@ main {
     position: relative;
 }
 
+.input-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .start-container {
     margin: 12.5rem 0;
 }
@@ -690,11 +695,6 @@ th, td {
     transparent calc(100% - var(--border)),
     #fff calc(100% - var(--border) + 1px)
     );
-}
-
-img {
-border-radius: 999px;
-display: block;
 }
 
 .pf-box {

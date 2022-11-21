@@ -78,6 +78,7 @@ def main(request):
     return render(request, "articles/main.html", context)
 
 
+@login_required
 def create(request):
 
     if request.method == "POST":
@@ -94,6 +95,7 @@ def create(request):
     return render(request, "articles/create.html", {"post_form": post_form})
 
 
+@login_required
 def participate(request, pk):
     # article = get_object_or_404(Article, pk=pk)
     article = Post.objects.get(pk=pk)
@@ -109,19 +111,21 @@ def participate(request, pk):
         is_participated = True
 
     data = {
-       "isPart": is_participated, 
-       "partNumCount": article.participate.count(),
+        "isPart": is_participated,
+        "partNumCount": article.participate.count(),
     }
     return JsonResponse(data)
 
 
 # 취소
+@login_required
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
     return redirect("articles:detail", pk)
 
 
+@login_required
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
     day = post.day
@@ -133,8 +137,8 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
-        'day' : day.strftime("%Y/%m/%d"),
-        "name" : post.park_address.parkNm,
+        "day": day.strftime("%Y/%m/%d"),
+        "name": post.park_address.parkNm,
         "latitude": post.park_address.latitude,
         "longitude": post.park_address.longitude,
     }
@@ -142,6 +146,7 @@ def detail(request, pk):
     return render(request, "articles/detail.html", context)
 
 
+@login_required
 def update(request, pk):
     posts = Post.objects.get(pk=pk)
     if request.user == posts.user:
@@ -156,12 +161,14 @@ def update(request, pk):
     return render(request, "articles/create.html", {"post_form": post_form})
 
 
+@login_required
 def delete(request, pk):
     posts = Post.objects.get(pk=pk)
     posts.delete()
     return redirect("articles:index")
 
 
+@login_required
 def comment(request, pk):
     post = Post.objects.get(pk=pk)
     post_pk = post.pk
@@ -198,6 +205,7 @@ def comment(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_delete(request, pk, comment_pk):
     post_pk = Post.objects.get(pk=pk).pk
     user = request.user.pk
@@ -230,6 +238,7 @@ def comment_delete(request, pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_update(request, pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
@@ -267,6 +276,7 @@ def comment_update(request, pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def board(request):
     posts = Post.objects.all().order_by("-pk")
     page = request.GET.get("page")
@@ -286,6 +296,7 @@ def board(request):
     return render(request, "articles/board.html", context)
 
 
+@login_required
 def search(request):
     popular_list = {}
     if request.method == "GET":
@@ -352,6 +363,7 @@ def search(request):
             return render(request, "articles/searchfail.html", context)
 
 
+@login_required
 def searchfail(request):
     popular_search = Search.objects.order_by("-count")[:10]
 
@@ -361,5 +373,6 @@ def searchfail(request):
     return render(request, "articles/searchfail.html", context)
 
 
+@login_required
 def support(request):
     return render(request, "articles/support.html")
