@@ -3,7 +3,7 @@ from .models import Map
 
 # Register your models here.
 class MapAdmin(admin.ModelAdmin):
-    fields = "__all__"
+    pass
 
 
 admin.site.register(Map, MapAdmin)
