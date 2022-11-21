@@ -21,3 +21,4 @@ class Map(models.Model):
     referenceDate = models.CharField(max_length=300, blank=True)
     instt_code = models.CharField(max_length=300, blank=True)
     institutionProvide = models.CharField(max_length=300, blank=True)
+
