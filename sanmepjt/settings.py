@@ -49,7 +49,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "channels",
-    "chat",
     # apps
     "accounts",
     "articles",
