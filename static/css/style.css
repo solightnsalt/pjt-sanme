@@ -692,11 +692,6 @@ th, td {
     );
 }
 
-img {
-border-radius: 999px;
-display: block;
-}
-
 .pf-box {
     display: flex;
     justify-content: space-evenly;
