@@ -5,27 +5,14 @@
     --color2: #0076a5;
     --from: 30deg;
     --distance: 46%;
-}    
+    --tc1: #3CA88D;
+    --tc2: #D0E6A5;
+    --tc3: #FFDD94;
+    --tc4: #FA897B;
+    --tc5: #CCABD8;
+    --tc0: #86E3CE;
+}  
 
-.point-2 {
-    color: #F2ACCD;
-}
-
-.bg-4 {
-    color: #F0F1F2;
-}
-
-.emphasis-3 {
-    color: #F288AF;
-}
-
-.main-1 {
-    color: #03A63C;
-}
-
-.rest-5 {
-    color: #BF9B6F;
-}
 /* ----------폰트---------- */
 /* main */
 @font-face {
@@ -73,12 +60,12 @@ body {
 }
 
 ::selection {
-    background: #D0E6A5;
+    background: var(--tc1);
     color: #F0F1F2;
 }
 
 ::-webkit-selection {
-    background: #D0E6A5;
+    background: var(--tc1);
     color: #F0F1F2;
 }
 
@@ -142,7 +129,7 @@ main {
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
-    background-color: #86E3CE;
+    background-color: var(--tc1);
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -161,7 +148,7 @@ main {
     padding: 10px 25px;
     font-weight: 500;
     background: transparent;
-    background-color: #FA897B;
+    background-color: var(--tc4);
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -231,7 +218,7 @@ main {
     color: rgb(0, 0, 0);
     text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
     text-align: center;
-    background-color: #86E3CE;
+    background-color: var(--tc1);
     box-shadow: -4px 4px 0px #F0F1F2;
     box-decoration-break: clone;
     border-radius: 3px;
@@ -310,7 +297,7 @@ main {
     text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
     text-align: center;
     background-color: #F0F1F2;
-    box-shadow: -5px 5px 0px #86E3CE;
+    box-shadow: -5px 5px 0px var(--tc0);
     box-decoration-break: clone;
     border-radius: 3px;
     width: auto;
@@ -330,7 +317,7 @@ main {
     text-decoration: none;
     list-style: none;
     font-size: 90%;
-    color:#CCABD8;
+    color:var(--tc1);
     cursor: pointer;
 }
 
@@ -487,7 +474,7 @@ th, td {
 }
 
 .active>.page-link, .page-link.active {
-    background-color: #86E3CE;
+    background-color: var(--tc1);
 }
 
 .disabled>.page-link, .page-link.disabled {
@@ -512,7 +499,7 @@ th, td {
     display: flex;
     justify-content: center;
     width:100vw;
-    background-color: #D0E6A5;
+    background-color: var(--tc2);
 }
 
 .detail-info-all{
@@ -552,7 +539,7 @@ th, td {
     margin-bottom: 0;
     border-radius: 10px;
     padding: 0.5rem 2rem;
-    background-color: #D0E6A5;
+    background-color: var(--tc2);
     font-size: 1.5rem;
 }
 
@@ -651,7 +638,7 @@ th, td {
 .comment-control-update:hover,
 .comment-control-update-exit:hover,
 .comment-control-delete:hover {
-    color: #CCABD8;
+    color: var(--tc5);
 }
 
 .comment-update {
@@ -660,7 +647,7 @@ th, td {
     border: none;
     padding: 0.5rem 1rem;
     font-size: 1.3rem;
-    background-color: #FFDD94;
+    background-color: var(--tc3);
 }
 
 /*-------------------- account detail------------------------- */
@@ -770,15 +757,15 @@ display: block;
 }
 
 #article-profile #article-profile-right .meters .bar-color-02 {
-    background-color: #de5d06;
+    background-color: var(--tc4);
 }
 
 #article-profile #article-profile-right .meters .bar-color-03 {
-    background-color: #1561a9;
+    background-color: var(--tc1);
 }
 
 #article-profile #article-profile-right .meters .bar-color-04 {
-    background-color: #319e45;
+    background-color: var(--tc0);
 }
 
 /* 프로필수정 */
@@ -809,7 +796,7 @@ display: block;
     cursor: pointer;
     padding:10px 20px;
     margin:0px 2px;
-    background:#03A63C;
+    background:var(--tc1);
     display:inline-block;
     color:#fff;
     border-radius:5px 5px 0px 0px;
@@ -864,7 +851,7 @@ display: block;
 #four:checked ~ .tabs #four-tab{
     background:#fffffff6;
     color:#000;
-    border-top: 3px solid #03A63C;
+    border-top: 3px solid var(--tc1);
 }
 
 /*-------------------- 지도 map ------------------------------- */
@@ -915,12 +902,12 @@ display: block;
     border: none 0px;
     border-radius: 5px;
     font-size: 1.2rem;
-    background-color: #F2ACCD;
+    background-color: var(--tc4);
     color: #F0F1F2;
 }
 
 .map-close-btn:hover{
-    background-color: #8a6274;
+    background-color: var(--tc3);
 }
 
 .map-link-btn{
@@ -930,12 +917,12 @@ display: block;
     border-radius: 5px;
     font-size: 1.2rem;
     text-decoration: none;
-    background-color: #03A63C;
+    background-color: var(--tc1);
     color: #F0F1F2;
 }
 
 .map-link-btn:hover{
-    background-color: #00531d;
+    background-color: var(--tc0);
     color: #F0F1F2;
 }
 
@@ -963,7 +950,7 @@ display: block;
 }
 
 .nav div.logo a:hover {
-    color: #03A63C;
+    color: var(--tc1);
 }
 
 .nav div.main_list {
@@ -995,7 +982,7 @@ display: block;
 }
 
 .nav div.main_list ul li a:hover {
-    color: #03A63C;
+    color: var(--tc1);
 }
 
 .navTrigger {
@@ -1070,7 +1057,7 @@ li .dd-list {
     color: #000;
     border-radius: 5px;
     background: transparent;
-    background-color: #03A63C;
+    background-color: var(--tc1);
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -1400,7 +1387,7 @@ li .dd-list {
 /*buttons*/
 #msform .action-button {
     width: 100px;
-    background: #27AE60;
+    background: var(--tc1);
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -1412,7 +1399,7 @@ li .dd-list {
 
 #msform .action-button:hover,
 #msform .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--tc1);
 }
 
 /*headings*/
@@ -1479,11 +1466,11 @@ li .dd-list {
     content: none;
 }
 
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
+/*marking active/completed steps */
+/*The number of the step and the connector before it*/
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #27AE60;
+    background: var(--tc1);
     color: white;
 }
 
@@ -1506,7 +1493,7 @@ padding: 50px 35px 10px 35px;
 border: 1px solid rgba(209, 213, 219, 0.3);
 text-shadow: 0 2px 1px hsla(250, 20, 20, 0.4);
 background-color: #F0F1F2;
-box-shadow: -5px 5px 0px #03A63C;
+box-shadow: -5px 5px 0px var(--tc1);
 box-decoration-break: clone;
 border-radius: 3px;
 transition: all 0.3s ease;
@@ -1563,7 +1550,7 @@ font-weight: 500;
 .form-outer form .page .field input{
 height: 100%;
 width: 100%;
-border: 1px solid #03A63C;
+border: 1px solid var(--tc1);
 border-radius: 5px;
 padding-left: 15px;
 font-size: 18px;
@@ -1575,7 +1562,7 @@ width: 100%;
 height: 45px;
 border: none;
 border-radius: 5px;
-background: #03A63C;
+background: var(--tc1);
 color: #F0F1F2;
 font-weight: 500;
 font-size: 18px;
@@ -1585,7 +1572,7 @@ transition: 0.3s ease;
 }
 
 .form-outer form .page .field button:hover{
-background: #06c749;
+background: var(--tc0);
 }
 
 form .page .btns button .prev{
@@ -1609,7 +1596,7 @@ margin-bottom: 55px;
 .textBox {
 margin: 10px 0;
 padding: 5px 20px 0 20px;
-border: 1px solid #06c749;
+border: 1px solid var(--tc1);
 font-size: 10px;
 width: 428px;
 height: 350px;
@@ -1660,8 +1647,8 @@ transition: 0.2s;
 }
 
 .progress-bar .step .bullet.active{
-border-color: #03A63C;
-background: #03A63C;
+border-color: var(--tc1);
+background: var(--tc1);
 }
 
 .progress-bar .step .bullet span{
@@ -1686,12 +1673,12 @@ background: #262626
 } 
 
 .progress-bar .step p.active{
-color: #03A63C;
+color: var(--tc1);
 transition: 0.2s linear;
 }
 
 .progress-bar .step .bullet.active:after{
-background: #03A63C;
+background: var(--tc1);
 transform: scaleX(0);
 transform-origin: left;
 animation: animate 0.3s linear forwards;
@@ -1718,7 +1705,7 @@ transform:  translateX(-50%);
 }
 
 .progress-bar .step p.active{
-color: #03A63C;
+color: var(--tc1);
 transition: 0.2s linear;
 }
 
