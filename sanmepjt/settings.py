@@ -47,7 +47,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "Sanmebeanstalk-env.eba-4rfc539i.ap-northeast-2.elasticbeanstalk.com",
+    "Sanmebean-env.eba-xshmayqd.ap-northeast-2.elasticbeanstalk.com",
 ]
 
 
