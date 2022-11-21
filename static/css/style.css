@@ -49,14 +49,22 @@
 }
 
 /* ----------공통---------- */
-html,
-body {
+html {
     height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    outline: none;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
 }
 
 ::selection {
@@ -85,11 +93,12 @@ main {
     min-height: 300px;
     /* background-image: url(https://images.unsplash.com/photo-1621794506088-f18522a69c32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80); */
     background-image: url(../images/bg/bd-top.png);
-    background-repeat: no-repeat; /* 배경이미지X */
-    background-size: cover; /* 요소를 비율에 맞게 커버 */
-    background-position: center top; /* 이미지를 요소의 정가운데로 처리 */
-    background-attachment: fixed; /* 스크롤바 움직일때 이미지가 따라다님 */
+    background-repeat: no-repeat;
+    background-size: 100% auto; 
+    background-position: center top;
+    background-attachment: fixed;
 }
+
 
 .content {
     padding: 6.25rem;
@@ -1726,22 +1735,20 @@ color: #fff;
 
 /* footer */
 footer {
-    position: relative;
-}
-
-.footer {
     position: absolute;
-    bottom: 10px;
-    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
     font-weight: 700;
-}
-
-.footer-bg {
+    min-height: 350px;
     background-image: url(../images/bg/bg-footer.png);
-    min-height: 300px;
-    background-repeat: no-repeat; /* 배경이미지X */
-    background-size: cover; /* 요소를 비율에 맞게 커버 */
-    background-position: 50% 170%;
-    background-attachment: fixed; /* 스크롤바 움직일때 이미지가 따라다님 */   
+    background-repeat: no-repeat; 
+    background-size: 100% auto; /* 요소를 비율에 맞게 커버 */
+    background-position: center bottom;
+    z-index: -1;
 }
