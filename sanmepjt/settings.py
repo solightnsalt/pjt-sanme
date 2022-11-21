@@ -208,12 +208,10 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("sanme_rds"),  # db이름
+            "NAME": os.getenv("DATABASE_NAME"),  # db이름
             "USER": "postgres",
-            "PASSWORD": os.getenv("sanme1313"),  # RDS 마스터암호
-            "HOST": os.getenv(
-                "sanme.cvprnt3cn8kv.ap-northeast-2.rds.amazonaws.com"
-            ),  # 엔드포인트
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),  # RDS 마스터암호
+            "HOST": os.getenv("DATABASE_HOST"),  # 엔드포인트
             "PORT": "5432",  # 포트
         }
     }
