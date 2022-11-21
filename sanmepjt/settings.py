@@ -21,6 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 import os, json
+from dotenv import load_dotenv
+
+load_dotenv()
 from django.core.exceptions import ImproperlyConfigured
 
 # SECRET_KEY 파일 위치
@@ -42,12 +45,19 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "Sanmebeanstalk-env.eba-4rfc539i.ap-northeast-2.elasticbeanstalk.com",
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # aws setting
+    "storages",
+    # chat
     "channels",
     "chat",
     # apps
