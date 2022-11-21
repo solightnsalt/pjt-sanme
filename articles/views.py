@@ -6,7 +6,7 @@ from accounts.models import User
 from maps.models import Map
 from .models import Post, Comment, Search
 from django.db.models import Q
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 import json
 import random
@@ -15,6 +15,7 @@ import random
 @require_safe
 def index(request):
     return render(request, "articles/index.html")
+
 
 @login_required
 def main(request):
@@ -101,18 +102,17 @@ def participate(request, pk):
     if request.user in article.participate.all():
         # 참여하기 삭제하고
         article.participate.remove(request.user)
-        # is_participated = False
+        is_participated = False
     else:
         # 참여하기 추가하고
         article.participate.add(request.user)
-        # is_participated = True
-    # 상세 페이지로 redirect
-    return redirect("articles:detail", pk)
-    # context = {
-    # "is_participated": is_participated,
-    # "ParticipateCount": article.participate.count(),
-    # }
-    # return JsonResponse(context)
+        is_participated = True
+
+    data = {
+       "isPart": is_participated, 
+       "partNumCount": article.participate.count(),
+    }
+    return JsonResponse(data)
 
 
 # 취소
@@ -124,6 +124,7 @@ def delete_participate(request, pk):
 
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
+    day = post.day
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
     post.hit += 1
@@ -132,6 +133,10 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
+        'day' : day.strftime("%Y/%m/%d"),
+        "name" : post.park_address.parkNm,
+        "latitude": post.park_address.latitude,
+        "longitude": post.park_address.longitude,
     }
 
     return render(request, "articles/detail.html", context)
@@ -144,7 +149,7 @@ def update(request, pk):
             post_form = PostForm(request.POST, instance=posts)
             if post_form.is_valid():
                 post_form.save()
-                return redirect("articles:index")
+                return redirect("articles:detail", posts.pk)
         else:
             post_form = PostForm(instance=posts)
 
@@ -263,9 +268,20 @@ def comment_update(request, pk, comment_pk):
 
 
 def board(request):
-    post = Post.objects.all().order_by("-pk")
+    posts = Post.objects.all().order_by("-pk")
+    page = request.GET.get("page")
+    paginator = Paginator(posts, 10)
+    try:
+        page_obj = paginator.get_page(page)
+    except PageNotAnInteger:
+        page = 1
+        page_obj = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        page_obj = paginator.page(page)
+
     context = {
-        "post": post,
+        "post": page_obj,
     }
     return render(request, "articles/board.html", context)
 

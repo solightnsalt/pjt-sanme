@@ -21,7 +21,9 @@ def login(request):
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
+
                 return redirect(request.GET.get('next') or "articles:main")
+
         else:
             login_form = AuthenticationForm()
 
@@ -182,3 +184,7 @@ def delete(request):
     request.user.delete()
     auth_logout(request)
     return redirect("articles:index")
+
+
+def use(request):
+    return render(request, "accounts/use.html")

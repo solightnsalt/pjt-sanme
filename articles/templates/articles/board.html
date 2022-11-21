@@ -3,75 +3,113 @@
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
 {% block title %}
-| 친구찾기{% endblock title %}
+| 메이트찾기{% endblock title %}
 
 {% block content %}
-<section class='container'>
-  <div class="content">
-    <h1>board</h1>
-    <table class="table align-middle">
+<section class='home'>
+  <div class="inner-box">
+    <h4>산책 메이트를 찾아보세요</h4>
+    <a type="button" class="btn pos-btn" href="{% url 'map:map' %}">산책생성</a>
+  </div>
+</section>
+<section class="container">
+  <div class="board-box">
+    <table class="sm-table align-middle">
       <thead>
         <tr>
-          <th scope="col">Title</th>
-          <th scope="col">Day</th>
-          <th scope="col">Time</th>
-          <th scope="col">애완동물 유/무</th>
+          <th scope="col">제목</th>
+          <th scope="col">산책날짜</th>
+          <th scope="col">시간</th>
+          <th scope="col">애완동물</th>
           <th scope="col">모집인원</th>
-          <th scope="col">내용</th>
           <th scope="col">생성일</th>
           <th scope="col">조회수</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        {% for posts in post %}{% if posts.user not in request.user.blocking.all %}
+        {% for posts in post %}
+        {% if posts.user not in request.user.blocking.all %}
         <tr>
           <td>
             <a href="{% url 'articles:detail' posts.pk %}">{{ posts.title }}</a>
           </td>
-          <td>{{ posts.day }}</td>
+          <td>{{ posts.day|date:'Y년 m월 d일' }}</td>
           <td>{{ posts.time }}</td>
-          <td>{{ posts.pet }}</td>
-          <td>{{ post.participate.count}}/{{post.participate_people}}</td>
-          <td>{{ posts.content }}</td>
+          <td>{% if posts.pet == 1 %}있어요{% else %}없어요{% endif %}</td>
+          <td>{{ posts.participate.count}}/{{posts.participate_people}}</td>
           <td>{{ posts.created_at }}</td>
           <td>{{ posts.hit }}</td>
         </tr>
-        {% endif %}{% endfor %}
+        {% else %}
+        <tr><em class="text-secondary">차단한 유저의 게시글입니다.</em></tr>
+        {% endif %}
+        {% endfor %}
       </tbody>
     </table>
-    <div class="d-flex justify-content-end">
-      <a href="{% url 'map:map' %}">
-        <button type="button" class="pos-btn">산책생성</button>
-      </a>
-    </div>
   </div>
+  <!-- 페이징처리 시작 -->
+  <ul class="pagination justify-content-center py-4">
+    <!-- 이전페이지 -->
+    {% if post.has_previous %}
+      <li class="page-item d-flex flex-row">
+        <a class="page-link" href="?page={{ post.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><i class="fa-solid fa-chevron-left"></i></a>
+      </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in post.paginator.page_range %}
+      {% if page_number >= post.number|add:-2 and page_number <= post.number|add:2 %}
+        {% if page_number == post.number %}  
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if post.has_next %}
+      <li class="page-item d-flex flex-row">
+        <a class="page-link" href="?page={{ post.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><i class="fa-solid fa-chevron-right"></i></a>
+      </li>
+    {% endif %}
+  </ul>
+  <!-- 페이징처리 끝 -->
 </section>
-<section class='container'>
-  <div class="content">
-    <div class="row">
-      {% for posts in post %}{% if posts.user not in request.user.blocking.all %}
-      <div class="col-3 mb-3">
-        <div class="card rounded-3 shadow">
-          <div class="badge bg-white text-black position-absolute" style="top: 0.5rem; right:0.5rem">
-            👁‍🗨{{ posts.hit }}
-          </div>
-          {% if posts.thumbnail %}
-          <img src="{{ posts.thumbnail.url }}" class="card-img-top " alt="...">
-          {% else %}
-          <img src="{% static 'images/base/article_base.jpg' %}" class="card-img-top">
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ posts.title }}</h5>
-            <h5 class="card-title">{{ posts.park_address }}</h5>
-            <a href="{% url 'articles:detail' posts.pk %}" class="pos-btn"">자세히보기</a>
-          </div>
+
+{% comment %} <section class='container'>
+  <div class="row">
+    {% for posts in post %}{% if posts.user not in request.user.blocking.all %}
+    <div class="col-3 mb-3">
+      <div class="card rounded-3 shadow">
+        <div class="badge bg-white text-black position-absolute" style="top: 0.5rem; right:0.5rem">
+          👁‍🗨{{ posts.hit }}
+        </div>
+        {% if posts.thumbnail %}
+        <img src="{{ posts.thumbnail.url }}" class="card-img-top " alt="...">
+        {% else %}
+        <img src="{% static 'images/base/article_base.jpg' %}" class="card-img-top">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ posts.title }}</h5>
+          <h5 class="card-title">{{ posts.park_address }}</h5>
+          <a href="{% url 'articles:detail' posts.pk %}" class="pos-btn">자세히보기</a>
         </div>
       </div>
-      {% endif %}{% endfor %}
     </div>
-</section>
-
-
+    {% endfor %}
+  </div>
+</section> {% endcomment %}
 {% endblock content %}
 
 {% block script %}{% endblock script %}

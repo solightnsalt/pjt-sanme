@@ -1,3 +1,4 @@
+
 from django.conf import settings
 import django.contrib.auth.models
 import django.contrib.auth.validators
@@ -174,7 +175,9 @@ class Migration(migrations.Migration):
                 (
                     "profile_pic",
                     imagekit.models.fields.ProcessedImageField(
-                        blank=True, upload_to="images/"
+                        blank=True,
+                        default="../static/images/profile_default.png",
+                        upload_to="profile/%Y%m%d/",
                     ),
                 ),
                 ("manner_point", models.FloatField(default=36.5)),

@@ -8,213 +8,215 @@
   | 회원가입{% endblock title %}
 
 {% block content %}
-  <section class="home"></section>
-  <div class="signup-body" style="height: 1000px">
-    <div class="signup-container">
-      <header>회원가입</header>
-      <!--프로그레스바-->
-      <div class=" progress-bar">
-        <div class="step">
-          <p>기본정보</p>
-          <div class="bullet">
-            <span>1</span>
+  <section class="home">
+    <div class="signup-body">
+      <div class="signup-container">
+        <header>회원가입</header>
+        <!--프로그레스바-->
+        <div class=" progress-bar">
+          <div class="step">
+            <p>기본정보</p>
+            <div class="bullet">
+              <span>1</span>
+            </div>
+            <div class="check fas fa-check"></div>
           </div>
-          <div class="check fas fa-check"></div>
+          <div class="step">
+            <p>상세정보</p>
+            <div class="bullet">
+              <span>2</span>
+            </div>
+            <div class="check fas fa-check"></div>
+          </div>
+          <div class="step">
+            <p>기타정보</p>
+            <div class="bullet">
+              <span>3</span>
+            </div>
+            <div class="check fas fa-check"></div>
+          </div>
+          <div class="step">
+            <p>프로필 설정</p>
+            <div class="bullet">
+              <span>4</span>
+            </div>
+            <div class="check fas fa-check"></div>
+          </div>
+          <div class="step">
+            <p>약관동의</p>
+            <div class="bullet">
+              <span>5</span>
+            </div>
+            <div class="check fas fa-check"></div>
+          </div>
         </div>
-        <div class="step">
-          <p>상세정보</p>
-          <div class="bullet">
-            <span>2</span>
-          </div>
-          <div class="check fas fa-check"></div>
-        </div>
-        <div class="step">
-          <p>기타정보</p>
-          <div class="bullet">
-            <span>3</span>
-          </div>
-          <div class="check fas fa-check"></div>
-        </div>
-        <div class="step">
-          <p>프로필 설정</p>
-          <div class="bullet">
-            <span>4</span>
-          </div>
-          <div class="check fas fa-check"></div>
-        </div>
-        <div class="step">
-          <p>약관동의</p>
-          <div class="bullet">
-            <span>5</span>
-          </div>
-          <div class="check fas fa-check"></div>
+        <!--회원가입 폼-->
+        <div class="form-outer">
+          <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--폼페이지1 기본정보-->
+            <div class="page slide-page">
+              <div class="title">기본 정보:</div>
+              <div class="field-box">
+                <div class="field">
+                  <div class="label">아이디</div>
+                  {% render_field form.username class="form-control" autocomplete="off" %}
+                </div>
+                <div class="field">
+                  <div class="label">비밀번호</div>
+                  {% render_field form.password1 class="form-control" %}
+                </div>
+                <div class="field">
+                  <div class="label">비밀번호 확인</div>
+                  {% render_field form.password2 class="form-control" %}
+                </div>
+                <div class="field">
+                  <div class="label">이메일 주소</div>
+                  {% render_field form.email class="form-control" %}
+                </div>
+              </div>
+              <div class="field">
+                <button class="firstNext next">다음</button>
+              </div>
+            </div>
+
+            <!--폼페이지2 상세정보-->
+            <div class="page">
+              <div class="title">상세정보:</div>
+              <div class="field-box">
+                <div class="field">
+                  <div class="label">나이</div>
+                  {% render_field form.birth class="form-control text" %}
+                </div>
+                <div class="field">
+                  <div class="label">성별</div>
+                  {% render_field form.gender %}
+                </div>
+                <div class="field">
+                  <div class="label">주소</div>
+                  <input type="text" id="address_kakao" name="address" class="form-control"><br>
+                </div>
+                <div class="field">
+                  <div class="label">상세주소</div>
+                  {% render_field form.address_detail class="form-control" %}
+                </div>
+              </div>
+              <div class="field btns">
+                <button class="prev-1 prev">이전</button>
+                <div>&nbsp;&nbsp;&nbsp;</div>
+                <button class="next-1 next">다음</button>
+              </div>
+            </div>
+
+            <!--폼페이지3 기타정보-->
+            <div class="page">
+              <div class="title">기타정보:
+              </div>
+              <div class="field-box">
+                <div class="field">
+                  <div class="label">MBTI</div>
+                  {% render_field form.mbti class="form-control" %}
+                </div>
+                <div class="field" style="height:160px">
+                  <div class="label">성격</div>
+                  {% render_field form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5 list-unstyled" %}
+                </div>
+                <div class="field">
+                  <div class="label">흡연여부</div>
+                  {% render_field form.smoking class="form-control" %}
+                </div>
+                <div class="field">
+                  <div class="label">애완동물(있으면 체크해주세요😉)</div>
+                  {% render_field form.pet %}
+                </div>
+              </div>
+              <div class="field btns">
+                <button class="prev-2 prev">이전</button>
+                <div>&nbsp;&nbsp;&nbsp;</div>
+                <button class="next-2 next">다음</button>
+              </div>
+            </div>
+
+            <!--폼페이지4 프로필-->
+            <div class="page">
+              <div class="title">프로필 설정:</div>
+              <div class="field-box">
+                <div class="field">
+                  <div class="label">닉네임</div>
+                  {% render_field form.nickname class="form-control" %}
+                </div>
+                <div class="field">
+                  <div class="label">프로필 사진</div>
+                  {% render_field form.profile_pic class="form-control" %}
+                </div>
+              </div>
+              <div class="field btns">
+                <button class="prev-3 prev">이전</button>
+                <div>&nbsp;&nbsp;&nbsp;</div>
+                <button class="next-3 next">다음</button>
+              </div>
+            </div>
+
+            <!--폼페이지5 약관동의프로필-->
+            <div class="page">
+              <div class="title">산메 서비스 이용약관</div>
+              <div class="field-box">
+                <div class="textBox" name="약관" value="">
+                  <h5>제1장 총칙</h5>
+                  <h6>제1조 (본 약관의 목적)</h6>
+                  <p>본 서비스 이용약관(이하 “본 약관”이라 합니다)은 프로젝트 산메(이하 “팀”이라 합니다) 가 제공하는 산책메이트(SAMNE) 서비스 및 관련 제반 서비스(이하 “서비스”라 합니다)의 이용에 대 한 팀과 회원 간의 권리 · 의무, 책임사항 및 기타 필요한 사항을 규정함으로써 상호 간의 이 해 관계를 합리적으로 조정하고, 이에 대한 원활한 서비스 시스템이 운영 및 유지될 수 있도록 하는 것을 목적으로 합니다.</p>
+                  <h6>제2조 (용어의 정의)</h6>
+                  <p>본 약관에서 명시하고 있는 주요 용어의 정의는 다음과 같습니다. 아래에서 명시하지 않거나 본 약관에서 별도로 정하고 있지 않은 용어의 경우, 관계법령 등에서 정하는 바에 따라 적용 · 해석합니다.
+                    <b>"산메 서비스"</b>는 회사가 운영 및 관리하는 서비스 플랫폼(웹, 모바일 웹 · 앱 포함, 이하 “플랫폼”이라 합니다)에서 제공하는 위치 등의 정보를 기반으로 다른 회원을 추천, 관련 정보 제공 서비스 및 이와 관련한 제반 서비스 전반을 의미합니다. 플랫폼 내에서는 다른 회원을 ‘친구’라고도 표시합니다.
+                    <b>"회원"</b>은 플랫폼에 회원가입을 한 자로서 회사가 플랫폼에서 제공하는 모든 서비스를 계속 적으로 이용할 수 있는 지위를 가진 자를 의미합니다.
+                    <b>"비회원"</b>은 플랫폼에 회원가입을 하지 않은 자(회원가입을 위한 정보 입력을 완료하지 않은 자, 가입 승인을 받지 못한 자 포함)로서, 회사가 제공하는 서비스를 제한적으로 이용할 수 있 는 자를 의미합니다. 비회원은 회사의 서비스를 이용하는 범위 내에서 회원에 준하여 이 약관 의 적용을 받습니다.
+                    <b>"이용자"</b>는 본 약관에서 ‘회원’ 및 ‘비회원’을 동시에 지칭하는 용어로 사용됩니다.
+                    <b>"계정(정보)"</b>라 함은 회원(또는 회원이 되려고 하는 자)이 플랫폼을 통하여 회사에 제공하 는 전화번호를 기반으로 인증 절차를 통하여 생성되는 정보를 의미합니다.
+                    <b>"계정 삭제"</b>는 ‘서비스 이용계약의 해지’를 의미하며, 회원 또는 회사가 본 약관에 따라 진 행할 수 있습니다.
+                  </p>
+                  <h6>제3조 (본 약관의 게시와 개정)</h6>
+                  <p>어쩌구저쩌구···생략···</p>
+                </div>
+                <div class="agreement">
+                  {% render_field form.agree %}
+                  <p class="mx-2 pt-2">약관에 동의합니다.</p>
+                </div>
+              </div>
+              <div class="field btns lastbtns">
+                <button class="prev-4 prev">이전</button>
+                <div>&nbsp;&nbsp;&nbsp;</div>
+                <input type="submit" class="submit" value="회원가입">
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <!--회원가입 폼-->
-      <div class="form-outer">
-        <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <!--폼페이지1 기본정보-->
-          <div class="page slide-page">
-            <div class="title">기본 정보:</div>
-            <div class="field-box">
-              <div class="field">
-                <div class="label">아이디</div>
-                {% render_field form.username class="form-control" autocomplete="off" %}
-              </div>
-              <div class="field">
-                <div class="label">비밀번호</div>
-                {% render_field form.password1 class="form-control" %}
-              </div>
-              <div class="field">
-                <div class="label">비밀번호 확인</div>
-                {% render_field form.password2 class="form-control" %}
-              </div>
-              <div class="field">
-                <div class="label">이메일 주소</div>
-                {% render_field form.email class="form-control" %}
-              </div>
-            </div>
-            <div class="field">
-              <button class="firstNext next">다음</button>
-            </div>
-          </div>
-          <!--폼페이지2 상세정보-->
-          <div class="page">
-            <div class="title">상세정보:
-            </div>
-            <div class="field-box">
-              <div class="field">
-                <div class="label">나이</div>
-                {% render_field form.birth class="form-control text" %}
-              </div>
-              <div class="field">
-                <div class="label">성별</div>
-                {% render_field form.gender %}
-              </div>
-              <div class="field">
-                <div class="label">주소</div>
-                <input type="text" id="address_kakao" name="address"/><br>
-              </div>
-              <div class="field">
-                <div class="label">상세주소</div>
-                {% render_field form.address_detail class="form-control" %}
-              </div>
-            </div>
-            <div class="field btns">
-              <button class="prev-1 prev">이전</button>
-              <div>&nbsp;&nbsp;&nbsp;</div>
-              <button class="next-1 next">다음</button>
-            </div>
-          </div>
-          <!--폼페이지3 기타정보-->
-          <div class="page">
-            <div class="title">기타정보:
-            </div>
-            <div class="field-box">
-              <div class="field">
-                <div class="label">MBTI</div>
-                {% render_field form.mbti class="form-control" %}
-              </div>
-              <div class="field" style="height:160px">
-                <div class="label">성격</div>
-                {% render_field form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5"%}
-              </div>
-              
-              <div class="field">
-                <div class="label">흡연여부</div>
-                {% render_field form.smoking class="form-control" %}
-              </div>
-              <div class="field">
-                <div class="label">애완동물</div>
-                {% render_field form.pet %}
-              </div>
-            </div>
-            <div class="field btns">
-              <button class="prev-2 prev">이전</button>
-              <div>&nbsp;&nbsp;&nbsp;</div>
-              <button class="next-2 next">다음</button>
-            </div>
-          </div>
-          <!--폼페이지4 프로필-->
-          <div class="page">
-            <div class="title">프로필 설정:</div>
-            <div class="field-box">
-              <div class="field">
-                <div class="label">닉네임</div>
-                {% render_field form.nickname class="form-control" %}
-              </div>
-              <div class="field">
-                <div class="label">프로필 사진</div>
-                {% render_field form.profile_pic class="form-control" %}
-              </div>
-            </div>
-            <div class="field btns">
-              <button class="prev-3 prev">이전</button>
-              <div>&nbsp;&nbsp;&nbsp;</div>
-              <button class="next-3 next">다음</button>
-            </div>
-          </div>
-          <!--폼페이지5 약관동의프로필-->
-          <div class="page">
-            <div class="title">산메 서비스 이용약관</div>
-            <div class="field-box">
-              <div class="textBox" name="약관" value="">
-                <h5>제1장 총칙</h5>
-                <h6>제1조 (본 약관의 목적)</h6>
-                <p>본 서비스 이용약관(이하 “본 약관”이라 합니다)은 프로젝트 산메(이하 “팀”이라 합니다) 가 제공하는 산책메이트(SAMNE) 서비스 및 관련 제반 서비스(이하 “서비스”라 합니다)의 이용에 대 한 팀과 회원 간의 권리 · 의무, 책임사항 및 기타 필요한 사항을 규정함으로써 상호 간의 이 해 관계를 합리적으로 조정하고, 이에 대한 원활한 서비스 시스템이 운영 및 유지될 수 있도록 하는 것을 목적으로 합니다.</p>
-                <h6>제2조 (용어의 정의)</h6>
-                <p>본 약관에서 명시하고 있는 주요 용어의 정의는 다음과 같습니다. 아래에서 명시하지 않거나 본 약관에서 별도로 정하고 있지 않은 용어의 경우, 관계법령 등에서 정하는 바에 따라 적용 · 해석합니다.
-                  <b>"산메 서비스"</b>는 회사가 운영 및 관리하는 서비스 플랫폼(웹, 모바일 웹 · 앱 포함, 이하 “플랫폼”이라 합니다)에서 제공하는 위치 등의 정보를 기반으로 다른 회원을 추천, 관련 정보 제공 서비스 및 이와 관련한 제반 서비스 전반을 의미합니다. 플랫폼 내에서는 다른 회원을 ‘친구’라고도 표시합니다.
-                  <b>"회원"</b>은 플랫폼에 회원가입을 한 자로서 회사가 플랫폼에서 제공하는 모든 서비스를 계속 적으로 이용할 수 있는 지위를 가진 자를 의미합니다.
-                  <b>"비회원"</b>은 플랫폼에 회원가입을 하지 않은 자(회원가입을 위한 정보 입력을 완료하지 않은 자, 가입 승인을 받지 못한 자 포함)로서, 회사가 제공하는 서비스를 제한적으로 이용할 수 있 는 자를 의미합니다. 비회원은 회사의 서비스를 이용하는 범위 내에서 회원에 준하여 이 약관 의 적용을 받습니다.
-                  <b>"이용자"</b>는 본 약관에서 ‘회원’ 및 ‘비회원’을 동시에 지칭하는 용어로 사용됩니다.
-                  <b>"계정(정보)"</b>라 함은 회원(또는 회원이 되려고 하는 자)이 플랫폼을 통하여 회사에 제공하 는 전화번호를 기반으로 인증 절차를 통하여 생성되는 정보를 의미합니다.
-                  <b>"계정 삭제"</b>는 ‘서비스 이용계약의 해지’를 의미하며, 회원 또는 회사가 본 약관에 따라 진 행할 수 있습니다.
-                </p>
-                <h6>제3조 (본 약관의 게시와 개정)</h6>
-                <p>어쩌구저쩌구···생략···</p>
-              </div>
-              <div class="agreement">
-                {% render_field form.agree %}
-                <p class="mx-2 pt-2">약관에 동의합니다.</p>
-              </div>
-            </div>
-            <div class="field btns lastbtns">
-              <button class="prev-4 prev">이전</button>
-              <div>&nbsp;&nbsp;&nbsp;</div>
-              <input type="submit" class="submit" value="회원가입">
-            </div>
-          </div>
-        </form>
-      </div>
+      <!--signup-container-->
     </div>
-    <!--signup-container-->
-  </div>
-  <!--"signup-body"-->
+    <!--"signup-body"-->
+  </section>
 {% endblock content %}
 
 {% block script %}
   <script src="{% static 'js/multistep.js' %}"></script>
   <script src="{% static 'js/signup.js' %}"></script>
-  {% comment %} <script>
-    $("button").on("click", function (event) {
-      if (event.originalEvent.detail != 0) {
-        alert("버튼을 눌러 이동해주세요😉");
-      }
-    });
-  </script> {% endcomment %}
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
-  window.onload = function(){
-      document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+    window.onload = function () {
+      document
+        .getElementById("address_kakao")
+        .addEventListener("click", function () { //주소입력칸을 클릭하면
           //카카오 지도 발생
-          new daum.Postcode({
-              oncomplete: function(data) { //선택시 입력값 세팅
-                  document.getElementById("address_kakao").value = data.address; // 주소 넣기
+          new daum
+            .Postcode({
+              oncomplete: function (data) { //선택시 입력값 세팅
+                document
+                  .getElementById("address_kakao")
+                  .value = data.address; // 주소 넣기
               }
-          }).open();
-      });
-  }
+            })
+            .open();
+        });
+    }
   </script>
 {% endblock script %}

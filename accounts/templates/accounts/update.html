@@ -11,8 +11,8 @@
 
 {% block content %}
   <section class="home"></section>
-  <div>
-    <h1>프로필 수정</h1>
+  <div class="content">
+    <h1 class="fw-bold">프로필 수정</h1>
     <div class="wrapper" id="pf_wrapper">
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -29,7 +29,7 @@
         <div class="panels">
           <div class="panel" id="one-panel">
             <div class="panel-title">아이디</div>
-            {% render_field user_form.username class="form-control inactive" %}
+            <div class="idfield">{{ user.username }}</div>
             <div class="panel-title">비밀번호</div>
             {% render_field user_form.password class="form-control" %}
             <div class="panel-title">이메일 주소</div>
@@ -49,7 +49,7 @@
             <div class="panel-title">MBTI</div>
             {% render_field user_form.mbti class="form-control" %}
             <div class="panel-title">성격</div>
-            {% render_field user_form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5 col-8"%}
+            {% render_field user_form.manner class="d-flex flex-wrap justify-content-around mt-1 me-5 list-unstyled" %}
             <div class="panel-title">흡연여부</div>
             {% render_field user_form.smoking class="form-control" %}
             <div class="panel-title">애완동물 유무</div>
@@ -61,7 +61,7 @@
             <div class="panel-title">프로필 사진</div>
             {% render_field user_form.profile_pic class="form-control" %}
           </div>
-          <button class="pos-btn" type="submit">수정</button>
+          <button class="panel-btn btn neg-btn mt-5" type="submit">수정</button>
         </div>
       </form>
     </div>
