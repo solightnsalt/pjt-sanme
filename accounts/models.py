@@ -91,8 +91,8 @@ class User(AbstractUser):
 
     profile_pic = ProcessedImageField(  # 프로필사진
         upload_to="profile/%Y%m%d/",
-        default="../static/images/profile_default.png",
-        blank=True,
+        # default="../static/images/profile_default.png",
+        null=True,
         processors=[ResizeToFill(360, 360)],
         format="JPEG",
         options={"quality": 80},
@@ -110,4 +110,4 @@ class User(AbstractUser):
 
         if self.profile_pic:
             return self.profile_pic.url
-        return "../static/images/profile_default.png"
+        return None
