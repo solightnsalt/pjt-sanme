@@ -347,7 +347,7 @@ main {
 }
 
 .recommended {
-    margin-top: 12.5rem;
+    margin-top: -12.5rem;
 }
 
 .inner-box {
