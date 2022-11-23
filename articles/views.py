@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_safe
+from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from accounts.models import User
-from .models import Post, Comment
+from maps.models import Map
+from .models import Post, Comment, Search
+from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 import json
+import random
 
 # Create your views here.
 @require_safe
@@ -12,19 +17,75 @@ def index(request):
     return render(request, "articles/index.html")
 
 
+@login_required
 def main(request):
+    mbti_info = {
+        "ENTJ": ["ISFP", "INFP", "ESFP", "ESTP"],
+        "ENTP": ["ISFJ", "ISTJ", "ENTP", "ESTJ"],
+        "INTJ": ["ESFP", "ESTP", "ISFP", "INTP"],
+        "INTP": ["ESFP", "ESTP", "ISFP", "INFP"],
+        "ESTJ": ["INFP", "ISFP", "INTP", "ENTP"],
+        "ESFJ": ["INTP", "ISTP", "ENTP", "ENFP"],
+        "ISTJ": ["ENFP", "ENTP", "ISFP", "INFP"],
+        "ISFJ": ["ENTP", "ENFP", "INTP", "ISTP"],
+        "ENFJ": ["ISTP", "INTP", "ESTP", "ESFP"],
+        "ENFP": ["ISTJ", "ISTJ", "ESFJ", "ESTJ"],
+        "INFJ": ["ESTP", "ESFP", "ISTP", "INTP"],
+        "INFP": ["ESTJ", "ENTJ", "INTJ", "ISTJ"],
+        "ESTP": ["INFJ", "INTJ", "ENFJ", "ENTJ"],
+        "ESFP": ["INTJ", "INFJ", "ENTJ", "ENFJ"],
+        "ISTP": ["ENFJ", "ESFJ", "INFJ", "ISFJ"],
+        "ISFP": ["ENTJ", "ESTJ", "INTJ", "ISTJ"],
+    }
+    # mbti에 따른 유저 3명 추출하기
+    # 유저 정보를 가져옴
+    my_data = User.objects.get(pk=request.user.pk)
+    # 유저의 mbti
+    my_mbti = my_data.mbti
+    # 해당 유저와 잘 맞는 유저 리스트
+    matched_user = []
+    # mbti 키, 값
+    try:
+        for mbti_key, mbti_value in mbti_info.items():
+            # 유저의 mbti가 키에 있으면
+            if my_mbti == mbti_key:
+                # 값에 해당하는 유저를 골라냄
+                for info in mbti_value:
+                    user_data = User.objects.filter(mbti=info)
+                    # 유저 데이터가 하나의 mbti에 2개 이상일 경우
+                    if len(user_data) <= 2:
+                        # 1개만 랜덤으로 추려냄
+                        user_data = random.choice(user_data)
+                    matched_user.append(user_data)
+        # 결과적으로 3개의 유저 데이터 도출
+        matched_user = random.sample(matched_user, 3)
+    except IndexError:
+        print("해당하는 유저가 없습니다")
+    except ValueError:
+        print("데이터가 없습니다.")
+
+    # 매너유저 3명
+    hot_user = User.objects.all().order_by("-manner_point")[:3]
     posts = Post.objects.all()
+    print(hot_user)
     context = {
         "posts": posts,
+        "my_mbti": my_mbti,
+        "matched_user": matched_user,
+        "hot_user": hot_user,
     }
+
     return render(request, "articles/main.html", context)
 
 
+@login_required
 def create(request):
+
     if request.method == "POST":
         post_form = PostForm(request.POST)
         if post_form.is_valid():
             posts = post_form.save(commit=False)
+            posts.park_address = Map.objects.get(pk=request.GET.get("park", ""))
             posts.user = request.user
             posts.save()
             return redirect("articles:board")
@@ -34,6 +95,7 @@ def create(request):
     return render(request, "articles/create.html", {"post_form": post_form})
 
 
+@login_required
 def participate(request, pk):
     # article = get_object_or_404(Article, pk=pk)
     article = Post.objects.get(pk=pk)
@@ -42,28 +104,31 @@ def participate(request, pk):
     if request.user in article.participate.all():
         # 참여하기 삭제하고
         article.participate.remove(request.user)
-        # is_participated = False
+        is_participated = False
     else:
         # 참여하기 추가하고
         article.participate.add(request.user)
-        # is_participated = True
-    # 상세 페이지로 redirect
-    return redirect("articles:detail", pk)
-    # context = {
-    # "is_participated": is_participated,
-    # "ParticipateCount": article.participate.count(),
-    # }
-    # return JsonResponse(context)
+        is_participated = True
+
+    data = {
+        "isPart": is_participated,
+        "partNumCount": article.participate.count(),
+    }
+    return JsonResponse(data)
 
 
+# 취소
+@login_required
 def delete_participate(request, pk):
     post = Post.objects.get(pk=pk)
     post.participate.delete(request.user)
     return redirect("articles:detail", pk)
 
 
+@login_required
 def detail(request, pk):
     post = Post.objects.get(pk=pk)
+    day = post.day
     comment_form = CommentForm()
     comments = Comment.objects.filter(post_id=post).order_by("-updated_at")
     post.hit += 1
@@ -72,32 +137,38 @@ def detail(request, pk):
         "post": post,
         "comment_form": comment_form,
         "comments": comments,
+        "day": day.strftime("%Y/%m/%d"),
+        "name": post.park_address.parkNm,
+        "latitude": post.park_address.latitude,
+        "longitude": post.park_address.longitude,
     }
 
     return render(request, "articles/detail.html", context)
 
 
+@login_required
 def update(request, pk):
     posts = Post.objects.get(pk=pk)
-    if request.method == "POST":
-        post_form = PostForm(request.POST, instance=posts)
-
-        if post_form.is_valid():
-            post_form.save()
-
-            return redirect("articles:index")
-    else:
-        post_form = PostForm(instance=posts)
+    if request.user == posts.user:
+        if request.method == "POST":
+            post_form = PostForm(request.POST, instance=posts)
+            if post_form.is_valid():
+                post_form.save()
+                return redirect("articles:detail", posts.pk)
+        else:
+            post_form = PostForm(instance=posts)
 
     return render(request, "articles/create.html", {"post_form": post_form})
 
 
+@login_required
 def delete(request, pk):
     posts = Post.objects.get(pk=pk)
     posts.delete()
     return redirect("articles:index")
 
 
+@login_required
 def comment(request, pk):
     post = Post.objects.get(pk=pk)
     post_pk = post.pk
@@ -134,6 +205,7 @@ def comment(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_delete(request, pk, comment_pk):
     post_pk = Post.objects.get(pk=pk).pk
     user = request.user.pk
@@ -166,6 +238,7 @@ def comment_delete(request, pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_update(request, pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
@@ -203,71 +276,103 @@ def comment_update(request, pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def board(request):
-    post = Post.objects.all().order_by("-pk")
+    posts = Post.objects.all().order_by("-pk")
+    page = request.GET.get("page")
+    paginator = Paginator(posts, 10)
+    try:
+        page_obj = paginator.get_page(page)
+    except PageNotAnInteger:
+        page = 1
+        page_obj = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        page_obj = paginator.page(page)
+
     context = {
-        "post": post,
+        "post": page_obj,
     }
     return render(request, "articles/board.html", context)
 
 
-import random
+@login_required
+def search(request):
+    popular_list = {}
+    if request.method == "GET":
+        search = request.GET.get("searched", "")
+        sort = request.GET.get("sorted", "")
+
+        if not search.isdigit() and not search == "":
+            # 검색받을 항목
+            if Post.objects.filter(
+                Q(title__icontains=search)
+                | Q(content__icontains=search)
+                | Q(day__icontains=search)
+            ):
+                popular_list[search] = popular_list.get(search, 0) + 1
+
+        # 인기순
+        for k, v in sorted(popular_list.items(), key=lambda x: -x[1]):
+            if Search.objects.filter(title=k):
+                s = Search.objects.get(title=k)
+                s.count += 1
+                s.save()
+            else:
+                s = Search(title=k, count=v)
+                s.save()
+        popular = Search.objects.order_by("-count")[:10]
+
+        search_list = Post.objects.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(day__icontains=search)
+        )
+
+        if search:
+            if search_list:
+                pass
+
+            if sort == "recent":
+                search_list = search_list.order_by("-updated_at")
+                sort = "recent"
+                print(search_list)
+
+            page = int(request.GET.get("p", 1))
+            pagenator = Paginator(search_list, 5)
+            boards = pagenator.get_page(page)
+
+            print(search)
+            print(boards)
+            print(search_list)
+            print(popular)
+            return render(
+                request,
+                "articles/search.html",
+                {
+                    "search": search,
+                    "boards": boards,
+                    "search_list": search_list,
+                    "popular": popular,
+                    "sort": sort,
+                },
+            )
+        else:
+            k = "검색 결과가 없습니다 다시 검색해주세요"
+            context = {"v": k}
+            return render(request, "articles/searchfail.html", context)
 
 
-def recommend(request, pk):
-    # mbti 별 잘 맞는 유형
-    mbti_info = {
-        "ENTJ": ["ISFP", "INFP", "ESFP", "ESTP"],
-        "ENTP": ["ISFJ", "ISTJ", "ENTP", "ESTJ"],
-        "INTJ": ["ESFP", "ESTP", "ISFP", "INTP"],
-        "INTP": ["ESFP", "ESTP", "ISFP", "INFP"],
-        "ESTJ": ["INFP", "ISFP", "INTP", "ENTP"],
-        "ESFJ": ["INTP", "ISTP", "ENTP", "ENFP"],
-        "ISTJ": ["ENFP", "ENTP", "ISFP", "INFP"],
-        "ISFJ": ["ENTP", "ENFP", "INTP", "ISTP"],
-        "ENFJ": ["ISTP", "INTP", "ESTP", "ESFP"],
-        "ENFP": ["ISTJ", "ISTJ", "ESFJ", "ESTJ"],
-        "INFJ": ["ESTP", "ESFP", "ISTP", "INTP"],
-        "INFP": ["ESTJ", "ENTJ", "INTJ", "ISTJ"],
-        "ESTP": ["INFJ", "INTJ", "ENFJ", "ENTJ"],
-        "ESFP": ["INTJ", "INFJ", "ENTJ", "ENFJ"],
-        "ISTP": ["ENFJ", "ESFJ", "INFJ", "ISFJ"],
-        "ISFP": ["ENTJ", "ESTJ", "INTJ", "ISTJ"],
-    }
-    # mbti에 따른 유저 3명 추출하기
-    # 유저 정보를 가져옴
-    my_data = User.objects.get(pk=pk)
-    # 유저의 mbti
-    my_mbti = my_data.mbti
-    # 해당 유저와 잘 맞는 유저 리스트
-    matched_user = []
-    # mbti 키, 값
-    try:
-        for mbti_key, mbti_value in mbti_info.items():
-            # 유저의 mbti가 키에 있으면
-            if my_mbti == mbti_key:
-                # 값에 해당하는 유저를 골라냄
-                for info in mbti_value:
-                    user_data = User.objects.filter(mbti=info)
-                    # 유저 데이터가 하나의 mbti에 2개 이상일 경우
-                    if len(user_data) <= 2:
-                        # 1개만 랜덤으로 추려냄
-                        user_data = random.choice(user_data)
-                    matched_user.append(user_data)
-        # 결과적으로 3개의 유저 데이터 도출
-        matched_user = random.sample(matched_user, 3)
-    except IndexError:
-        print("해당하는 유저가 없습니다")
-    except ValueError:
-        print("데이터가 없습니다.")
+@login_required
+def searchfail(request):
+    popular_search = Search.objects.order_by("-count")[:10]
 
-    # 매너유저 3명
-    hot_user = User.objects.all().order_by("-manner_point")[:3]
-    print(hot_user)
     context = {
-        "my_mbti": my_mbti,
-        "matched_user": matched_user,
-        "hot_user": hot_user,
+        "popular": popular_search,
     }
+    return render(request, "articles/searchfail.html", context)
 
-    return render(request, "articles/main.html", context)
+
+@login_required
+def support(request):
+    return render(request, "articles/support.html")

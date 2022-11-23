@@ -36,6 +36,7 @@ class User(AbstractUser):
         choices=MBTI_CHOICES,
     )  # mbti
     address = models.CharField(max_length=50)  # 주소
+    address_detail = models.CharField(max_length=40, null=True)  # 상세주소
     birth = models.DateTimeField(default=timezone.now)  # 나이
     GENDER_CHOICES = (
         ("M", "남자"),
@@ -89,8 +90,9 @@ class User(AbstractUser):
     agree = models.BooleanField(default=False)  # 약관내용
 
     profile_pic = ProcessedImageField(  # 프로필사진
-        upload_to="images/",
-        blank=True,
+        upload_to="profile/%Y%m%d/",
+        # default="../static/images/profile_default.png",
+        null=True,
         processors=[ResizeToFill(360, 360)],
         format="JPEG",
         options={"quality": 80},
@@ -103,3 +105,9 @@ class User(AbstractUser):
         "self", symmetrical=False, related_name="blockers"
     )
 
+    @property
+    def get_photo_url(self):
+
+        if self.profile_pic:
+            return self.profile_pic.url
+        return None

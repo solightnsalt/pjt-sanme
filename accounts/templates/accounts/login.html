@@ -1,132 +1,109 @@
-{% extends 'base.html' %}
+{% extends 'nonav_base.html' %}
+
 {% load static %}
 {% load widget_tweaks %}
 {% load django_bootstrap5 %}
+
 {% block title %}{% endblock title %}
 
-{% block content %}
-  <section class="home">
-    <div class="content">
-      <h2 class="myH2"><img src="{% static 'images/indexlogo.png' %}" alt=""></h2>
-      <p class="myP">친구 말고 산책 메이트 👩‍❤️‍👨</p>
-      <p class="myP">지금 시작하세요</p>
-    </div>
-    <!--로그인폼 위 설명-->
-    <div class="content">
-      <div class="glass">
-        <h1 class="text-center">로그인</h1>
-        <form action="{% url 'accounts:login' %}" method='POST' onsubmit="return frm_check();">
-          {% csrf_token %}
-          {% render_field login_form.username class="form-control w-70 mt-5" placeholder="아이디를 입력하세요" type="text" name="id" id="logId" %}
-          {% render_field login_form.password class="form-control w-70 my-5" placeholder="비밀번호를 입력하세요" %}
-          <input class="form-control btn pos-btn" type="submit" value="시작하기">
-          <p class="text-center my-5">회원이 아니신가요?
-            <a style="main-1" href="{% url 'accounts:signup' %}">회원가입</a>
-          </p>
-        </form>
-        <!--아이디저장, 찾기-->
-        <div class="box d-flex flex-row justify-content-between my-5">
-          <span class="input-wrap">
-            <input type="checkbox" name="saveId" id="saveId">
-            <label for="saveId">
-              <span></span></label>
-            아이디 저장
-          </span>
-          <ul class="find d-flex flex-row">
-            <li class="idSearch mx-3" id="idSearch" style="cursor: hand; cursor: pointer">아이디 찾기</li>
-            <li class="pwSearch" id="pwSearch" style="cursor: hand; cursor: pointer">비밀번호 찾기</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-{% endblock content %}
+{% block section %}
+  <section class="login-container">
+    <h1 class="text-center my-2">로그인</h1>
+    <form action="{% url 'accounts:login' %}" method='POST' onsubmit="return frm_check();">
+      {% csrf_token %}
+      {% render_field login_form.username class="form-control w-70" placeholder="아이디를 입력하세요" type="text" name="id" id="logId" %}
+      {% render_field login_form.password class="form-control w-70 my-2" placeholder="비밀번호를 입력하세요" %}
+      <!-- 아이디저장, 찾기 -->
+      <div class="box d-flex flex-row justify-content-between my-1">
+        <span class="input-wrap">
+          <input type="checkbox" name="saveId" id="saveId" style="cursor: hand; cursor: pointer">
+          <label for="saveId">
+            <span></span></label>
+          아이디 저장
+        </span>
+        <input class="form-control btn pos-btn" type="submit" value="시작하기">
+        <p class="text-center mt-5">회원이 아니신가요?
+          <a class="to-signup" href="{% url 'accounts:signup' %}">
+            <b>회원 가입<i class="bi bi-person-fill-add"></i>
+            </b>
+          </a>
+        </p>
+      </form>
+    </section>
+  {% endblock section %}
 
-{% block script %}
-  <!-- Jquery needed -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Function used to shrink nav bar removing paddings and adding black background -->
-  <script>
-    $(window).scroll(function () {
-      if ($(document).scrollTop() > 50) {
-        $('.nav').addClass('affix');
-        console.log("OK");
-      } else {
-        $('.nav').removeClass('affix');
-      }
-    });
-  </script>
-  <script>
-    $(function () {
+  {% block script %}
+    <script>
+      $(function () {
 
-      fnInit();
+        fnInit();
 
-    });
+      });
 
-    function frm_check() {
-      saveid();
-    }
-
-    function fnInit() {
-      var cookieid = getCookie("saveid");
-      console.log(cookieid);
-      if (cookieid != "") {
-        $("input:checkbox[id='saveId']").prop("checked", true);
-        $('#logId').val(cookieid);
+      function frm_check() {
+        saveid();
       }
 
-    }
+      function fnInit() {
+        var cookieid = getCookie("saveid");
+        console.log(cookieid);
+        if (cookieid != "") {
+          $("input:checkbox[id='saveId']").prop("checked", true);
+          $('#logId').val(cookieid);
+        }
 
-    function setCookie(name, value, expiredays) {
-      var todayDate = new Date();
-      todayDate.setTime(todayDate.getTime() + 0);
-      if (todayDate > expiredays) {
-        document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiredays + ";";
-      } else if (todayDate < expiredays) {
-        todayDate.setDate(todayDate.getDate() + expiredays);
-        document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
       }
 
-      console.log(document.cookie);
-    }
+      function setCookie(name, value, expiredays) {
+        var todayDate = new Date();
+        todayDate.setTime(todayDate.getTime() + 0);
+        if (todayDate > expiredays) {
+          document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiredays + ";";
+        } else if (todayDate < expiredays) {
+          todayDate.setDate(todayDate.getDate() + expiredays);
+          document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
+        }
 
-    function getCookie(Name) {
-      var search = Name + "=";
-      console.log("search : " + search);
+        console.log(document.cookie);
+      }
 
-      if (document.cookie.length > 0) { // 쿠키가 설정되어 있다면
-        offset = document
-          .cookie
-          .indexOf(search);
-        console.log("offset : " + offset);
-        if (offset != -1) { // 쿠키가 존재하면
-          offset += search.length;
-          // set index of beginning of value
-          end = document
+      function getCookie(Name) {
+        var search = Name + "=";
+        console.log("search : " + search);
+
+        if (document.cookie.length > 0) { // 쿠키가 설정되어 있다면
+          offset = document
             .cookie
-            .indexOf(";", offset);
-          console.log("end : " + end);
-          // 쿠키 값의 마지막 위치 인덱스 번호 설정
-          if (end == -1) 
-            end = document.cookie.length;
-          console.log("end위치  : " + end);
+            .indexOf(search);
+          console.log("offset : " + offset);
+          if (offset != -1) { // 쿠키가 존재하면
+            offset += search.length;
+            // set index of beginning of value
+            end = document
+              .cookie
+              .indexOf(";", offset);
+            console.log("end : " + end);
+            // 쿠키 값의 마지막 위치 인덱스 번호 설정
+            if (end == -1) 
+              end = document.cookie.length;
+            console.log("end위치  : " + end);
 
-          return unescape(document.cookie.substring(offset, end));
+            return unescape(document.cookie.substring(offset, end));
+          }
+        }
+        return "";
+      }
+
+      function saveid() {
+        var expdate = new Date();
+        if ($("#saveId").is(":checked")) {
+          expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
+          setCookie("saveid", $("#logId").val(), expdate);
+        } else {
+          expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
+          setCookie("saveid", $("#logId").val(), expdate);
+
         }
       }
-      return "";
-    }
-
-    function saveid() {
-      var expdate = new Date();
-      if ($("#saveId").is(":checked")) {
-        expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
-        setCookie("saveid", $("#logId").val(), expdate);
-      } else {
-        expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
-        setCookie("saveid", $("#logId").val(), expdate);
-
-      }
-    }
-  </script>
-{% endblock script %}
+    </script>
+  {% endblock script %}

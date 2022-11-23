@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Map
 import functools, time
+from django.contrib.auth.decorators import login_required
 from django.db import connection, reset_queries
 from django.conf import settings
 from django.db.models import Q
 from haversine import haversine
+from operator import itemgetter
 
 
 def query_debugger(func):
@@ -28,36 +30,51 @@ def query_debugger(func):
 
 
 # Create your views here.
+@login_required
 def map(request):
     return render(request, "maps/map.html")
 
 
+@login_required
 @query_debugger
 def map_search(request, x, y):
     parks = Map.objects.all()
     parkJson = []
 
-    latitude_range = (float(x) - 0.025 , float(x) + 0.025)
+    latitude_range = (float(x) - 0.025, float(x) + 0.025)
     longitude_range = (float(y) - 0.0375, float(y) + 0.0375)
 
-    user_distance = int(haversine((float(x), float(y)), (float(parks[1].latitude), float(parks[1].longitude))) * 1000)
-
+    user_distance = int(
+        haversine(
+            (float(x), float(y)), (float(parks[1].latitude), float(parks[1].longitude))
+        )
+        * 1000
+    )
 
     for park in parks:
-        if park.latitude != '' and park.longitude != '':
-            if latitude_range[0] <= float(park.latitude) <= latitude_range[1] and longitude_range[0] <= float(park.longitude) <= longitude_range[1]:
-                
-                
-                user_distance = haversine((float(x), float(y)), (float(park.latitude), float(park.longitude))) * 1000
-                
+        if park.latitude != "" and park.longitude != "":
+            if (
+                latitude_range[0] <= float(park.latitude) <= latitude_range[1]
+                and longitude_range[0] <= float(park.longitude) <= longitude_range[1]
+            ):
+
+                user_distance = (
+                    haversine(
+                        (float(x), float(y)),
+                        (float(park.latitude), float(park.longitude)),
+                    )
+                    * 1000
+                )
+
                 if user_distance <= 1000:
-                    user_distance = str(int(user_distance)) + 'm'
+                    user_distance = str(int(user_distance)) + "m"
                 else:
                     user_distance = user_distance / 1000
-                    user_distance = str(format(user_distance, ".2f")) + 'km'
-                
+                    user_distance = str(format(user_distance, ".2f")) + "km"
+
                 parkJson.append(
                     {
+                        "id": park.id,
                         "name": park.parkNm,
                         "addr": park.lnmadr,
                         "lat": park.latitude,
@@ -72,10 +89,11 @@ def map_search(request, x, y):
     return JsonResponse(data)
 
 
-def search(request):
+@login_required
+def search(request, x, y):
     park_list = []
     if request.method == "POST":
-        searched = request.POST['searched']
+        searched = request.POST["searched"]
 
         if searched != "":
             park_name = Map.objects.filter(
@@ -84,17 +102,46 @@ def search(request):
                 | Q(lnmadr__icontains=searched)
             )
 
+            user_distance = int(
+                haversine(
+                    (float(x), float(y)),
+                    (float(park_name[1].latitude), float(park_name[1].longitude)),
+                )
+                * 1000
+            )
+
             if len(park_name) > 0:
                 for park in park_name:
-                    park_list.append(
-                        {
-                            "name": park.parkNm,
-                            "addr": park.lnmadr,
-                            "parkType": park.parkSe,
-                            "lat": park.latitude,
-                            "long": park.longitude,
-                        }
-                    )
+                    if park.latitude != "" and park.longitude != "":
+
+                        user_distance = (
+                            haversine(
+                                (float(x), float(y)),
+                                (float(park.latitude), float(park.longitude)),
+                            )
+                            * 1000
+                        )
+
+                        park_list.append(
+                            {
+                                "id": park.id,
+                                "name": park.parkNm,
+                                "addr": park.lnmadr,
+                                "parkType": park.parkSe,
+                                "lat": park.latitude,
+                                "long": park.longitude,
+                                "userDistance": float(user_distance),
+                            }
+                        )
+
+    park_list = sorted(park_list, key=itemgetter("userDistance"), reverse=False)
+
+    for park in park_list:
+        if park["userDistance"] <= 1000:
+            park["userDistance"] = int(park["userDistance"]) + "m"
+        else:
+            park["userDistance"] = park["userDistance"] / 1000
+            park["userDistance"] = format(park["userDistance"], ".2f") + "km"
 
     data = {
         "parkJson": park_list,

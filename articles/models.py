@@ -1,6 +1,7 @@
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.db import models
+from maps.models import Map
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -14,7 +15,7 @@ class Post(models.Model):
     like_user = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_post"
     )
-    park_address = models.CharField(max_length=80)
+    park_address = models.ForeignKey(Map, on_delete=models.CASCADE)
     pet = models.BooleanField(default=False)
     content = models.TextField()
     TIME_CHOICES = (
@@ -74,3 +75,8 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class Search(models.Model):
+    title = models.CharField(max_length=10)
+    count = models.PositiveIntegerField(default=0)

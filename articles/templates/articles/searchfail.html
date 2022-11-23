@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="height:100px"></div>
+  <div class="container mt-5 mb-3">
+    <div class="search-box">
+      <form action="{%url 'articles:search' %}" class="search d-flex" role="search" method="">
+        <input type="text" style="display:none" autocomplete="off">
+        <input type="password" style="display:none" autocomplete="off">
+        <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container d-flex justify-content-center">
+    <h1>{{v}}</h1>
+  </div>
+{% endblock %}

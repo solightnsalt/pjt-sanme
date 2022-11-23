@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_safe
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from .forms import CustomUserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,13 +16,16 @@ from django.http import JsonResponse
 # Create your views here.
 
 
+@require_safe
 def login(request):
     if request.user.is_anonymous:
         if request.method == "POST":
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 auth_login(request, login_form.get_user())
-                return redirect("articles:main")
+
+                return redirect(request.GET.get("next") or "articles:main")
+
         else:
             login_form = AuthenticationForm()
 
@@ -33,6 +37,7 @@ def login(request):
         return HttpResponseRedirect("/")
 
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect("accounts:login")
@@ -53,6 +58,7 @@ def signup(request):
     return render(request, "accounts/signup.html", context)
 
 
+@login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     context = {
@@ -178,7 +184,8 @@ def block_user_block(request, pk):
     return redirect("accounts:block_user")
 
 
+@login_required
 def delete(request):
     request.user.delete()
     auth_logout(request)
-    return redirect("accounts:index")
+    return redirect("articles:index")
